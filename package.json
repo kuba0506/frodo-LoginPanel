@@ -1,7 +1,7 @@
 {
-  "name": "Schola-Mentis",
+  "name": "LoginPanel",
   "version": "0.0.1",
-  "description": "LoginPanel",
+  "description": "Plugin for multiplatform login",
   "repository": {
     "type": "git",
     "url": "https://github.com/kuba0506/frodo-LoginPanel.git"
