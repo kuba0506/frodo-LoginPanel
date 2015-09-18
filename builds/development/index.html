@@ -4,171 +4,351 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Schola Mentis</title>
+  <title>Social Login</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
   <meta name="author" content="Redhand.pl - Strony Internetowe Częstochowa">
   <link rel="stylesheet" href="css/libs.css">
   <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body {
+  font-family: "proxima-nova",sans-serif;
+  font-size: 16px;
+}
+body a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  outline: 0;
+  border: 0;
+  margin: 0;
+}
+.wrapper {
+  max-width: 1100px;
+  margin: 40px auto;
+}
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+header:after, .login-form:after, footer:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.ui-panel {
+  margin: 0 auto;
+  margin-top: 120px;
+  margin-top: 15px;
+  padding: 10px 0;
+  /*max-width: 360px;*/
+  max-width: 300px;
+  height: auto;
+  /*background-color: black;*/
+  /*background-color: #2D2E82;*/
+  /*background-color: #f7f7f7;*/
+  /*background-color: #A1A2C8;*/
+  background-color: #FFD716;
+  /*color: white;*/
+  color: #0088e3;
+  /*color: #343434;*/
+  /*border: 1px solid #161616;*/
+  /*box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3);*/
+  /*-webkit-box-shadow: 0 2px 5px rgba(255, 255, 255, 0.3), 0 3px 8px rgba(255, 255, 255, 0.5);*/
+          /*box-shadow: 0 2px 5px rgba(255, 255, 255, 0.3), 0 3px 8px rgba(255, 255, 255, 0.5);*/
+  /*-webkit-box-shadow:0 0 10px rgba(255, 255, 255, 0.7);
+  -moz-box-shadow:0 0 10px rgba(255, 255, 255, 0.7);
+  box-shadow:0 0 10px rgba(255, 255, 255, 0.7);*/
+  /*box-shadow: 3px 3px 10px 2px rgba(183,183,183, .5);*/
+            /*0 0 4px rgba(229,229,229 .5) inset;*/
+  /*-webkit-box-shadow: 0 2px 5px rgba(183, 183, 183, 0.3), 0 3px 8px rgba(183, 183, 183, 0.5);
+          box-shadow: 0 2px 5px rgba(183, 183, 183, 0.3), 0 3px 8px rgba(183, 183, 183, 0.5);*/
+          
+  /*-webkit-box-shadow: #FFF;*/
+          box-shadow: 0 0 10px 0 rgba(164, 164, 164, 0.9),
+                  -15px 0 15px -20px rgba(164, 164, 164, 0.9), 15px 0 15px -20px rgba(164, 164, 164, 0.9);
+  position: absolute;
+  z-index: 9999;
+  margin-top: -130px;
+  margin-left: -150px;
+  top: 50%;
+  left: 50%;
+}
+
+header {
+  height: 40px;
+  /*border-bottom: 1px solid  #161616;*/
+  border-bottom: 1px solid  rgba(164, 164, 164, 0.5);
+  line-height: 40px;
+  /*padding: 0 28px;*/
+  padding: 0 18px;
+  font-size: 0.8em;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+}
+header .logo {
+  text-transform: uppercase;
+}
+header span {
+  /*color: #ffdd00;*/
+  color: #000;
+}
+.close {
+  color: rgb(122,122,122);
+  font-size: 1em;
+  opacity: 0.7;
+  -webkit-transition: all .3s linear;
+     -moz-transition: all .3s linear;
+      -ms-transition: all .3s linear;
+       -o-transition: all .3s linear;
+          transition: all .3s linear;
+}
+.close:hover {
+  opacity: 1;
+}
+
+
+.login-form {
+  padding: 18px 28px 0 28px;
+}
+.login-form .subtitle {
+  font-size: 0.92em;
+}
+.login-form input {
+  font-size: 1.05em;
+  font-weight: 300;
+  margin-top: 18px;
+  padding: 10px 8px;
+  width: 288px;
+}
+
+footer {
+  padding: 26px 28px 22px 28px;
+  font-size: 0.82em;
+}
+footer .social-login i:first-child {
+  margin-left: 4px;
+}
+footer .form-actions a {
+  padding: 4px 8px;
+}
+footer .register {
+  background-color: #ffdd00;
+  color: black;
+  border-radius: 2px;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-color: #efefef;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  /*width: 100%;*/
+  /*height: 100%;*/
+  z-index: -1;
+  opacity: 0;
+  -webkit-transition: all .3s linear;
+     -moz-transition: all .3s linear;
+      -ms-transition: all .3s linear;
+       -o-transition: all .3s linear;
+          transition: all .3s linear;
+  background-color: rgba(0, 0, 0, 0.88);
+}
+.overlay-visibility {
+  opacity: 1;
+  z-index: 1;
+}
+.hide-panel {
+  display: none !important;
+}
+.log-in {
+  color: #333;
+  text-transform: uppercase;
+}
+/* Helpers */
+.mt20 {
+  margin-top: 20px;
+}
+
+.no-scroll {
+  position: fixed;
+  overflow: hidden;
+}
+
+.main {
+  /*padding: 26px 28px 22px;*/
+  padding: 16px 18px 12px;
+}
+.provider {
+  float: left;
+  width: 50%;
+  /*padding: 5px;*/
+  text-align: center;
+}
+
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+
+  </style>
   <script src="js/modernizr.min.js"></script>
 </head>
 <body>
-  <header class="header relative">
+  <!-- fa pls -->
+<!-- <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"> -->
 
-      <div class="container">
+<!-- animate.css -->
+<link href="http://s3-us-west-2.amazonaws.com/s.cdpn.io/67239/animate.min.css" rel="stylesheet" />
 
-        <div class="top-info no-mobile">
-          <div class="top-item home">
-            <a href="#">strona główna</a>
-          </div>
-          <div class="top-item about-us">
-            <a href="#">o nas</a>
-          </div>
-          <div class="top-item offer">
-            <a href="#">oferta</a>
-          </div>
-          <div class="top-item contact">
-            <a href="#">kontakt</a>
-          </div>
-        </div>
-      
-      <div class="top-logo">
-        <h1 class="logo" role="banner">
-          <a href="#" rel="home">
-            <img src="images/logo.png" alt="EXAMPLE">
-          </a>
-        </h1>
-        <fieldset class="search-schola">
-          <legend>Szukaj</legend>
-          <form novalidate="novalidate" role="search" method="get" action="produkty,szukaj">
-            <input type="text" placeholder="Szukaj w sklepie..." name="q" class="input input-search">
-            <button class="button button-search" type="submit">Szukaj</button>
-          </form>
-        </fieldset>
+<!-- under overlay stuff -->
+<div class="body"></div>
+
+<!-- the panel -->
+
+<a href="#" class="log-in">Log In</a>
+  <!-- <div class="ui-panel login-panel animated bounceInDown hide-panel"> -->
+  <div class="ui-panel login-panel animated hide-panel">
+    <header>
+      <div class="left logo">
+        <span>Connect </span>with
       </div>
       
-      <nav class="nav" role="navigation">
-        <button class="mobile-menu" type="button"><span>Mobile Menu</span></button>
-        <div class="ul-wrapper">
-          <ul class="menu">
-            <li class="dropdown" data-dropdown>
-                <a href="#" class="relative triangle">rozwój fizyczny</a>
-                <ul class="submenu" data-dropdown-content>
-                  <li><a href="#">sitodruk</a></li>
-                  <li><a href="#">termotransfer</a></li>
-                  <li class="relative">
-                    <a href="#" class="sublink-2">haft komputerowy</a>
-                      <ul class="submenu-2">
-                        <li class="relative triangle"><a href="#">link1</a></li>
-                        <li><a href="#">link2</a></li>
-                        <li><a href="#">link3</a></li>
-                        <li><a href="#">link4</a></li>
-                        <li><a href="#">link5</a></li>
-                        <li><a href="#">link6</a></li>
-                      </ul>
-                  </li>
-                  <li><a href="#">sublimacja</a></li>
-                  <li><a href="#">dtg</a></li>
-                  <li><a href="#">tempodruk</a></li>
-                </ul>
-            </li>
-            <li class="dropdown" data-dropdown>
-              <a href="#" class="relative triangle">rozwój umysłowy</a>
-              <ul class="submenu" data-dropdown-content>
-                  <li><a href="#">sitodruk</a></li>
-                  <li><a href="#">termotransfer</a></li>
-                  <li><a href="#">haft komputerowy</a></li>
-                  <li><a href="#">sublimacja</a></li>
-                  <li><a href="#">dtg</a></li>
-                  <li><a href="#">tempodruk</a></li>
-                </ul>
-            </li>
-            <li><a href="#">rozwój społeczno-emocjonalny</a></li>
-            <li><a href="#">rozwój duchowy</a></li>
-            <li><a href="#">nowa szkoła</a></li>
-          </ul>
-        </div>
-      </nav>
-    </div>  
-  </header>
-
-  <main role="main" class="main">
-
-    <div class="container">
-      <div class="left">
-        <article class="infografika relative">
-          <img src="images/gfx/infografika2.png">
-            <div class="txt txt1">
-              <a href="#">
-                <div class="lh-normalize lh-13">Rozwój fizyczny</div>
-              </a>
-            </div>
-
-            <div class="txt txt2">
-              <a href="#">
-                <div class="lh-normalize lh-13">Rozwój umysłowy</div>
-              </a>
-            </div>
-
-            <div class="txt txt3">
-              <a href="#">
-                <div class="lh-normalize lh-13">
-                  <h3>Umysł</h3>
-                  <p>władca Twojego życia</p>
-                </div>
-              </a>
-            </div>
-
-            <div class="txt txt4">
-              <a href="#">
-                <div class="lh-normalize lh-13">
-                  Rozwój społeczno-emocjonalny
-                </div>
-              </a>
-            </div>
-
-            <div class="txt txt5">
-              <a href="#">
-                <div class="lh-normalize lh-13">
-                  Rozwój duchowy
-                </div>
-              </a>
-            </div>
-          <footer class="infografika-footer">
-            <p class="blue-btn">Harmonia i równowaga = solidny fundament udanego życia</p>
-          </footer>
-        </article>    
-      </div>
-
       <div class="right">
-        <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam illum aut similique exercitationem laborum.</h2>
-        <div class="right-text">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex odio, accusantium sapiente rem necessitatibus debitis quam dolor iusto unde dignissimos.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit impedit ipsa nobis architecto sequi, similique laboriosam aliquid suscipit corrupti vitae laudantium obcaecati fugiat dolorum omnis?</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia fugit sint veritatis voluptatum ad porro.</p>
-          <strong>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia, beatae!</strong>
-        </div>
-        <a href="#" class="blue-btn right-link">dowiedz się więcej &gt;</a>
+        <a href="#close" id="close" class="ui-button close">
+          x
+        </a>
       </div>
-        
-    </div>
-
-  </main>
-
-  <footer class="footer" role="contentinfo">
-
-    <div class="container">
-      <div class="footer-copy">
-        <span>Copyright &copy;2015 Schola Mentis</span>
-        <a href="http://www.redhand.pl" rel="nofollow">Projekt i wykonanie Redhand.pl</a>
+    </header>
+    <main class="main clearfix">
+      <div class="provider">
+        <a class="btn azm-social azm-btn azm-facebook" href="#"><i class="fa fa-facebook"></i> Facebook</a>
       </div>
-    </div>
+      <div class="provider">
+        <a class="btn azm-social azm-btn azm-twitter" href="#"><i class="fa fa-twitter"></i> Twitter</a>
+      </div>
+      <div class="provider">
+        <a class="btn azm-social azm-btn azm-google-plus" href="#"><i class="fa fa-google-plus"></i> Google+</a>
+      </div>
+      <div class="provider">
+        <a class="btn azm-social azm-btn azm-android" href="#"><i class="fa fa-android"></i> Android</a>
+      </div>
+      <div class="provider">
+        <a class="btn azm-social azm-btn azm-linkedin" href="#"><i class="fa fa-linkedin"></i> LinkedIn</a>
+      </div>
+      <div class="provider">
+        <a class="btn azm-social azm-btn azm-skype" href="#"><i class="fa fa-skype"></i> Skype</a>
+      </div>
+      <p>
+                      
+                      
+                      
+                    </p>
+    </main>
+  <!--   <div class="login-form">
+      <div class="subtitle">Login or register</div>
+      <input type="text" placeholder="Username" />
+      <input type="text" placeholder="Password" />
+    </div> -->
+    
+ <!--    <footer>
+      
+    </footer> -->
+  </div>
 
-  </footer>
+  <div class="wrapper">
+    <p class="mt20">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab tempore deserunt esse omnis recusandae, facilis distinctio sunt voluptas porro, sint autem nesciunt quidem vitae odio iusto eligendi dolorem quod, fugiat suscipit qui? Fugiat provident vel enim, distinctio. Laborum similique doloribus odio alias ea numquam enim omnis cumque. Totam labore, aliquam quod fugiat enim deserunt dignissimos quasi culpa modi. Earum molestias, beatae? Vitae facilis at suscipit itaque sint atque fuga consectetur tenetur quibusdam quas accusamus culpa velit pariatur blanditiis excepturi impedit asperiores, ad sit eos eligendi quidem? Saepe excepturi praesentium ab vel, laborum, voluptatum, deserunt facilis nesciunt harum nemo repellendus veniam fugiat! Iste error sapiente esse velit minima similique. Similique exercitationem hic quo quod accusantium itaque quidem nemo consectetur eos quisquam officiis porro nihil aliquam voluptatem quae culpa magni adipisci necessitatibus rem, nisi possimus, natus expedita laborum! Alias amet earum dolores, natus consectetur, adipisci eaque magnam ex repellat, eius delectus vero. Sapiente, ad minima ducimus saepe pariatur eveniet assumenda quam, placeat ipsam illo debitis ratione quod mollitia eius, corrupti accusamus natus impedit laudantium laborum praesentium facere nobis. Voluptas fugiat eligendi enim expedita eum beatae vel sit unde distinctio quas, nemo iusto inventore voluptatibus? Assumenda nisi in, quo tenetur veritatis soluta animi minus optio neque asperiores ipsam? Quaerat cumque officia explicabo atque adipisci totam consequatur sit harum, laboriosam, est earum, tenetur esse impedit minus accusantium doloribus omnis ducimus quis nisi animi eos maiores, nemo beatae quae unde. Culpa voluptates quos sapiente vero soluta ullam reiciendis accusantium pariatur esse quod molestiae id fuga doloremque aliquam officiis at dolor perferendis minima assumenda, iusto eos. Iste earum modi quibusdam tempore velit consequuntur quo libero nam facilis cupiditate qui voluptatum, voluptates, et blanditiis, dolorem repellendus voluptatem. Amet odit, rem saepe architecto veniam eveniet sequi nostrum officia expedita ducimus. Nihil alias, molestias veniam officiis accusantium architecto earum.</p>
+       <p class="mt20">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa natus sunt asperiores, beatae commodi suscipit. Quis sint, iste consectetur dolore. Amet quod vel facilis aut doloribus suscipit asperiores quibusdam fuga! Perferendis cum, nihil at quis hic possimus saepe excepturi magni corrupti quae! Adipisci eum libero quos, explicabo ab quia id perferendis praesentium. Impedit rerum, iste! Similique fuga obcaecati delectus dolorem veniam velit fugit ipsam. Dolores consequuntur, nostrum fuga rerum itaque dolor iusto quidem adipisci tenetur vitae similique nobis quisquam harum, eos eum perferendis, consequatur suscipit optio. Sunt magnam eum itaque, explicabo deleniti! Ipsa, aliquam, libero. Eos aut facere incidunt atque ipsa ex qui maiores quasi consequatur nulla doloribus enim, nam dicta ab nihil, necessitatibus magni, officiis, deserunt beatae repudiandae neque aspernatur odio voluptatem modi! Labore beatae cum suscipit quia eaque nihil voluptate inventore amet cumque ullam doloremque ex omnis, delectus ducimus voluptas, dicta explicabo recusandae accusantium similique laborum sed atque tempore est mollitia! Labore dolorem distinctio laboriosam quidem, voluptas accusamus! Accusantium facere itaque, provident, debitis voluptate repellendus quasi, necessitatibus delectus modi sit iste. Libero neque fugiat rerum nulla rem cupiditate perferendis deserunt ducimus. Aliquam dicta optio repudiandae facilis, dolorem eligendi quidem at quisquam, cum sapiente nihil deserunt tempora, voluptas odio numquam magni ea voluptatem? Tempora temporibus aliquam hic autem, non quia blanditiis harum quam tempore sunt pariatur numquam ducimus qui molestiae unde repellat laborum doloremque voluptates at sequi fuga voluptatem, iusto beatae. Illum assumenda, officiis distinctio, facere doloribus commodi iure minima vel sapiente eligendi deleniti ipsam dicta. Unde esse ipsam, eum reprehenderit cum sunt neque voluptate, maiores distinctio, quasi facilis impedit error possimus veniam ipsa repellat vero ullam nam eveniet dolor corporis ducimus, quibusdam. Saepe amet voluptatem eaque voluptates voluptatibus eligendi nihil, ut consectetur est et labore, tempore quod temporibus nesciunt molestias nisi hic fugiat. Eligendi autem fugiat incidunt alias.</p>
+       <p class="mt20">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus ratione, praesentium, ea a modi totam voluptatum reiciendis, eaque nihil aperiam error esse. Iste placeat nam obcaecati dolores laborum saepe facere, officia, mollitia, quas dicta sunt at qui ipsa quae aspernatur magni velit explicabo. Commodi hic porro fugiat, eius explicabo inventore sapiente omnis ipsa sint debitis non autem voluptatem nam officiis sequi magni ab iusto, vel nemo accusamus repellendus et ipsam impedit alias! Voluptatum vel cum sapiente quis beatae voluptate tempora tenetur quae, minus eius, atque excepturi explicabo. Asperiores, optio deleniti harum cum eos excepturi commodi! Reiciendis labore assumenda, eum optio illo minus dolorem, porro esse voluptatum doloremque placeat quis recusandae necessitatibus eius itaque adipisci harum quibusdam dolor. Dolorem vel nulla, laudantium sequi. Sed possimus molestias commodi eaque vel nam aliquid maxime, provident facere officia labore impedit blanditiis voluptatibus accusamus amet asperiores animi nesciunt minima est. Aliquam libero non sapiente soluta, molestias natus vitae voluptatum amet. Facilis quasi, est doloremque mollitia explicabo aperiam. Iure cumque aliquam praesentium incidunt ab, laboriosam vitae possimus commodi sed quasi hic doloremque quaerat fugit aut, labore excepturi deleniti necessitatibus! Libero facilis, quidem necessitatibus? Esse, mollitia temporibus quidem unde perspiciatis, aliquam numquam odit laboriosam? Error doloremque aut deleniti vero, voluptates libero qui necessitatibus, odit a mollitia architecto ex nesciunt numquam totam. Aperiam dolore architecto sequi, pariatur quas animi sint recusandae dicta! Ex veniam aliquam error accusantium, et maxime laborum debitis iure iusto praesentium repellendus necessitatibus corporis quibusdam voluptatibus laboriosam cupiditate doloremque a excepturi, architecto saepe fugiat quaerat asperiores ea nisi sed. Magni eligendi aliquam nulla quia officia aperiam itaque consectetur perferendis ipsum alias repellendus autem porro soluta possimus laborum a nostrum cumque, inventore rerum ea architecto iure ratione dolores. Iste culpa asperiores quam cum, tempore incidunt, facere sapiente ducimus, vel, beatae explicabo. Nemo alias veritatis, quidem ab.</p>
+       <p class="mt20">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit sint hic deserunt vitae, facilis laboriosam debitis, sit commodi eligendi sed cum aliquid quae libero ullam assumenda. Omnis dolorem dolorum magnam dolores atque impedit vitae a quam ex minus? Asperiores neque blanditiis provident, hic facere perferendis cum ad quia. Illum culpa obcaecati veniam delectus vero iusto assumenda inventore maxime libero commodi similique, natus, asperiores facere odio error unde quo, in accusantium laudantium? Corporis, accusamus, facere. Quas fuga tempore ipsa voluptas corporis, esse voluptate, sit ducimus eveniet maiores magnam qui perferendis, ad hic aperiam est mollitia! Aliquam velit tempore, necessitatibus quo, ducimus quas deserunt nam temporibus cum cumque similique. Qui sunt quo consequatur. Delectus labore itaque dignissimos, illum velit aliquid dolore totam harum nostrum suscipit facilis sequi aut dolorum voluptates, adipisci quod saepe placeat porro vitae ipsum dolor. Praesentium iusto voluptatem obcaecati consequatur sint voluptates dolor quam consequuntur beatae maiores, tempore officiis a sunt quis aliquid in voluptatibus! Velit delectus vitae hic illum possimus voluptate quos libero, enim quaerat, animi qui ipsum dicta quae! Libero repellat dolor asperiores sint iusto, totam maiores dicta molestias ab quaerat quibusdam, vel consequuntur officia ipsum, vero minima nulla accusantium facere blanditiis voluptate? Doloremque dolores eum nesciunt odit facere quis deserunt totam incidunt iste quasi amet, repudiandae, tenetur laudantium veritatis minima quidem quo, velit eos voluptatum nam ducimus architecto. Nostrum maxime suscipit nulla aspernatur eligendi tenetur maiores aperiam, eius culpa consequatur repellat pariatur, libero iure cupiditate repellendus necessitatibus, distinctio impedit! Commodi minus soluta, sequi nemo ipsam recusandae optio, sit aliquid rem odit animi, ipsa minima ducimus blanditiis cum suscipit perferendis est asperiores nam deleniti corporis dolore repudiandae necessitatibus? Ipsa sed, fugiat reiciendis distinctio fuga libero, quaerat quae officiis, cumque ad repellendus laborum. Eos sed nobis soluta facilis qui iure repellat temporibus, praesentium labore porro reiciendis quisquam sequi.</p>   
+  </div>
+
+<div class="overlay"></div>
+
+<!-- get dem fancy typefaces 
+<script type="text/javascript" src="//use.typekit.net/psm0wvc.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script> -->
   
   <script src="js/jquery-1.11.2.min.js"></script>
   <script src="js/libs.js"></script>
   <script src="js/scripts.js"></script>
+  <script>
+      // Quick exercise
+// Working on a login panel from my Bananaplate project
+// http://dribbble.com/iamnbutler/projects/178899-BANANAPLATE
+
+$(document).ready(function(){
+
+  // $('.login-panel').hide();
+  // No links pls
+  $('.ui-button.inactive').click(function(){
+    e.preventDefault();
+  });
+  
+  $('.log-in').on('click', function(e) {
+    e.preventDefault();
+    // $('.login-panel').removeClass('hide-panel').addClass('bounceInDown');
+    $('.login-panel').each(function() {
+      var panel = $(this),
+          hideClass = 'hide-panel',
+          bounceInDown = 'bounceInDown',
+          bounceOutUp = 'bounceOutUp';
+
+      $('.overlay').toggleClass('overlay-visibility');
+      //Switch classes
+      // (panel.hasClass(hideClass)) ? panel.removeClass(hideClass + " " + bounceOutUp).addClass(bounceInDown)
+      //   : panel.removeClass(bounceInDown).addClass(bounceOutUp).delay(500).queue(function() {
+      //     $(this).addClass(hideClass).dequeue();
+      //   });
+        $('body').toggleClass('no-scroll');
+        (panel.hasClass(hideClass)) ? panel.removeClass(hideClass).addClass(bounceInDown)
+        : panel.removeClass(bounceInDown).addClass(hideClass);
+
+    });
+  });
+  //Exit button
+  $('#close').click(function(){
+      $('.overlay').removeClass('overlay-visibility');
+      $('body').toggleClass('no-scroll');
+    // $('.ui-panel').removeClass('bounceInDown').addClass('bounceOutUp').delay(500).queue(function() {
+    //   $(this).addClass('hide-panel').dequeue();
+    // });
+
+    $('.ui-panel').removeClass('bounceInDown').addClass('hide-panel');
+    
+  });
+});
+
+  </script>
 
 </body>
 </html>
