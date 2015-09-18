@@ -46,7 +46,7 @@ gulp.task('js',function () {
 		.on('error', gutil.log)
 	// .pipe(watch(jsSources))
 	// .pipe(browserify())
-	.pipe(rename('scripts.js'))
+	.pipe(rename('jquery.frodo.js'))
 	.pipe(gulp.dest('builds/development/js'))
 	.pipe(connect.reload())
 	// .pipe(watch())
