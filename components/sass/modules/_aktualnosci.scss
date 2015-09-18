@@ -1,0 +1,19 @@
+/*
+Aktualnośći
+ */
+.media { overflow: hidden; display: block; margin: .8em 0; }
+.media-image { float: left; margin-right: .8em; }
+.media-content { overflow: hidden; margin: 0; }
+.media--triple, .media--double { display: inline-block; vertical-align: top; width: 48.8%; margin: .8em .4%; }
+.media--triple { width: 32%; }
+.media2 { display: table; margin: .8em 0; }
+.media2-image, .media2-content { display: table-cell; vertical-align: middle; }
+.media2-image { padding: 0 .6em 0 0; }
+.media2-image--after { padding-right: .6em; padding: 0 0 0 .6em; }
+.media2--double { display: inline-block; vertical-align: top; width: 48.9%; margin: .4em .4% .8em; }
+.media2--inline { display: inline-block; vertical-align: middle; margin: .8em .3em; }
+
+/*
+ * Hint
+ */
+.hint { color: #999; font-size: .8em; line-height: 1.3em; }

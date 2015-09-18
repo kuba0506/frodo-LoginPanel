@@ -1,0 +1,22 @@
+/**
+ * Podstrona
+ */
+.subpage-left, .subpage-right {
+    float: left;
+}
+.subpage-left {
+    width: 20%;
+}
+.subpage-right {
+    width: 80%;
+    padding-left: 2%;
+    .right-text img {
+        float: right;
+    }
+}
+.right-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: normal;
+}
+

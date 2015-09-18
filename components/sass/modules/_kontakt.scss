@@ -1,0 +1,17 @@
+/**
+ * Kontakt
+ */
+.contact-page {
+    padding: 30px 0;
+    @include clearfix;
+    .column {
+        width: 33%;
+        a.tel {
+            color: $black; 
+        }
+    }
+}
+.h6--contact {
+    color: $black; 
+    font-size: 18px;
+}

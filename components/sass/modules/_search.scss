@@ -1,0 +1,213 @@
+/*
+* @SEARCH
+ */
+
+.search {
+  float: left;
+  width: 100%;
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  padding: 0;
+  // margin: 0;
+  margin: 10px 0;
+  }
+.search-schola legend {
+  display: none;
+}
+
+.button--submit {
+  margin-top: 10px;
+  float: none;
+}
+
+// .input--solokolos, .input--solokolos-full {
+//   // width: 425px;
+//   -webkit-border-radius: 2px;
+//   border-radius: 2px;
+//   font-size: 18px;
+//   line-height: 15px;
+// }
+// .input--solokolos {
+//   width: 84%;
+//   height: 70px;
+// }
+// .button--solokolos {
+//   // width: 70px;
+//   width: 14%;
+//   margin-left: 2%;
+//   height: 70px;
+//   line-height: 70px;
+//   padding: 0;
+//   .icon-search {
+//     display: inline-block;
+//     vertical-align: middle;
+//     font-size: 35px;
+
+//   }
+// }
+
+// fieldset.search {
+//   border: none; }
+//   fieldset.search legend {
+//     display: none; }
+
+// .input-search {
+//   width: 100%;
+//   border: 1px solid #1e9098;
+//   padding-top: 13px;
+//   padding-bottom: 13px; }
+
+// .button-search {
+//   position: absolute;
+//   right: 8px;
+//   top: 9px;
+//   background: url(../images/ico/left/search.png) no-repeat center center;
+//   width: 22px;
+//   text-indent: -9999px;
+//   height: 22px;
+//   border: none; }
+
+.search-adv {
+  background-color: #fff;
+  // position: absolute;
+  z-index: 200;
+  // top: 100%;
+  // left: 0px;
+  float: left;
+  // width: 200px;
+  // width: 247px;
+  // width: 84%;
+  // padding: 5px 10px;
+  padding: 10px 10px 15px;
+  // padding: 0;
+  // opacity: 0;
+  // max-height: 0;
+  // overflow: hidden;
+  // visibility: hidden;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  // border: 1px solid $color2;
+  // -webkit-transform: translateY(0);
+  // -moz-transform: translateY(0);
+  // -ms-transform: translateY(0);
+  // -o-transform: translateY(0);
+  // transform: translateY(0);
+  -moz-transition: max-height 0.4s linear;
+  -webkit-transition: max-height 0.4s linear;
+  transition: max-height 0.4s linear; }
+//   .search-adv:before, .search-adv:after {
+//     content: "";
+//     position: absolute;
+//     width: 0;
+//     height: 0;
+//     border-style: solid;
+//     border-color: transparent;
+//     border-top: 0; }
+//   .search-adv:before {
+//     // top: -8px;
+//     top: -8px;
+//     right: 17px;
+//     // border-bottom-color: #ee1212;
+//     border-bottom-color: $color2;
+//     border-width: 8px; }
+//   .search-adv:after {
+//     top: -7px;
+//     right: 18px;
+//     // border-bottom-color: #f5f5f5;
+//     border-bottom-color: #fff;
+//     border-width: 7px; }
+
+// .search-adv--hide {
+//   visibility: hidden;
+//   opacity: 0;
+//   -webkit-transform: translateY(-10px);
+//   -moz-transform: translateY(-10px);
+//   -ms-transform: translateY(-10px);
+//   -o-transform: translateY(-10px);
+//   transform: translateY(-10px); }
+
+// .search-adv-field {
+//   padding: 5px 0; }
+
+// .search-adv-field + .search-adv-field {
+//   border-top: 1px solid #f5f5f5; }
+
+// .search-adv-field-label {
+//   display: block;
+//   font-size: 10px; }
+
+.search-adv .input {
+  border: 1px solid #e0e0e0;
+  box-shadow: none;
+  width: 100%;
+  color: #B8B7B7;
+  font-size: 12px;
+  padding: 12px 5px;
+  box-sizing: border-box; }
+.search-adv .select {
+  padding: 12px 5px;
+}
+
+.search .h5--top {
+  margin: 0.8em 0;
+  display: inline-block;
+}
+.search-adv--wrapper {
+  max-height: 0;
+  overflow: hidden;
+  width: 84%;
+  -webkit-transition: max-height .5s;
+  -moz-transition: max-height .5s;
+  -ms-transition: max-height .5s;
+  -o-transition: max-height .5s;
+  transition: max-height .5s;
+}
+.search-adv--active {
+  max-height: 220px;
+  // padding: 5px 10px;
+  // opacity: 1;
+  // visibility: visible;
+}
+// a.search-more {
+//   text-transform: uppercase;
+//   outline: none;
+//   display: block;
+//   text-align: center;
+//   padding: 5px 0;
+//   color: #1e9098;
+//   font-size: 11px;
+//   font-weight: bold;
+//   > span {font-size: 8px;}
+//   }
+//   a.search-more:hover {
+//     color: #16686d; }
+
+
+
+
+
+// ::-webkit-input-placeholder {
+//    font-family: $main-font;
+//    font-size: 14px;
+//    color: #a6a6a6;
+// }
+
+// :-moz-placeholder { /* Firefox 18- */
+//    font-family: $main-font;
+//    font-size: 14px;
+//    color: #a6a6a6;
+// }
+
+// ::-moz-placeholder {  /* Firefox 19+ */
+//    font-family: $main-font;
+//    font-size: 14px;
+//    color: #a6a6a6;
+// }
+
+// :-ms-input-placeholder {
+//    font-family: $main-font;
+//    font-size: 14px;
+//    color: #a6a6a6;
+// }
+

@@ -1,0 +1,127 @@
+/*
+* @PRODUCTS
+ */
+.products {
+	.h2 {
+		padding-bottom: 2%;
+	}
+}
+.product-item {
+	// max-width: 260px;
+	width: 32%;
+	margin-bottom: 20px;
+  display: inline-block;
+  vertical-align: top;
+    // float: left;
+    img {
+    	@include border-radius;
+    }
+	.product-name {
+		font: {
+			size: 14px;
+			weight: bold;
+			}
+		width: 80%;
+		margin-top: 10px;
+		min-height: 2.4em;
+	}
+}
+
+.productWrapper {
+	padding: 0 2px;
+		text-align: justify;
+	}
+	.productWrapper:after {
+    content: "";
+    display: inline-block;
+    width: 80%;
+	}
+.product-footer{
+	position: relative;
+	// text-align: center;
+}
+	.product-price {
+		float: left;
+	}
+		.regular-price {
+			color: #898989;
+			text-decoration: line-through;
+		}
+		.promo-price {
+			color: darken($font-color1, 10%);
+		}
+	.read-more {
+		font: {
+			size: 12px;
+			weight: bold;
+			family: $main-font;
+		}
+		float: right;
+		position: absolute;
+		padding-left: 30px;
+		line-height: 28px;
+		color: #fff;
+		bottom: 0;
+		right: 0;
+		width: 90px;
+		height: 30px;
+		background: #776772 url(../images/ico/info.png) no-repeat 10px center;
+		@include border-radius;
+        transition: all .4s;
+        &:hover {
+            background: lighten(#776772,10%) url(../images/ico/info.png) no-repeat 10px center;
+        }
+	}
+
+.instruction-ad {
+	background: url(../images/ads-bg.png) no-repeat center;
+	height: 125px;
+	// width: 100%;
+     p {
+        color: #FFF ;
+        width: 196px;
+        display: inline-block;
+        text-align: center;
+        font-size: 16px;
+        margin: {
+            top: 10px;
+            bottom: 0;
+        }
+    }
+}
+.inst-text {
+    padding-left: 30px;
+}
+.h3 {
+	font: {
+		size: 1.9em;
+		family: $trajan;
+		weight: normal;
+	}
+    margin-top: 25px;
+	color: #fff;
+	line-height: 1.4em;
+}
+.button-inst {
+    font: {
+        family: $trajan;
+        size: 20px;
+        weight: normal;
+    }
+    display: inline-block;
+    background: #A3B12C ;
+    color: #FFF;
+    border: none;
+    margin-top: 20px;
+    padding: 7px 43px;
+    @include border-radius;
+    // padding: 7px 13px;
+    // width: 196px;
+    height: 53px;
+    transition: all .4s;
+    &:hover {
+        color: darken(#FFF,50%);
+        background: lighten(#A3B12C, 10%);
+    }
+}
+

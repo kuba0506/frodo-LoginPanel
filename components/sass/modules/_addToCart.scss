@@ -1,0 +1,28 @@
+/*
+Ilość produktów
+ */
+.addToCart-qty {
+  width: 100%;
+  display: block;
+}
+.addToCart-qty-minus, .addToCart-qty-plus {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  margin: 0 10px;
+  width: 17px;
+  height: 17px;
+  line-height: 17px;
+  border-radius: 5px;
+  // background-color: #bddee2;
+  background-color: $color2;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff; }
+
+.addToCart-qty-minus:hover, .addToCart-qty-plus:hover, .add-to-cart:hover {
+  color: #fff;
+  text-decoration: none;
+  // background-color: #26b8c3;
+  background-color: $color6;
+   }

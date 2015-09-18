@@ -1,0 +1,36 @@
+/*
+Pagination
+ */
+.pagination {
+    text-align: center;
+}
+.pagination-info {
+    color: #bbb;
+    padding-bottom: 0;
+}
+.pagination-element {
+    border-radius: 3px;
+    color: #776772;
+    display: inline-block;
+    padding: 3px 10px;
+    text-decoration: none;
+    transition: all 0.3s linear 0s;
+}
+.pagination-element:hover {
+    background-color: #e3e0e2;
+}
+.pagination-element--left, .pagination-element--right {
+    background-color: #c8c2c6;
+    color: #323232;
+    padding: 3px 15px;
+}
+.pagination-element--active, .pagination-element--active:hover {
+    background: none repeat scroll 0 0 #776772;
+    color: #fff;
+    font-weight: bold;
+}
+.pagination-element--disabled, .pagination-element--disabled:hover {
+    background-color: transparent;
+    color: #ccc;
+    font-weight: normal;
+}

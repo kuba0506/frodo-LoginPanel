@@ -1,0 +1,83 @@
+/*
+Input
+ */
+input[type="search"] {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.input { //NIE RUSZAĆ
+  display: inline-block;
+  padding: 10px;
+  width: 220px;
+  max-width: 100%;
+  border: 1px solid #CCC;
+  // border-radius: 4px;
+  background: #FDFDFD;
+  vertical-align: middle;
+  // font: 13px/13px Arial, Helvetica, sans-serif;
+  -webkit-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+  background-clip: padding-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  &:focus {
+    border-color: #AAA;
+    box-shadow: 0 0 6px rgba(0,0,0,0.1);
+  }
+}
+.input--long {
+    width: 350px;
+  }
+  .input--full {
+    width: 100%;
+  }
+  .input--number {
+    width: 55px;
+    text-align: center;
+  }
+  .input--short {
+    width: 70px;
+    text-align: center;
+  }
+  .input--textarea {
+    max-width: 380px;
+    width: 100%;
+    height: 90px;
+    vertical-align: top;
+    line-height: 1.2em;
+    resize: none;
+  }
+  .input--full {
+    max-width: none;
+  }
+  .input--textarea--medium {
+    height: 200px;
+  }
+  .input--textarea--large {
+    height: 400px;
+  }
+  .input:focus {
+    border-color: #AAA;
+    box-shadow: 0 0 6px rgba(0,0,0,0.1);
+  }
+  .input--invalid {
+    border-color: #D47171;
+  }
+
+::-webkit-input-placeholder {
+   color: #a3a3a3;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: #a3a3a3;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #a3a3a3;  
+}
+
+:-ms-input-placeholder {  
+   color: #a3a3a3;  
+}

@@ -1,0 +1,101 @@
+/*
+ * Form
+ */
+
+.form {
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.label,
+.formActions {
+  display: block;
+  clear: both;
+  // padding: 3px 0 3px 120px;
+  padding: 3px 0 3px;
+}
+  .label-name {
+    float: left;
+    margin-left: -120px;
+    padding-top: 5px;
+    padding-right: 5px;
+    width: 110px;
+    text-align: right;
+    font-size: 13px;
+  }
+  .label-value {
+    padding: 5px 0 0 0;
+    display: inline-block;
+  }
+  .label-help {
+    display: block;
+    color: #aaa;
+    font-size: 11px;
+    line-height: 1.2em;
+  }
+  .label-help--after {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .label--invalid {
+    color: #B72B2B;
+  }
+  .label--invalid .input {
+    border-color: #D92E2E;
+  }
+
+  .label--big {
+    padding-left: 210px;
+  }
+    .label--big .label-name {
+      margin-left: -210px;
+      width: 200px;
+    }
+
+  .label--small {
+    padding-left: 80px;
+  }
+    .label--small .label-name {
+      margin-left: -80px;
+      width: 70px;
+    }
+
+  /* elastyczne labele */
+  .elasticLabels .label {
+    padding-left: 0;
+  }
+    .elasticLabels .label-name {
+      display: inline-block;
+      float: none;
+      margin-left: 0;
+      padding-right: 10px;
+      min-width: 110px;
+      width: auto;
+      vertical-align: top;
+    }
+
+// .formActions {
+//   // margin: 1em 0;
+//   padding-top: 15px;
+//   // padding-bottom: 15px;
+//   // border-top: 1px solid #E8E8E8;
+//   // background: #F5F5F5;
+// }
+  .formActions--center {
+    padding-left: 0;
+    text-align: center;
+  }
+  .formActions--sides {
+    padding: 15px;
+    overflow: hidden;
+  }
+    .formActions--sides-left {
+      float: left;
+    }
+    .formActions--sides-right {
+      float: right;
+    }
+.label input[type="file"] + span {
+  font-size: 11px;
+  color: #A3A3A3 ;
+}

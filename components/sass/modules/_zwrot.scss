@@ -1,0 +1,29 @@
+/*@Zwrot*/
+.form-zwrot {
+  left: 25%;
+  margin-top: 20px;
+}
+.label {
+    clear: both;
+    display: block;
+    padding: 3px 0 3px 120px;
+}
+.label-name {
+    float: left;
+    font-size: 13px;
+    margin-left: -120px;
+    padding-right: 5px;
+    padding-top: 5px;
+    text-align: right;
+    width: 110px;
+}
+.input--zwrot {
+  padding: 8px 15px;
+}
+.input--short {
+    text-align: center;
+    width: 70px;
+}
+.hint {
+    font-size: 12px;
+}

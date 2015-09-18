@@ -1,10 +1,10 @@
 {
   "name": "Schola-Mentis",
   "version": "0.0.1",
-  "description": "Schola-Mentis",
+  "description": "LoginPanel",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kuba0506/Schola-Mentis.git"
+    "url": "https://github.com/kuba0506/frodo-LoginPanel.git"
   },
   "author": "Kuba",
   "license": "ISC",

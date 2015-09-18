@@ -1,0 +1,75 @@
+/*
+Zamówienia
+ */
+.cell-quantity {
+  width: 25%;
+  text-align: center;
+}
+.cell-order {
+  width: 10%;
+}
+.cell-order {
+  text-align: center;
+}
+.input-order, .input-add-quantity {
+  display: inline-block;
+  text-align: center;
+  width: 60px;
+  -webkit-border-radius: 2px ;
+  border-radius: 2px ;
+
+}
+.label-order {
+  display: block;
+  .kg {
+    display: inline-block;
+    text-align: right;
+    width: 20px;
+  }
+  .ilosc {
+    display: inline-block;
+    width: 35px;
+    text-align: left;
+  }
+}
+
+.delete-ico, .add-ico {
+  display: block;
+  // width: 16px;
+  width: 45px;
+  // height: 16px;
+  height: 45px;
+}
+.delete-ico {
+  background: url('../images/ico/delete-ico.png') no-repeat center;
+}
+.add-ico {
+ background: url('../images/ico/add-ico.png') no-repeat center;
+}
+
+.add-order {
+ h5 {
+  font-size: 14px;
+  font-weight: 300;
+ }
+ .table-row {
+    background-color: $color10;
+   .cell-info, .cell-quantity, .cell-order  {
+     border-top: 1px solid $color8;
+   }
+ }
+}
+.input-add-name {
+  width: 300px;
+  text-align: center;
+}
+.textarea-order {
+  width: 310px;
+  float: left;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  resize: none;
+}
+.submit-area {
+  margin-bottom: 20px;
+}

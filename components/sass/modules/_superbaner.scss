@@ -1,0 +1,210 @@
+/*@Superbaner*/
+
+.superbaner {
+  // display: table;
+  width: 100%;
+  overflow: hidden;
+  // position:relative;
+   &:hover {
+    .superProduct {
+     width:20%;
+      transition:width 0.5s ease;
+    }
+  }
+  .superProduct:hover {
+    width:40%;
+    transition:width 0.5s ease;
+  }
+}
+.superProduct {
+  // display: table-cell;
+  height: 400px;
+  float: left;
+  width: 25%;
+  transition: width 0.5s ease;
+  // background-position: left top;
+  position:relative;
+  z-index:2;
+  // max-width: 465px;
+  overflow: hidden;
+  &:hover {
+    .super-inner:after {
+      opacity: 0;
+    }
+  }
+}
+.superLink {
+    display: block;
+    height: 100%;
+    width: 100%;
+    line-height: 400px;
+    // background: yellow;
+    // position: relative;
+    // z-index: 3;
+
+  }
+.super-inner {
+  // min-width: 80%;
+  min-width: 250px;
+  position: relative;
+  // z-index: 2;
+  height: 400px;
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index:2;
+    width: 125px;
+    height: 100%;
+    // background: green;
+    top:0;
+    right:0;
+    opacity: 0.5;
+    background: -moz-linear-gradient(left,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.6))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.6) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.6) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.6) 100%); /* IE10+ */
+    background: linear-gradient(to right,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.6) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#99000000',GradientType=1 ); /* IE6-9 */
+    @include transition;
+  }
+  > img {
+    max-width: none;
+    position: absolute;
+    z-index: 1;
+  }
+}
+// .super-gradient {
+//   position: relative;
+//   width: 100%;
+//   height: 100%;
+//   z-index:2;
+//   background: green;
+// }
+// .last-item {
+//   height:400px;
+//   width: auto;
+//   right: 0;
+//   // float: right;
+//   // background-position: right top;
+//   // transition:width 0.5s ease;
+//   position:relative;
+//   z-index:1;
+// }
+// .wrapper {
+//   width:100%;
+//   /* margin: 25px auto; */
+//   overflow:hidden;
+//   border: 1px solid grey;
+//   position:relative;
+// }
+
+// .item {
+//   height:400px;
+//   width:25%;
+//   float:left;
+//   background-position: left top;
+//   transition: width 0.5s ease;
+//   position:relative;
+//   z-index:2;
+// }
+
+// .wrapper:hover .item {
+//   width:10%;
+//   transition:width 0.5s ease;
+// }
+
+// .wrapper .item:hover{
+//   width:70%;
+//   transition:width 0.5s ease;
+// }
+
+ .superContent {
+    position: absolute;
+    top:0;
+    z-index: 3;
+    width: 100%;
+    // width: 100%;
+    // height: 100%;
+    // display: inline-block;
+    // vertical-align: middle;
+    &:hover {
+      .superButton {
+        opacity: 1;
+      }
+    }
+    > h1.arrow {
+      background: url(../images/ico/arrow.png) no-repeat 10px center;
+      display: inline-block;
+      width: 100%;
+      vertical-align: middle;
+      margin: 0;
+      padding: {
+        left: 50px;
+        right: 10px;
+      }
+      text-align: right;
+      > strong {
+        display: inline-block;
+        width: 130px;
+        color: #FFF;
+        font-size: 28px;
+      }
+    }
+  }
+  .superButton {
+        font-size: 11px;
+        padding: 4px 9px;
+        font-weight: bold;
+        color: #FFF;
+        background-color: $color2;
+        border: none;
+        border-radius: 0;
+        opacity: 0;
+        @include transition;
+      }
+.banery {
+  margin: 15px 0;
+  img {
+    max-height: 170px;
+  }
+}
+.span-baner {
+  width: 33%;
+  float: left;
+  margin-left: 0.5%;
+  img {
+    opacity: 1;
+    @include transition;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+  &:first-child {
+  margin-left: 0;
+  }
+}
+.info-box {
+  float: left;
+  width: 25%;
+  border-left: 1px solid $color3;
+  padding-right: 5px;
+  min-height: 95px;
+  &:first-child {
+    border-left: none;
+    padding-left: 65px;
+  }
+}
+.delivery {
+  background: url(../images/ico/delivery.png) no-repeat 0 0;
+}
+.money-back {
+    background: url(../images/ico/money-back.png) no-repeat 15px 0;
+}
+.friendly-company {
+   background: url(../images/ico/friendly-company.png) no-repeat 15px 0;
+}
+.loyalty {
+   background: url(../images/ico/loyalty.png) no-repeat 15px 0;
+}

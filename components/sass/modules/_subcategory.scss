@@ -1,0 +1,20 @@
+/*
+Category
+ */
+.product-item--cat {border-right: none;}
+.img-container--cat {
+  height: 210px;
+    > img {
+    max-width: none;
+  }
+  }
+.product-name--cat {
+  background: lighten($color4,10%);
+  height: 2.4em;
+  line-height: 2.4em;
+  padding-left: 10px;
+  @include transition;
+  &:hover {
+    background-color: $color4;
+  }
+ }

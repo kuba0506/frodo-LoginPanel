@@ -1,0 +1,77 @@
+/*
+Box
+ */
+.box {
+  position: relative;
+  margin: 0.9em 0.7em;
+  padding: 0.7em 1em;
+  border: 1px solid #CCC;
+  border-radius: 2px;
+  background-color: #F5F5F5;
+  color: #666;
+  text-align: left;
+  line-height: 1.4em;
+}
+  .box-close {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #CCC;
+    border-radius: 100%;
+    background-color: #F5F5F5;
+    box-shadow: 0 0 1px rgba(0,0,0,0.3);
+    color: #666;
+    text-align: center;
+    font-size: 12px;
+    line-height: 16px;
+    cursor: pointer;
+  }
+  .box-close:hover {
+    top: -7px;
+    right: -7px;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    font-weight: bold;
+  }
+
+  .box--ok,
+  .box--ok .box-close {
+    border-color: #78CA52;
+    background: #F7FFED;
+    color: #4DAB01;
+  }
+  .box--error,
+  .box--error .box-close {
+    border-color: #FF9494;
+    background: #FFF0F0;
+    color: #D92A2A;
+  }
+  .box--info,
+  .box--info .box-close {
+    border-color: #81AEFF;
+    background: #E9F1FF;
+    color: #2F5DB3;
+  }
+  .box--alert,
+  .box--alert .box-close {
+    border-color: #E1D042;
+    background: #FFFFDE;
+    color: #A99B27;
+  }
+
+  /*
+  Custom box styles
+   */
+  .box--order {
+    display: none;
+    font-weight: 400;
+    margin: 0;
+    position: fixed;
+    z-index: 99999;
+    right: 20px;
+    top: 40px;
+    font-weight: bold;
+  }

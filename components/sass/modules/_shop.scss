@@ -1,0 +1,219 @@
+/****************************************************************************\
+|********************************** SHOP ************************************|
+\****************************************************************************/
+
+
+/****************************************************************************\
+|********************************** SHOP ************************************|
+\****************************************************************************/
+
+
+/*
+ * Login box
+ */
+
+.loginBox {
+  margin: 30px auto;
+  border: 1px solid #CCC;
+  background: #EEE;
+  padding: 10px;
+  border-radius: 4px;
+  max-width: 330px;
+}
+  .loginBox-header {
+    margin-top: 0;
+    text-align: center;
+  }
+  .loginBox .box {
+    margin: 6px -11px;
+    border-radius: 0;
+  }
+  .loginBox .formActions {
+    background: none;
+    padding: 10px 0 0;
+    margin: 0;
+    border-color: #CCC;
+  }
+
+
+/*
+ * Cart Steps
+ */
+
+.stepsWrapper {
+  overflow: hidden;
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  margin: 10px 0;
+  padding: 0;
+}
+  .step {
+    display: table-cell;
+    border-bottom: 2px solid #639C24;
+    color: #639C24;
+    background: none !important;
+    list-style: inside;
+    padding: 0;
+  }
+  .step--active {
+    border-color: #D8A122;
+    color: #D8A122;
+  }
+  .step--active ~ .step {
+    border-color: #EEE;
+    color: #ccc;
+  }
+    .step b {
+      font-size: 1.2em;
+      display: block;
+    }
+    .step .hint {
+      line-height: 1.1em;
+      margin: 5px 44px 5px 0;
+    }
+
+
+
+/*
+ * Shop Cart
+ */
+
+.cartWrapper {
+  position: relative;
+  margin-top: 40px;
+  border-top: 1px solid #EEE;
+}
+.cart-table {
+  display: table;
+  width: 100%;
+}
+  .cart-row {
+    display: table-row;
+  }
+  .cart-header {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    margin-bottom: 10px;
+    text-align: left;
+    color: #888;
+  }
+  .cart-row:first-child .cart-header {display: block}
+
+  .cart-cell {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: left;
+    border-bottom: 1px solid #EEE;
+    padding: 10px 0;
+  }
+
+  .cart-product {
+    width: 60%;
+  }
+    .cart-product-image {
+      width: 70px;
+      display: inline-block;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+      .cart-product-image img {
+        display: block;
+      }
+
+    .cart-product-name {
+      display: inline-block;
+      vertical-align: middle;
+      width: 70%;
+    }
+      .cart-product-name .box {
+        font-size: 12px;
+        line-height: 1.1em;
+        padding: 4px 6px;
+        margin: 0;
+      }
+
+    .cart-product-attrs {
+      margin: 0;
+      overflow: hidden;
+      font-size: 0.8em;
+      line-height: 1.3em;
+    }
+      .cart-product-attrs li {
+        background: none;
+        padding: 0;
+        display: inline-block;
+        margin-right: 20px;
+      }
+    .cart-product-delivery {
+      max-width: 90%;
+    }
+
+  .cart-price {
+    color: #888;
+  }
+  .cart-price-main {font-size: 20px;}
+
+  .cart-delete {
+    text-align: center;
+    width: 5%;
+  }
+
+  .cart-x {
+    font-size: 20px;
+  }
+@media only screen and (max-width: 769px) {
+  .cart-price-main {font-size: 16px;}
+}
+@media only screen and (max-width: 600px) {
+
+  .cart-wrapper {
+    margin-top: 0;
+  }
+  .cart-table {
+    border: 0;
+  }
+    .cart-row {
+      display: block;
+      text-align: justify;
+    }
+    .cart-row:after {
+      content: "";
+      width: 100%;
+      display: inline-block;
+    }
+
+    .cart-header {
+      position: static;
+      display: block;
+      text-align: center;
+      border: none;
+      margin: 0 0 5px;
+    }
+
+    .cart-cell {
+      display: inline-block;
+      vertical-align: top;
+      border: 0;
+    }
+
+    .cart-product {
+      width: 100%;
+      border-top: 1px solid #EEE;
+    }
+      .cart-product .cart-header {
+        display: none !important;
+      }
+
+    .cart-qty,
+    .cart-price,
+    .cart-delete {
+      width: 32%;
+      text-align: center;
+      padding-top: 10px;
+    }
+
+}
+
+/****************************************************************************/

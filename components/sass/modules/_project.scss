@@ -1,0 +1,182 @@
+/*
+Project
+ */
+
+*, *:before, *:after {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: $main-font;
+	font-size: $main-size;
+	line-height: $line-height;
+	font-weight: 300;
+	color: $color1a;
+	background: $color2a;
+		-ms-overflow-x: hidden ;
+	overflow-x: hidden ;
+}
+
+.container {
+	margin: 0 auto;
+	max-width: 100%;
+	padding: 0 20px;
+}
+
+a {
+	color: $color4;
+	font-size: 13px;
+	text-decoration: none;
+	outline: none !important;
+	@include transition;
+	&:hover {
+		color: darken($color4, 10%);
+	}
+	&:active {
+		outline: none !important;
+	}
+}
+
+.p,
+p, ul, ol {
+	// margin: .7em 0;
+	margin: 1em 0;
+	padding: 0;
+}
+
+hr {
+	height: 10px;
+	margin: 20px 0 10px;
+	background: none;
+	border: 0 solid #CCC;
+	border-top-width: 1px;
+}
+
+h1, .h1 {
+	font-size: 2em;
+	line-height: 1.0em;
+	margin: .8em 0;
+}
+h2, .h2 {
+	font-weight: normal;
+	font-size: 1.8em;
+	margin: .8em 0;
+	line-height: 1.1em;
+}
+h3, .h3 {
+	font-weight: normal;
+	font-size: 1.5em;
+	margin: .7em 0;
+	line-height: 1.2em;
+}
+h4, .h4 {
+	margin: .5em 0;
+	line-height: 1.2em;
+}
+
+h5, .h5 {
+	font-size: 1em;
+	margin: .4em 0;
+}
+img {
+	max-width: 100%;
+	height: auto;
+}
+.img-container {
+	display: block;
+	text-align: center;
+	img , a  {
+		display: inline-block;
+		vertical-align: middle;
+		padding: 2px 3px;
+	}
+}
+strong, .strong, b, .b {
+	font-weight: $fwb;
+}
+i, .italic {
+	font-style: italic;
+}
+
+.clearfix:before,
+.clearfix:after {
+	display: table;
+	content: "";
+}
+
+.clearfix:after {
+	clear: both;
+}
+.relative {position: relative;}
+.absolute {position: absolute;}
+.ninja {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	top: -1px;
+	left: -1px;
+	text-indent: 1px;
+	overflow: hidden;
+	padding: 0 !important;
+	margin: 0 !important;
+	border: 0 !important;
+}
+fieldset, .fieldset {
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+.hide {display: none}
+.no-mobile {display: block;}
+.alignLeft {
+    text-align: left;
+}
+.alignRight {
+    text-align: right;
+}
+.alignCenter {
+    text-align: center;
+}
+.pullLeft {
+    float: left;
+    // margin: 0.8em 0.8em 0.8em 0;
+}
+.pullRight {
+    float: right;
+    // margin: 0.8em 0 0.8em 0.8em;
+}
+.clb { clear: both; }
+
+.fn { float: none; }
+
+.pullRight:first-child, .pullLeft:first-child {
+    margin-top: 0;
+}
+.pullCenter {
+    display: block;
+    margin: 0.8em auto;
+}
+/*
+Grid
+ */
+
+.grid, .table {
+    display: table;
+    width: 100%;
+}
+.table-cell {
+	display: table-cell;
+}
+.grid--fixed {
+    table-layout: fixed;
+}
+.grid-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+.grid-cell--tabloid {
+    // width: 1px;
+    width: 20px;
+}

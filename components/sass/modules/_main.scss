@@ -1,0 +1,92 @@
+/*
+Main
+ */
+.main {
+  display: block;
+}
+.container-main {
+  overflow: hidden;
+}
+// .container-content {
+//   min-height: 420px;
+// }
+.leftColumn, .rightColumn {
+  float: left;
+  display: block;
+  padding-top: 30px;
+  // padding-bottom: 30px;
+  min-height: 420px;
+}
+// .leftColumn-rest, .rightColumn-reset {
+//   min-height: auto;
+// }
+.leftColumn {
+  background-color: $color3;
+  padding-right: 20px;
+}
+.rightColumn {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.rightColumn-wh {
+  background-color: $color3;
+  position: relative;
+  &:after {
+    position: absolute;
+    content: "";
+    left: 0;
+    width: 100%;
+    background: $color3;
+    height: 3000px;
+  }
+}
+.white-bg {
+  position: relative;
+  &:after {
+    content: "";
+    position: absolute;
+    display: inline-block;
+    top: 0;
+    bottom: 0;
+    right: 100%;
+    width: 1000px;
+    background: $color3;
+  }
+  &:before {
+    content: "";
+    position: absolute;
+    // display: inline-block;
+    left: 0;
+    width: 100%;
+    top: 100%;
+    // bottom: 0;
+    // right: 100%;
+    height: 3000px;
+    background: $color3;
+    // background: red;
+  }
+}
+
+.h3-title, .h4-title {
+  font-weight: 300;
+  margin: 0;
+  border-bottom: 1px solid $color8;
+}
+.h3-title  {
+  font-size: 26px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+.h4-title {
+  font-size: 18px;
+  padding-bottom: 15px;
+  // margin-bottom: 30px;
+}
+.aboutContent {
+  img {
+    float: left;
+    margin: 0 15px 15px 0;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+  }
+}

@@ -1,0 +1,50 @@
+/*
+@INfo
+ */
+.info-container {
+  margin: 15px 0 30px;
+}
+.info-box {
+  float: left;
+  width: 33%;
+  color: $color1;
+  border-left: 1px solid $color6;
+  padding-right: 5px;
+  padding-left: 65px;
+  min-height: 95px;
+  &:hover {
+    color: lighten($color1,10%);
+  }
+  &:first-child {
+    border-left: none;
+    padding-left: 60px;
+  }
+  h3 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    min-height: 4.2em;
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+}
+.delivery {
+  background: url(../images/gfx/delivery.png) no-repeat 0 0;
+  span {
+    color: $color2;
+  }
+}
+.money-back {
+  padding-left: 70px;
+  background: url(../images/gfx/money-back.png) no-repeat 10px 0;
+  span {
+    color: $color4;
+  }
+}
+.friendly-company {
+ padding-left: 70px;
+ background: url(../images/gfx/friendly-company.png) no-repeat 10px 0;
+ span {
+  color: $color5;
+ }
+}

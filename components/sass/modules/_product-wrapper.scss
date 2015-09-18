@@ -1,0 +1,265 @@
+/*
+Product-wrapper
+ */
+
+.productWrapper { padding: 0 2px; text-align: justify;
+  &:after {
+    content: ""; display: block; width: 100%;
+    margin-bottom: -1.2em;
+    } }
+.product-item {
+  display: inline-block;
+  width: 48.5%;
+  background: $color2n;
+  text-align: left;
+  // padding-top: 10px;
+  vertical-align: top;
+  // position: relative;
+  // overflow: hidden;
+  margin-bottom: 20px;
+  // border: 1px solid $color8;
+  @include transition;
+  @include boxsh-out;
+  .img-container {
+    height: 220px;
+    line-height: 220px;
+    }
+  }
+.product-item--reset {
+    border: 0 none;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0;
+}
+
+// .img-container--cat {
+//   height: 110px;
+//   line-height: 110px;
+//   // padding: 10px;
+// }
+// .product-item-content {
+//   padding: 10px 0;
+//   h4 {
+//     font-size: 14px;
+//     line-height: 18px;
+//     color: $color2;
+//     font-weight: $fwb;
+//     margin: 0;
+//   }
+//   p {
+//     font-size: 13px;
+//     line-height: 16px;
+//     margin: 0;
+//   }
+// }
+// .product-item-list {
+//   padding: 10px;
+//   background: $color4b;
+//   margin: 0 -10px;
+//   border-top: 1px solid $color8;
+//   a {
+//     display: block;
+//     background: $color2;
+//     color: $color3;
+//     font-size: 10px;
+//     text-align: center;
+//     text-transform: uppercase;
+//     font-weight: $fwb;
+//     padding: 9px 0;
+//     &:hover {
+//       background-color: $color2c;
+//     }
+//   }
+// }
+// .product-item:hover {
+//   -webkit-box-shadow: 0 3px 7px rgba(0, 0, 100, 0.2);
+//   box-shadow: 0 3px 7px rgba(0, 0, 100, 0.2);
+// }
+// .sticker {
+//   position: absolute;
+//   width: 30px;
+//   height: 77px;
+//   left:5px;
+//   top: 5px;
+//   z-index: 3;
+// }
+// .sticker + .sticker {
+//   left: 30px;
+// }
+
+// .sticker-nowosc {
+//   background: url(../images/gfx/sticker-nowosc.png) no-repeat center center;
+// }
+// .sticker-promocja {
+//  background: url(../images/gfx/sticker-promocja.png) no-repeat center center;
+// }
+
+
+// .img-container {
+//     display: block;
+//     text-align: center;
+//     img {
+//       // max-width: 90%;
+//       max-width: 100%;
+//       vertical-align: middle;
+//     }
+//   }
+//   .img-container--product {
+//     height: 200px;
+//     line-height: 200px;
+
+//   }
+  // .img, .img-hover {
+  //   // position: absolute;
+  //   // top: 0;
+  //   // left: 0;
+  //   width: 100%;
+  //   display: block;
+  // }
+  // .img {
+  //   opacity: 1;
+  //   // z-index: 2;
+  //   @include transition;
+  // }
+  // .img-hover {
+  //   z-index:1;
+  //   opacity: 0;
+  //   @include transition;
+  // }
+
+// .product-content {
+//   width: 100%;
+//   text-align: left;
+//   // padding: 5px 15px 10px;
+//   // position: absolute;
+//   // z-index:2;
+//   // bottom: -100px;
+//   @include transition;
+// }
+// .product-id {
+//   display: block;
+//   margin-top: 5px;
+//   font-size: 11px;
+//   line-height: 15px;
+//   color: $color2;
+// }
+// .product-name {
+//     font-size: 14px;
+//     font-weight: bold;
+//     text-align: center;
+//     line-height: 2.4em;
+//     min-height: 2.4em;
+//     // margin-top: 0;
+//     color: $color1;
+//     span {
+//       display: inline-block;
+//       vertical-align: middle;
+//       line-height: 1.2em;
+//     }
+//     // line-height: 15px;
+//     // width: 80%;
+//     // margin: 5px 0;
+//     // a {
+//     //   font-size: 14px;
+//     //   color: $color1;
+//     // }
+//     }
+
+// .product-price {
+//   float: left;
+// }
+// .basket-ico {
+//   display: block;
+//   float: right;
+//   width: 34px;
+//   height: 34px;
+//   background: url(../images/ico/basket-ico.png) no-repeat center center;
+// }
+
+
+// .regular-price {
+//   color: $color2;
+//   font-size: 16px;
+//    }
+
+//   .regular-price-promo {
+//   color: $color4;
+//   text-decoration: line-through;
+//   font-size: 12px;
+//   }
+
+// .promo-price {
+//    color: $color3;
+//     font-size: 17px; }
+
+// .info-ico {
+//   position: absolute;
+//   bottom: 10px;
+//   right: 20px;
+//   background: url(../images/ico/produkt/info-product.png) no-repeat center center;
+//   width: 18px;
+//   height: 18px;
+// }
+
+// .rozmiar {
+//   // width: 100%;
+//   margin-top: 15px;
+//   > strong {
+//     display: block;
+//     // float: left;
+//     color: #C4C4C4;
+//     font-size: 10px;
+//   }
+//   input[name="add-to-basket"] {
+//     display: inline-block;
+//     width: 40%;
+//     float: right;
+//     font-size: 11px;
+//     color: #FFF ;
+//     background: $color2;
+//     border: none;
+//     line-height: 29px;
+//     font-weight: bold;
+//     @include transition;
+//     &:hover {
+//       background: lighten($color2,10%);
+//     }
+//   }
+// }
+// .lista-rozmiarow {
+//   width: 60%;
+//   margin: 0;
+//   padding: 0;
+//   list-style: none;
+//   float: left;
+//   > li {
+//     float: left;
+//     margin-right: 3px;
+//     margin-bottom: 3px;
+
+//     &:last-child {
+//         margin-right: 0;
+//       }
+//     > label {
+//       line-height: 25px;
+//       font-size: 12px;
+//       min-width: 29px;
+//       display: block;
+//       position: relative;
+//       overflow: hidden;
+//       border: 2px solid $color2;
+//       text-align: center;
+//       &:hover, &.active {
+//         background-color: $color2;
+//         color: #FFF;
+//       }
+//       > input {
+//         position: absolute;
+//         height: 1px;
+//         top: -5px;
+//         opacity: 0;
+//         cursor: pointer;
+//       }
+//     }
+//   }
+// }

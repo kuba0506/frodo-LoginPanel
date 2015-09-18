@@ -1,0 +1,162 @@
+/*
+MEDIA QUERIES
+ */
+
+@media #{$large-tablet} {
+ ul.menu {
+     margin-top: 10px;
+ }
+ ul.menu li a {
+     font-size: 14px;
+     padding: 10px 0;
+ }
+ ul.menu ul.submenu li a {
+     font-size: 13px;
+     padding-left: 5px;
+ }
+.left, .right {
+    width: 100%;
+    padding: 0;
+    float: none;
+}
+ .txt h3 {
+     font-size: 16px;
+ }
+  .txt p,  .txt a {
+      font-size: 13px;
+  }
+  .txt3 > a {
+      width: 121px;
+      height: 121px;
+      line-height: 112px;
+  }
+  .txt1 > a, .txt2 > a, .txt4 > a, .txt5 > a {
+      width: 98px;
+      height: 98px;
+      line-height: 90px;
+  }
+}
+
+@media #{$tablet} {
+    .container {
+        width: 95%;
+    }
+   .no-mobile {display: none !important;}
+   .logo {
+       width: 100%;
+       margin-top: 10px;
+       text-align: center;
+   }
+   .search-schola {
+       margin-top: 0;
+   }
+   ul.menu {
+    margin: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #eee;   
+    padding: 5px 0 0 ;
+       li {
+           display: block;
+       }
+   }
+   ul.menu > li {
+       padding: 0;
+       > a {
+         -webkit-border-radius: 0;
+           border-radius: 0;  
+       }
+   }
+   ul.submenu, ul.submenu-2 {
+       position: static;
+       // background-color: $white; 
+       width: 100%;
+       background-color: $blueTxt; 
+   }
+   ul.menu ul.submenu > li > a {
+       padding-left: 15px;
+       color: $blueTxt; 
+   }
+   ul.menu ul.submenu li:hover > a 
+   {
+       color: $white; 
+   }
+   .submenu-2 li > a {
+       padding-left: 30px;
+   }
+
+   @import 'mobile-menu';
+   .infografika {
+       @include clearfix;
+       padding-top: 20px;
+       background: url('../images/gfx/infografika2.png') no-repeat center;
+       -webkit-background-size: cover;
+       -o-background-size: cover;
+       background-size: cover;
+       img {
+        display: none;
+       } 
+   }
+   .txt {
+       position: static;
+       float: left;
+   }
+   .txt1, .txt2, .txt3, .txt4, .txt5 {
+       padding-top: 0;
+   }
+   .txt1, .txt2, .txt4, .txt5  {
+       width: 50%;
+   }
+   .txt3 {
+       width: 100%;
+   }
+   .txt1 > a, .txt2 > a, .txt4 > a, .txt5 > a {
+       width: 96px;
+       height: 96px;
+       line-height: 88px;
+   }
+
+   .txt3 > a {
+       width: 123px;
+       height: 123px;
+       line-height: 115px;
+   }
+   .infografika-footer {
+    margin-top: 20px;
+       float: left;
+       width: 100%;
+   }
+   .infografika-footer p {
+       font-size: 14px;
+       padding: 5px;
+   }
+   .right {
+       margin-top: 15px;
+       h2 {
+           font-size: 18px;
+       }
+   }
+   .footer-copy a {
+       padding-top: 20px;
+   }
+   .subpage-right {
+       width: 100%;
+   }
+   .right-title {
+       font-size: 18px;
+   }
+   // .txt2 {
+   //     margin-left: 11%;
+   // }
+   // .txt4 {
+   //     margin-left: -11%;
+   // }
+   //  .txt5 {
+   //      margin-left: -6%;
+   //  }
+}
+
+@media #{$phone} {
+
+}

@@ -1,0 +1,458 @@
+/*
+Tab-panels
+ */
+// %panel-border {
+// 	border-top: 1px solid $color3;
+// 	border-bottom: 1px solid $color3;
+// }
+.tab-panels {
+	width: 100%;
+	margin: {
+		top:15px;
+		bottom:25px;
+	}
+}
+	ul.tabs {
+		margin: 0;
+		padding: 0;
+		// display: table;
+		width: 100%;
+		list-style: none;
+		text-align: center;
+		 li {
+			float: left;
+			width: 50%;
+			background-color: #eee;
+			// &:first-child {
+			// 	a {
+			// 		border-left: none;
+			// 	}
+			// }
+			&:hover a {
+				background-color: #FFF;
+			}
+			&.active {
+					background-color: #fff;
+					// background-color: red;
+					color: $color2a;
+
+			}
+			 a {
+				display: block;
+				position: relative;
+				font-size: 14px;
+				font-weight: bold;
+				line-height: 1.2;
+				text-transform: uppercase;
+				color: #050505;
+				// padding: 0 15px 10px;
+				padding: 16px;
+				@include transition();
+				// border-left: 1px solid $color2a;
+
+				// &:hover, &:active {
+				// 	color: $color2a;
+				// 	font-weight: $fwb;
+				// }
+				img {
+					display: inline-block;
+					-webkit-border-radius: 50%;
+					margin-bottom: 10px;
+					border-radius: 50%;
+				}
+			}
+		}
+	}
+// 	.tab-title {
+// 		margin: 0;
+// 		text-align: left;
+// 		line-height: 1em;
+// 		min-height: 2em;
+// 		// overflow: hidden;
+// 		span {
+// 			position: absolute;
+// 			display: inline-block;
+// 			width: 100%;
+// 			word-wrap: break-word;
+// 			white-space: pre-wrap;
+// 			white-space: -moz-pre-wrap;
+// 			bottom: 0;
+// 			font-size: 14px;
+// 			font-weight: $fwb;
+// 		}
+// 	}
+// 	.logos li {
+// 		float: none;
+// 		border-left: 1px solid #e8e8e8;
+// 		// display: inline-block;
+// 		// margin-left: -4px;
+// 	}
+// 	.logos li a {
+// 		padding: 10px 15px;
+// 		// height: 54px;
+// 		border-left: none;
+// 	}
+// 	.logos-cell {
+// 		vertical-align: middle;
+// 	}
+// 	.logos li a img {
+// 		-webkit-border-radius: 0;
+// 		border-radius: 0;
+// 	    margin-bottom: 0;
+// 	}
+
+// .tabs li.active .triangle2:before, .tabs li.active .triangle2:after {
+//       content: "";
+//       position: absolute;
+//       width: 0;
+//       height: 0;
+//       border-style: solid;
+//       border-color: transparent;
+//       border-top: 0;
+//       }
+
+//     .tabs li.active .triangle2:before {
+//       bottom: -9px;
+//       left: 50%;
+//       margin-left: -7px;
+//       border-bottom-color: $color8;
+//       border-width: 14px;
+//       }
+//     .tabs li.active .triangle2:after {
+//       bottom: -9px;
+//       left: 50%;
+//       margin-left: -5px;
+//       border-bottom-color: $color4b;
+//       border-width: 12px;
+//       }
+
+	.panel {
+			display: none;
+			padding: 10px;
+			// border: 1px solid $color2a;
+			@include boxsh-out;
+			// margin-top: 8px;
+
+			// height: auto;
+			// max-height: 0;
+			// margin: 0;
+			// overflow: hidden;
+
+			// border: 1px solid $color8;
+			background-color: #fff;
+			// padding: 10px 0;
+			@include transition;
+			// p {
+			// 	font-weight: $fwb;
+			// 	font-size: 15px;
+			// 	margin: 3px 0 10px;
+			// 	padding: 0 15px;
+			// 	i {
+			// 		font-weight: 300;
+			// 	}
+			// }
+
+		&.active {
+			display: block;
+		}
+		}
+
+
+.panel table {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+.panel table td, .panel table th {
+	border: 1px solid #e3e3e3;
+	width: 50%;
+	color: $color1a;
+	padding: 5px 10px;
+}
+.panel table td.td--text {
+	color: $color4;
+}
+.panel table td.td--akcesoria {
+	color: $color5;
+}
+.panel .button {
+	float: none;
+}
+
+
+
+
+// .productWrapper { padding: 0 2px; text-align: justify;
+// 	&:after {
+// 		content: ""; display: inline-block; width: 80%;
+// 		} }
+// .product-item { display: inline-block; width: 23.5%; border: 1px solid #e6e6e6;
+// 	text-align: center;
+// 	vertical-align: top;
+// 	position: relative;
+// 	overflow: hidden;
+// 	height: 360px;
+
+// 	&:hover {
+// 		.product-content {
+// 			bottom: 0;
+// 			background-color: $color1;
+// 			opacity: 0.9;
+// 		}
+// 		.product-name {
+// 			color: #FFF ;
+// 		}
+// 		.lista-rozmiarow li > label {
+// 			color: #FFF ;
+// 		}
+// 		.img {
+// 			opacity: 0;
+// 		}
+// 		.img-hover {opacity: 1;}
+// 	}
+//     img {
+//     	display: inline-block;
+// 	    min-height:260px;
+//     }
+// 	  }
+// .sticker {
+// 	position: absolute;
+// 	font-size: 10px;
+// 	left:5px;
+// 	top: 5px;
+// 	z-index: 3;
+// 	padding: 0 5px;
+// 	background: $color3;
+// }
+// .sticker + .sticker {
+// 	left: 44px;
+// }
+
+// .img-container {
+// 		display: block;
+// 		position: relative;
+// 		min-height: 260px;
+// 		text-align: center;
+// 	}
+// 	.img, .img-hover {
+// 		position: absolute;
+// 		top: 0;
+// 		left: 0;
+// 		width: 100%;
+// 		display: block;
+// 	}
+// 	.img {
+// 		opacity: 1;
+// 		z-index: 2;
+// 		@include transition;
+// 	}
+// 	.img-hover {
+// 		z-index:1;
+// 		opacity: 0;
+// 		@include transition;
+// 	}
+
+// .product-content {
+// 	width: 100%;
+// 	text-align: left;
+// 	padding: 5px 15px 10px;
+// 	position: absolute;
+// 	z-index:2;
+// 	bottom: -100px;
+// 	@include transition;
+// }
+// .product-name {
+//     font-size: 16px;
+//     color: $color1;
+//     // width: 80%;
+//     min-height: 2.4em;
+//     margin: 5px 0;
+//     }
+
+// .regular-price {
+//   color: $color2;
+//   font-size: 16px;
+//    }
+
+//   .regular-price-promo {
+//   color: #ce0909;
+//   text-decoration: line-through;
+//   font-size: 10px;}
+
+// .promo-price {
+//    color: $color2;
+//   	font-size: 16px; }
+// .rozmiar {
+// 	// width: 100%;
+// 	margin-top: 15px;
+// 	> strong {
+// 		display: block;
+// 		// float: left;
+// 		color: #C4C4C4;
+// 		font-size: 10px;
+// 	}
+// 	input[name="add-to-basket"] {
+// 		display: inline-block;
+// 		width: 40%;
+// 		float: right;
+// 		font-size: 11px;
+// 		color: #FFF ;
+// 		background: $color2;
+// 		border: none;
+// 		line-height: 29px;
+// 		font-weight: bold;
+// 		@include transition;
+// 		&:hover {
+// 			background: lighten($color2,10%);
+// 		}
+// 	}
+// }
+// .lista-rozmiarow {
+// 	width: 60%;
+// 	margin: 0;
+// 	padding: 0;
+// 	list-style: none;
+// 	float: left;
+// 	> li {
+// 		float: left;
+// 		margin-right: 3px;
+// 		margin-bottom: 3px;
+
+// 		&:last-child {
+// 				margin-right: 0;
+// 			}
+// 		> label {
+// 			line-height: 25px;
+// 			font-size: 12px;
+// 			min-width: 29px;
+// 			display: block;
+// 			position: relative;
+// 			overflow: hidden;
+// 			border: 2px solid $color2;
+// 			text-align: center;
+// 			&:hover, &.active {
+// 				background-color: $color2;
+// 				color: #FFF;
+// 			}
+// 			> input {
+// 				position: absolute;
+// 				height: 1px;
+// 				top: -5px;
+// 				opacity: 0;
+// 				cursor: pointer;
+// 			}
+// 		}
+// 	}
+// }
+
+// /*@Tabs panel produkt**/
+// .tab-panels-product {
+// 	margin: {
+// 		top: 5px;
+// 		bottom: 0;
+// 	}
+// }
+// // .tab-panels- {
+// // 	.li-product {
+// // 		width: 20%;
+// // 	}
+// // }
+// ul.tab-product {
+// 	> li {
+// 		width: 20%;
+// 	}
+// }
+// .product-desc {
+// 	// @extend %panel-border;
+// 	background: #FFF ;
+// 	@include border-radius;
+// 	// @include box-shadow2;
+// 	box-shadow: -1px -2px -5px 0px rgba(50, 50, 50, 0.1);
+
+// 	ul {
+// 		margin: 0;
+// 		padding: 20px;
+// 		list-style-type: none;
+// 		li {
+// 			line-height: 20px;
+// 			background: url(../images/ico/list-dot.png) no-repeat left center;
+// 			padding-left: 15px;
+// 		}
+// 	}
+// }
+// .tabela2 {
+// 	display: block;
+// 	opacity: 1;
+// 	height: auto;
+// 	overflow: hidden;
+// 	padding: 20px 0;
+// 	@extend %panel-border;
+// 	@include transition(all, .5s, ease);
+// }
+// .see-also {
+// 	> h3 {
+// 		font-size: 16px;
+// 		margin: 0;
+// 		margin-bottom: 20px;
+// 		padding: 15px 0;
+// 		border-bottom: 1px solid $color3;
+// 	}
+// }
+// /*@Zwrot*/
+// .form-zwrot {
+// 	padding: 20px 0 20px 25%;
+// 	// padding-left: 25%;
+//  //  padding-top: 20px;
+//  //  padding-bottom: 20px;
+//   @extend %panel-border;
+// }
+// .label {
+//     clear: both;
+//     display: block;
+//     padding: 3px 0 3px 120px;
+// }
+// .label-name {
+//     float: left;
+//     font-size: 13px;
+//     margin-left: -120px;
+//     padding-right: 5px;
+//     padding-top: 5px;
+//     text-align: right;
+//     width: 110px;
+// }
+// .input--zwrot {
+//   padding: 8px 15px;
+// }
+// .input--short {
+//     text-align: center;
+//     width: 70px;
+// }
+// .hint {
+//     font-size: 12px;
+// }
+
+// /**@Wysyłka*/
+// .wysylka-tab {
+// 	padding: 20px 0;
+// 	@extend %panel-border;
+// }
+// .wysylka-wrapper {
+// 	display: table;
+// 	width: 100%;
+// 	text-align: center;
+// }
+// .poczta--tab, .paczkomaty--tab, .kurier--tab {
+// 	display: table-cell;
+// 	font-size: 14px !important;
+// 	line-height: 22px;
+// 	// float: left;
+// 	width: 33%;
+// 	// display: inline-block;
+// 	// margin-right: 2%;
+// 	> .na-konto {
+// 		font-size: 16px;
+// 	}
+// 	> .odbior {
+// 		font-size: 16px;
+// 	}
+// }

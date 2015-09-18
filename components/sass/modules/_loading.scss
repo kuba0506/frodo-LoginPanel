@@ -1,0 +1,28 @@
+/*
+ * Loading
+ */
+
+.loading {
+  background: url(../images/gfx/loading.png) center center no-repeat;
+}
+  .loading--full {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #FFF;
+    opacity: .8;
+    filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+  }
+  .loading-text {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 50%;
+  }
+.loader {
+  background: url("../images/gfx/ajax-loader.gif") no-repeat scroll 95% center;
+  display: block;
+  width: 90%;
+}
