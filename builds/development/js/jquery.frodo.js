@@ -1,7 +1,11 @@
 ;(function ($) {
   "use strict";
 
-  var defaults = {};
+  //Default plugin settings
+  var defaults = {
+    lang: 'en',
+    bgColor: null
+  };
 
   //Constructor
   function Frodo(element, options) {
