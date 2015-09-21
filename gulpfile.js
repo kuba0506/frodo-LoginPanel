@@ -8,12 +8,13 @@ var gulp = require('gulp'),
 	changed = require('gulp-changed'),
 	include  = require('gulp-include'),
 	imagemin  = require('gulp-imagemin'),
-	// uglify  = require('gulp-uglify'),
 	connect  = require('gulp-connect'), //tworzy serwer
+	browserSync  = require('browser-sync').create(), //tworzy serwer
 	plumber  = require('gulp-plumber'), 
 	rename  = require('gulp-rename'), 
-	// sass  = require('gulp-sass'), 
 	minify = require('gulp-uglify');
+	// uglify  = require('gulp-uglify'),
+	// sass  = require('gulp-sass'), 
 	// watch = require('gulp-watch');
 
 /**
@@ -71,12 +72,25 @@ gulp.task('sass', function () {
 	.pipe(connect.reload())
 });
 
-//Serwer - connect
+//Serwer - LiveReload
+// gulp.task('connect', function () {
+// 	connect.server({
+// 		root: 'builds/development/',
+// 		livereload: true
+// 	});
+// });
+//Serwer - BrowserSync
 gulp.task('connect', function () {
-	connect.server({
-		root: 'builds/development/',
-		livereload: true
+	browserSync.init({
+		server: {
+			baseDir: './builds/development/'
+		}
 	});
+
+	// gulp.watch('components/sass/**/*.scss', ['sass']);
+	gulp.watch('builds/development/css/**/*').on('change', browserSync.reload);
+	gulp.watch('builds/development/js/**/*').on('change', browserSync.reload);
+	gulp.watch('builds/development/*.html').on('change', browserSync.reload);
 });
 
 //Html

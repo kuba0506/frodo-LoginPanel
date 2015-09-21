@@ -14,3 +14,5 @@
 
   $.fn.frodo = function () {};
 })(jQuery);
+
+///=include jquery.frodo.js
