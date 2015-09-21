@@ -11,201 +11,7 @@
   <link rel="stylesheet" href="css/libs.css">
   <link rel="stylesheet" href="css/styles.css">
   <style>
-    body {
-  font-family: "proxima-nova",sans-serif;
-  font-size: 16px;
-}
-body a {
-  color: inherit;
-  text-decoration: none;
-}
 
-* {
-  outline: 0;
-  border: 0;
-  margin: 0;
-}
-.wrapper {
-  max-width: 1100px;
-  margin: 40px auto;
-}
-.left {
-  float: left;
-}
-
-.right {
-  float: right;
-}
-
-header:after, .login-form:after, footer:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.ui-panel {
-  margin: 0 auto;
-  margin-top: 120px;
-  margin-top: 15px;
-  padding: 10px 0;
-  max-width: 360px;
-  max-width: 300px;
-  height: auto;
-  /*background-color: black;*/
-  /*background-color: #2D2E82;*/
-  /*background-color: #f7f7f7;*/
-  /*background-color: #A1A2C8;*/
-  background-color: #FFD716;
-  /*color: white;*/
-  color: #0088e3;
-          box-shadow: 0 0 10px 0 rgba(164, 164, 164, 0.9),
-                  -15px 0 15px -20px rgba(164, 164, 164, 0.9), 15px 0 15px -20px rgba(164, 164, 164, 0.9);
-  position: absolute;
-  z-index: 9999;
-  margin-top: -130px;
-  /*margin-left: -150px;*/
-  margin-left: -180px;
-  top: 50%;
-  left: 50%;
-}
-
-header {
-  height: 40px;
-  /*border-bottom: 1px solid  #161616;*/
-  border-bottom: 1px solid  rgba(164, 164, 164, 0.5);
-  line-height: 40px;
-  /*padding: 0 28px;*/
-  padding: 0 18px;
-  font-size: 0.8em;
-  font-weight: 600;
-  letter-spacing: 0.3em;
-}
-header .logo {
-  text-transform: uppercase;
-}
-header span {
-  /*color: #ffdd00;*/
-  color: #000;
-}
-.close {
-  color: rgb(122,122,122);
-  font-size: 1em;
-  opacity: 0.7;
-  -webkit-transition: all .3s linear;
-     -moz-transition: all .3s linear;
-      -ms-transition: all .3s linear;
-       -o-transition: all .3s linear;
-          transition: all .3s linear;
-}
-.close:hover {
-  opacity: 1;
-}
-
-
-.login-form {
-  padding: 18px 28px 0 28px;
-}
-.login-form .subtitle {
-  font-size: 0.92em;
-}
-.login-form input {
-  font-size: 1.05em;
-  font-weight: 300;
-  margin-top: 18px;
-  padding: 10px 8px;
-  width: 288px;
-}
-
-footer {
-  padding: 26px 28px 22px 28px;
-  font-size: 0.82em;
-}
-footer .social-login i:first-child {
-  margin-left: 4px;
-}
-footer .form-actions a {
-  padding: 4px 8px;
-}
-footer .register {
-  background-color: #ffdd00;
-  color: black;
-  border-radius: 2px;
-}
-
-body {
-  width: 100%;
-  height: 100%;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  background-color: #efefef;
-}
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  /*width: 100%;*/
-  /*height: 100%;*/
-  z-index: -1;
-  opacity: 0;
-  -webkit-transition: all .3s linear;
-     -moz-transition: all .3s linear;
-      -ms-transition: all .3s linear;
-       -o-transition: all .3s linear;
-          transition: all .3s linear;
-  background-color: rgba(0, 0, 0, 0.88);
-}
-.overlay-visibility {
-  opacity: 1;
-  z-index: 1;
-}
-.hide-panel {
-  display: none !important;
-}
-.log-in {
-  color: #333;
-  text-transform: uppercase;
-}
-/* Helpers */
-.mt20 {
-  margin-top: 20px;
-}
-
-.no-scroll {
-  position: fixed;
-  overflow: hidden;
-}
-
-.main {
-  /*padding: 26px 28px 22px;*/
-  padding: 16px 18px 12px;
-}
-.provider {
-  float: left;
-  /*width: 50%;*/
-  width: 50%;
-  /*padding: 5px;*/
-  text-align: center;
-}
-
-*, *:before, *:after {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-
-.clearfix:after {
-  clear: both;
-}
 
 
   </style>
@@ -225,8 +31,10 @@ body {
 
 <a href="#" class="log-in">Log In</a>
   <!-- <div class="ui-panel login-panel animated bounceInDown hide-panel"> -->
-  <div class="ui-panel login-panel animated hide-panel">
-    <header>
+
+
+  <div id="frodo" class="frodo-panel login-panel animated hide-panel">
+    <div class="frodo-header">
       <div class="left logo">
         <span>Connect </span>with
       </div>
@@ -236,8 +44,9 @@ body {
           x
         </a>
       </div>
-    </header>
-    <main class="main clearfix">
+    </div>
+
+    <div class="frodo-body">
       <div class="provider">
         <a class="btn azm-social azm-btn azm-facebook" href="#"><i class="fa fa-facebook"></i> Facebook</a>
       </div>
@@ -256,17 +65,8 @@ body {
       <div class="provider">
         <a class="btn azm-social azm-btn azm-skype" href="#"><i class="fa fa-skype"></i> Skype</a>
       </div>
-      <p>
-                      
-                      
-                      
-                    </p>
-    </main>
-  <!--   <div class="login-form">
-      <div class="subtitle">Login or register</div>
-      <input type="text" placeholder="Username" />
-      <input type="text" placeholder="Password" />
-    </div> -->
+    
+    </div>
     
  <!--    <footer>
       
@@ -331,7 +131,7 @@ $(document).ready(function(){
     //   $(this).addClass('hide-panel').dequeue();
     // });
 
-    $('.ui-panel').removeClass('bounceInDown').addClass('hide-panel');
+    $('.frodo-panel').removeClass('bounceInDown').addClass('hide-panel');
     
   });
 });
