@@ -10,6 +10,7 @@ var gulp = require('gulp'),
 	imagemin  = require('gulp-imagemin'),
 	connect  = require('gulp-connect'), //tworzy serwer
 	browserSync  = require('browser-sync').create(), //tworzy serwer
+	reload = browserSync.reload,
 	plumber  = require('gulp-plumber'), 
 	rename  = require('gulp-rename'), 
 	minify = require('gulp-uglify');
@@ -49,7 +50,7 @@ gulp.task('js',function () {
 	// .pipe(browserify())
 	.pipe(rename('jquery.frodo.js'))
 	.pipe(gulp.dest('builds/development/js'))
-	.pipe(connect.reload())
+	// .pipe(connect.reload())
 	// .pipe(watch())
 });
 
@@ -69,7 +70,7 @@ gulp.task('sass', function () {
 	// .pipe(sass(
 	// 	{ outputStyle: 'compact' }))
 	.pipe(gulp.dest(cssSources))
-	.pipe(connect.reload())
+	// .pipe(connect.reload())
 });
 
 //Serwer - LiveReload
@@ -83,21 +84,24 @@ gulp.task('sass', function () {
 gulp.task('connect', function () {
 	browserSync.init({
 		server: {
-			baseDir: './builds/development/'
-		}
+			baseDir: 'builds/development/'
+		},
+		logLevel: "debug",
+		logConnections: true,
+		browser: ["google-chrome", "firefox"]
 	});
 
 	// gulp.watch('components/sass/**/*.scss', ['sass']);
-	gulp.watch('builds/development/css/**/*').on('change', browserSync.reload);
-	gulp.watch('builds/development/js/**/*').on('change', browserSync.reload);
-	gulp.watch('builds/development/*.html').on('change', browserSync.reload);
+	gulp.watch('builds/development/css/**/*').on('change', reload);
+	gulp.watch('builds/development/js/**/*').on('change', reload);
+	gulp.watch('builds/development/*.html').on('change', reload);
 });
 
 //Html
 gulp.task('html', function () {
 	gulp.src(htmlSources)
 	// .pipe(watch(htmlSources))
-	.pipe(connect.reload());
+	// .pipe(connect.reload());
 });
 
 //Zdjęcia
