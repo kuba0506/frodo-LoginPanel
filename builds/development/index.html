@@ -85,7 +85,31 @@
             };
 
             //EVENT HANDLERS
-            
+            // Ajax - jsonp
+            $('.btn').on('click', function () { 
+                var url = 'http://www.eniro.se.test.eniro.net/webmaster-content/wmc-js/jsonp.js',
+                    url2 = 'http://www.eniro.se.test.eniro.net/webmaster-content/wmc-js/test.json';
+
+                $.ajax({
+                    type: 'GET',
+                    url: url2,
+                    dataType: 'jsonp',
+                    callback: 'callback',
+                    // jsonp: 'callback',
+                    // jsonpCallback: 'myCallback',
+                    success: function (response) {
+                        console.log(response.title);
+                    }
+                });
+            });
+
+            function myCallback() {
+                console.log('ok');
+            } 
+
+
+
+
             //Open login panel
             $('[data-login]').on('click', function(e) {
 
@@ -121,7 +145,6 @@
             });
         });
     </script>
-
-   
+    <!--<script src="http://www.eniro.se.test.eniro.net/webmaster-content/wmc-js/jsonp.js"></script>-->
 </body>
 </html>
