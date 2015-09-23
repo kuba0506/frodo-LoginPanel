@@ -4,7 +4,7 @@
 
 /*
 FRODO */
-.frodo { padding: 10px 20px 20px; max-width: 360px; height: auto; background-color: #FFD716; color: #0088e3; box-shadow: 0 0 10px 0 rgba(164, 164, 164, 0.9), -15px 0 15px -20px rgba(164, 164, 164, 0.9), 15px 0 15px -20px rgba(164, 164, 164, 0.9); position: fixed; top: 50%; left: 50%; z-index: -1; margin-top: -130px; margin-left: -180px; opacity: 0; }
+.frodo { padding: 10px 10px 20px; max-width: 360px; height: auto; background-color: #FFD716; color: #0088e3; box-shadow: 0 0 10px 0 rgba(164, 164, 164, 0.9), -15px 0 15px -20px rgba(164, 164, 164, 0.9), 15px 0 15px -20px rgba(164, 164, 164, 0.9); position: fixed; top: 50%; left: 50%; z-index: -1; margin-top: -130px; margin-left: -180px; opacity: 0; }
 .frodo a { text-decoration: none; }
 
 .frodo-body:after, .frodo-body:before { display: table; content: ""; }
@@ -15,11 +15,11 @@ FRODO */
 .frodo-text { float: left; text-transform: uppercase; }
 .frodo-text span { color: #000; }
 
-.frodo-close { float: right; }
-.frodo-close a { color: #282828; font-size: 1.3em; opacity: 0.55; display: inline-block; width: 40px; height: 40px; text-align: right; -webkit-transition: all .3s linear; transition: all .3s linear; }
-.frodo-close:hover { opacity: 1; }
+.frodo-close { float: right; width: 40px; height: 40px; margin-right: -20px; text-align: center; }
+.frodo-close a { color: #505050; font-size: 1.3em; opacity: 0.55; display: inline-block; vertical-align: middle; height: 20px; line-height: 20px; letter-spacing: 0; -webkit-transform: scale(1); -ms-transform: scale(1); transform: scale(1); -webkit-transition: all .3s linear; transition: all .3s linear; }
+.frodo-close a:hover { -webkit-transform: scale(1.2); -ms-transform: scale(1.2); transform: scale(1.2); color: #333; opacity: 1; }
 
-.frodo-overlay { position: fixed; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%; z-index: -2; opacity: 0; background-color: rgba(0, 0, 0, 0.88); }
+.frodo-overlay { position: fixed; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%; z-index: -2; opacity: 0; background-color: rgba(0, 0, 0, 0.9); }
 
 /** Helpers */
 .frodo-visible { opacity: 1; }
