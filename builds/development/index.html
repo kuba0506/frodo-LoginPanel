@@ -42,7 +42,7 @@
                     <a href="#">x</a>
                 </div>
             </div>
-            
+            <span id="message"></span>
             <div class="frodo-body">
                 <div class="provider">
                     <a class="btn azm-social azm-btn azm-facebook" href="#"><i class="fa fa-facebook"></i> Facebook</a>
@@ -84,28 +84,48 @@
                 'bodyReset': 'frodo-reset'
             };
 
+            function getRandomInt(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
             //EVENT HANDLERS
             // Ajax - jsonp
             $('.btn').on('click', function () { 
-                var url = 'http://www.eniro.se.test.eniro.net/webmaster-content/wmc-js/jsonp.js',
-                    url2 = 'http://www.eniro.se.test.eniro.net/webmaster-content/wmc-js/test.json';
+                // var url = 'http://www.eniro.se.test.eniro.net/webmaster-content/wmc-js/jsonp.js',
+                var url = 'http://jurczynski.czest.pl/registerFailed.json?callback=myCallback',
+                    url2 = 'http://jurczynski.czest.pl/registerSuccess.json?callback=myCallback',
+                    address = [url, url2], index;
+
+                index = getRandomInt(0, address.length-1);
+
+                console.log(address[index]);
 
                 $.ajax({
                     type: 'GET',
-                    url: url2,
+                    url: address[index],
                     dataType: 'jsonp',
-                    callback: 'callback',
-                    // jsonp: 'callback',
-                    // jsonpCallback: 'myCallback',
+                    jsonpCallback: 'myCallback',
                     success: function (response) {
-                        console.log(response.title);
+                        // var span = $('<span/>', {'id':'message'});
+                        // if (response.fail) {
+                        //     if (span) {
+                        //         span.empty();
+                        //     }
+                        //         span.text(response.message).fadeIn();
+                        //     }
+                        // else {
+                        //     span.fadeOut().remove();
+                        // }
+                        var message = $('#message');
+                        if (response.fail) {
+                            message.empty();
+                            message.text(response.message);
+                        } else {
+                            message.empty();
+                        }
                     }
                 });
             });
-
-            function myCallback() {
-                console.log('ok');
-            } 
 
 
 
