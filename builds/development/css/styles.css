@@ -4,7 +4,7 @@
 
 /*
 FRODO */
-.frodo { background-color: #FFD716; color: #0088e3; box-shadow: 0 0 10px 0 rgba(164, 164, 164, 0.9), -15px 0 15px -20px rgba(164, 164, 164, 0.9), 15px 0 15px -20px rgba(164, 164, 164, 0.9); position: fixed; top: 10%; left: 50%; z-index: -1; z-index: 11; margin-left: -180px; opacity: 1; }
+.frodo { background-color: #FFD716; color: #0088e3; box-shadow: 0 0 10px 0 rgba(164, 164, 164, 0.9), -15px 0 15px -20px rgba(164, 164, 164, 0.9), 15px 0 15px -20px rgba(164, 164, 164, 0.9); position: fixed; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%); z-index: -1; z-index: 11; opacity: 1; }
 .frodo a { text-decoration: none; }
 
 .frodo-social:after, .frodo-social:before { display: table; content: ""; }
