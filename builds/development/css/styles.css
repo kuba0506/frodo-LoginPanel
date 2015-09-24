@@ -4,11 +4,11 @@
 
 /*
 FRODO */
-.frodo { padding: 0 10px 10px; max-width: 360px; height: auto; background-color: #FFD716; color: #0088e3; box-shadow: 0 0 10px 0 rgba(164, 164, 164, 0.9), -15px 0 15px -20px rgba(164, 164, 164, 0.9), 15px 0 15px -20px rgba(164, 164, 164, 0.9); position: fixed; top: 50%; left: 50%; z-index: -1; margin-top: -130px; margin-left: -180px; opacity: 0; }
+.frodo { background-color: #FFD716; color: #0088e3; box-shadow: 0 0 10px 0 rgba(164, 164, 164, 0.9), -15px 0 15px -20px rgba(164, 164, 164, 0.9), 15px 0 15px -20px rgba(164, 164, 164, 0.9); position: fixed; top: 10%; left: 50%; z-index: -1; z-index: 11; margin-left: -180px; opacity: 1; }
 .frodo a { text-decoration: none; }
 
-.frodo-body:after, .frodo-body:before { display: table; content: ""; }
-.frodo-body:after { clear: both; }
+.frodo-social:after, .frodo-social:before { display: table; content: ""; }
+.frodo-social:after { clear: both; }
 
 .frodo-header { height: 40px; border-bottom: 1px solid rgba(164, 164, 164, 0.5); line-height: 40px; padding: 0 18px; font-size: 0.8em; font-weight: 600; letter-spacing: 0.3em; }
 
@@ -19,7 +19,7 @@ FRODO */
 .frodo-close a { color: #505050; font-size: 1.3em; opacity: 0.55; display: inline-block; vertical-align: middle; height: 20px; line-height: 20px; letter-spacing: 0; -webkit-transform: scale(1); -ms-transform: scale(1); transform: scale(1); -webkit-transition: all .3s linear; transition: all .3s linear; }
 .frodo-close a:hover { -webkit-transform: scale(1.2); -ms-transform: scale(1.2); transform: scale(1.2); color: #333; opacity: 1; }
 
-.frodo-overlay { position: fixed; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%; z-index: -2; opacity: 0; background-color: rgba(0, 0, 0, 0.9); }
+.frodo-overlay { position: fixed; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%; z-index: -2; opacity: 1; background-color: rgba(0, 0, 0, 0.7); }
 
 /** Helpers */
 .frodo-visible { opacity: 1; }
@@ -28,7 +28,7 @@ FRODO */
 
 .frodo.frodo-visible { z-index: 9999; }
 
-/* Helpers┬á*/
+/* Helpers */
 .frodo-no-scroll { position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; overflow-x: hidden; }
 
 .frodo-reset { margin: 0; -ms-overflow-y: hidden; overflow-y: hidden; }
@@ -49,4 +49,33 @@ body { font-family: "proxima-nova",sans-serif; font-family: Arial, Helvetica, sa
 
 .mt20 { margin-top: 20px; }
 
-.log-in { color: #333; text-transform: uppercase; }
+/** New design */
+.frodo-form { max-width: 400px; display: block; background-color: #f7f7f7; background-color: #FFD716; box-shadow: 0 0 3px 3px #888; border-radius: 2px; }
+
+.main { padding: 38px 38px; }
+
+.frodo-social-box { margin: 0 auto; padding: 28px; border-bottom: 1px #ccc solid; }
+
+.frodo-social-box a { font-weight: bold; font-size: 18px; padding: 8px; }
+
+.frodo-social-box a i { font-weight: bold; font-size: 20px; }
+
+.frodo-heading { font-size: 20px; margin-top: 0; font-weight: bold; padding: 38px 38px 0px 38px; padding: 10px 38px 0px 38px; }
+
+.frodo-form .form-signin-heading, .frodo-form .checkbox { margin-bottom: 10px; }
+
+.frodo-form .checkbox { font-weight: normal; }
+
+.frodo-form .form-control { position: relative; font-size: 16px; height: 20px; padding: 20px; box-sizing: border-box; }
+
+.frodo-form .form-control:focus { z-index: 2; }
+
+.frodo-form input[type="text"] { margin-bottom: 10px; border-radius: 5px; }
+
+.frodo-form input[type="password"] { margin-bottom: 10px; border-radius: 5px; }
+
+.frodo-login { margin: 0 auto; border-bottom: 1px solid #dadada; padding: 0 20px 10px; }
+
+.frodo-login .left-section a { color: #8a8a8a; display: block; line-height: 19px; font-size: 12px; }
+
+.mg-btm { margin-bottom: 20px; }

@@ -13,6 +13,7 @@
         <link href="http://s3-us-west-2.amazonaws.com/s.cdpn.io/67239/animate.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="css/styles.css">
         <script src="js/modernizr.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
     </head>
 <body>
@@ -33,7 +34,80 @@
     
         <!-- Frodo LoginPanel -->
         <div id="frodo" class="frodo login-panel animated">
-            <div class="frodo-header">
+
+            <form class="frodo-form">
+            <h3 class="frodo-heading">
+            <button aria-hidden="true" class="close pull-right" type="button">×</button>
+            Log in</h3>
+
+<!--             <div class="main">  
+
+            <input type="text" autofocus="" placeholder="Email" class="form-control">
+            <input type="password" placeholder="Password" class="form-control">
+
+            <span class="clearfix"></span>  
+            </div> -->
+            <div class="frodo-login">
+      <!--       <div class="row">
+                <div class="col-xs-12 col-md-12"> -->
+                    <input type="text" autofocus="" placeholder="Email" class="form-control">
+                    <input type="password" placeholder="Password" class="form-control">                    
+   <!--              </div>
+            </div> -->
+            <div class="row">
+                <div class="col-xs-6 col-md-6">
+                    <div class="left-section">
+                        <a href="">Forgot your password?</a>
+                        <a href="">Sign up now</a>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-6 pull-right">
+                    <button class="btn btn-large btn-danger pull-right" type="submit">Login</button>
+                </div>
+            </div>
+
+            </div><div class="frodo-social-box">
+            <div class="row mg-btm">
+            <div class="col-md-6">
+            <a href="#" class="btn btn-primary btn-block">
+            <i class="icon-facebook"></i> &nbsp;&nbsp;&nbsp;Login with Facebook
+            </a>
+            </div><div class="col-md-6">
+            <a class="btn btn-info btn-block" href="#">
+            <i class="icon-twitter"></i> &nbsp;&nbsp;&nbsp;Login with Twitter
+            </a>
+            </div>
+            </div><div class="row mg-btm">
+            <div class="col-md-6">
+            <a class="btn btn-primary btn-block" href="#">
+            <i class="icon-facebook"></i> &nbsp;&nbsp;&nbsp;Login with Facebook
+            </a>
+            </div><div class="col-md-6">
+            <a href="#" class="btn btn-info btn-block">
+            <i class="icon-twitter"></i> &nbsp;&nbsp;&nbsp;Login with Twitter
+            </a>
+            </div>
+            </div><div class="row">
+            <div class="col-md-6">
+            <a class="btn btn-primary btn-block" href="#">
+            <i class="icon-facebook"></i> &nbsp;&nbsp;&nbsp;Login with Facebook
+            </a>
+            </div><div class="col-md-6">
+            <a href="#" class="btn btn-info btn-block">
+            <i class="icon-twitter"></i> &nbsp;&nbsp;&nbsp;Login with Twitter
+            </a>
+            </div>
+            </div>
+
+            </div>
+            </form>
+
+
+
+
+
+
+          <!--   <div class="frodo-header">
                 <div class="frodo-text">
                     <span>Connect </span>with
                 </div>
@@ -43,7 +117,9 @@
                 </div>
             </div>
             <span id="message"></span>
-            <div class="frodo-body">
+            <div class="frodo-login">
+            </div>
+            <div class="frodo-social">
                 <div class="provider">
                     <a class="btn azm-social azm-btn azm-facebook" href="#"><i class="fa fa-facebook"></i> Facebook</a>
                 </div>
@@ -63,7 +139,7 @@
                     <a class="btn azm-social azm-btn azm-skype" href="#"><i class="fa fa-skype"></i> Skype</a>
                 </div>
 
-            </div>
+            </div> -->
         </div>
 
         <!-- Overlay -->
