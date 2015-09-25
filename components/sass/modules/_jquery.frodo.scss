@@ -29,8 +29,9 @@ FRODO MAIN
 .frodo-form {
   max-width: 400px; 
   display:block;
-  // background-color: #FFD716;
+  padding: 10px 0;
   background-color: #f7f7f7;
+  background-color: #FFD716;
   -moz-box-shadow: 0 0 3px 3px #888;
     -webkit-box-shadow: 0 0 3px 3px #888;
   box-shadow: 0 0 3px 3px #888;
@@ -46,8 +47,7 @@ FRODO MAIN
   text-transform: uppercase;
   margin-top: 0;
   font-weight:bold;
-  padding:38px 38px 0px 38px;
-  padding:10px 38px 0px 38px;
+  padding: 0 38px;
   span {
     // color: #FFD716;
     color: #0088E3;
@@ -103,12 +103,38 @@ FRODO MAIN
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);
     outline: 0 none;
 }
-.frodo-form .frodo-input {
+// .frodo-form .frodo-input {
 
-}
+// }
+
+/**
+ * FRODO SOCIAL
+ */
 .frodo-social {
   @include clearfix;
+  padding: 0 20px;
 }
+.frodo-provider {
+  @include pull-left;
+  width: 50%;
+  padding: 1%;
+  text-align: center;
+  a {
+    text-decoration: none;
+  }
+}
+
+.frodo-social-text {
+    display: block;
+    text-align: center;
+    padding: 10px 0;
+    // text-transform: uppercase;
+    color: #000; 
+    span {
+      color: #000; 
+    }
+}
+
 // .frodo-header {
 //   height: 40px;
 //   border-bottom: 1px solid  rgba(164, 164, 164, 0.5);
@@ -118,13 +144,6 @@ FRODO MAIN
 //   font-weight: 600;
 //   letter-spacing: 0.3em;
 // }
-.frodo-text {
-    float: left;
-    text-transform: uppercase;
-    span {
-      color: #000; 
-    }
-}
 // .frodo-close {
 //   float: right;
 //   width: 40px;
@@ -170,12 +189,12 @@ FRODO MAIN
 /**
  * Helpers
  */
-.pull-right {
-  float: right !important;
-}
-.pull-left {
-  float: left !important;
-}
+// .pull-right {
+//   float: right !important;
+// }
+// .pull-left {
+//   float: left !important;
+// }
 
 .frodo-visible {
   opacity: 1;
@@ -206,12 +225,7 @@ FRODO MAIN
   overflow-y: hidden;
 }
 
-.provider {
-  float: left;
-  width: 33.3333%;
-  padding: 1%;
-  text-align: center;
-}
+
 
 /**
  * Buttons
@@ -254,16 +268,34 @@ FRODO MAIN
       color: #fff;
     }
 }
+// .frodo-social-btn {
+//   width: 100%;
+//   margin: 0;
+//   height: 40px;
+//   line-height: 40px;
+//   i:after {
+//      background: rgba(255, 255, 255, 0.3) none repeat scroll 0 0;
+//     content: "";
+//     height: 36px;
+//     left: 70%;
+//     position: absolute;
+//     top: -8px;
+//     width: 1px;
+//   }
+// }
 
+// .frodo-btn-social i::after {
+   
+// }
 // .btn {
 //   width: 100%;
 // }
-.azm-btn {
-  margin: 0;
-}
-.azm-btn i {
-  padding-right: 5px;
-}
+// .azm-btn {
+//   margin: 0;
+// }
+// .azm-btn i {
+//   padding-right: 5px;
+// }
 
 
 /**

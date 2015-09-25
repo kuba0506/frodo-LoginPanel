@@ -1809,13 +1809,15 @@
 .azm-social {
     margin: 0;
     padding: 0;
+    width: 100%;
     display: inline-block;
+    text-decoration: none !important:;
     color: #fff;
     text-align: center;
     -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0;
     -o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s; -ms-transition: all .3s; transition: all .3s;
 }
-.azm-social:hover, .azm-social:focus, .azm-social:active { outline: 0; opacity: 0.7; color: #fff; }
+.azm-social:hover, .azm-social:focus, .azm-social:active { outline: 0; opacity: 0.7; color: #fff; text-decoration: none !important; }
 
 .azm-size-32 {
     width: 32px;
@@ -1854,22 +1856,24 @@
 
 .azm-btn {
     height: 40px;
-    margin: 8px;
+    /*margin: 8px;*/
     /*padding: 13px 17px;*/
-    padding: 0 10px;
+    padding: 0 5px;
     font-size: 14px;
     /*line-height: 21px;*/
     line-height: 40px;
     font-weight: 300;
-    -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+    -moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px;
 }
 .azm-btn i { 
     /*padding-right: 27px; */
     padding-right: 15px; 
     font-size: 21px; 
+    /*width: 40px;*/
     /*line-height: 21px; */
     line-height: 40px; 
-    vertical-align: top;
+    /*vertical-align: top;*/
+    vertical-align: middle;
      }
 
 /*.azm-btn i:after {
@@ -2072,17 +2076,23 @@
 .btn {
     -moz-user-select: none;
     background-image: none;
-    width: 90%;
+    width: 100%;
     border: 1px solid transparent;
     border-radius: 4px;
     cursor: pointer;
     display: inline-block;
     font-size: 14px;
     font-weight: 400;
-    /*line-height: 1.42857;*/
+    /*line-height: 1.42857;
     margin-bottom: 0;
     /*padding: 6px 12px;*/
     text-align: center;
     vertical-align: middle;
     white-space: nowrap;
 }
+.frodo-btn-social {
+  margin: 0;
+  -webkit-border-radius: 2px;
+          border-radius: 2px;
+}
+
