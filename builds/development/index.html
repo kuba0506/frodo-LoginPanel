@@ -18,7 +18,7 @@
     </head>
 <body>
 
-    <div id="frodo-wrapper">
+    <!-- <div id="frodo-wrapper"> -->
         
         <!-- Page content -->
         <a href="#" class="log-in" data-login>Log In</a>
@@ -33,7 +33,7 @@
         </div>
     
         <!-- Frodo LoginPanel -->
-        <div id="frodo" class="frodo login-panel animated">
+       <!--  <div id="frodo" class="frodo">
 
             <form class="frodo-form" action="?" method="get" name="frodo-form">
 
@@ -42,15 +42,16 @@
                     Log in
                 </h3>
 
-                <div class="frodo-login">
+                <div class="frodo-login-box">
+                    <span id="frodo-login-message"></span>
                     <input type="text" placeholder="Email" class="frodo-input" autofocus>
                     <input type="username" placeholder="Username" class="frodo-input">                    
                     <div class="frodo-login-footer">
-                        <div class="frodo-footer-links">
-                            <a href="">Forgot your password?</a>
-                            <a href="">Sign up now</a>
+                        <div class="frodo-links">
+                            <a href="#">Forgot your password?</a>
+                            <a href="#">Sign up now</a>
                         </div>
-                        <button class="frodo-btn frodo-btn-submit" type="submit">Login</button>
+                        <button class="frodo-btn-submit" type="submit">Login</button>
                     </div>
 
                 </div>
@@ -80,50 +81,11 @@
                     </div>
                 </div>
             </form>
-
-
-
-
-
-
-          <!--   <div class="frodo-header">
-                <div class="frodo-text">
-                    <span>Connect </span>with
-                </div>
-
-                <div class="frodo-close">
-                    <a href="#">x</a>
-                </div>
-            </div>
-            <span id="message"></span>
-            <div class="frodo-login">
-            </div>
-            <div class="frodo-social">
-                <div class="provider">
-                    <a class="btn azm-social azm-btn azm-facebook" href="#"><i class="fa fa-facebook"></i> Facebook</a>
-                </div>
-                <div class="provider">
-                    <a class="btn azm-social azm-btn azm-twitter" href="#"><i class="fa fa-twitter"></i> Twitter</a>
-                </div>
-                <div class="provider">
-                    <a class="btn azm-social azm-btn azm-google-plus" href="#"><i class="fa fa-google-plus"></i> Google+</a>
-                </div>
-                <div class="provider">
-                    <a class="btn azm-social azm-btn azm-android" href="#"><i class="fa fa-android"></i> Android</a>
-                </div>
-                <div class="provider">
-                    <a class="btn azm-social azm-btn azm-linkedin" href="#"><i class="fa fa-linkedin"></i> LinkedIn</a>
-                </div>
-                <div class="provider">
-                    <a class="btn azm-social azm-btn azm-skype" href="#"><i class="fa fa-skype"></i> Skype</a>
-                </div>
-
-            </div> -->
-        </div>
+        </div> -->
 
         <!-- Overlay -->
-        <div id="frodo-overlay" class="frodo-overlay"></div>
-     </div>
+        <!-- <div class="frodo-overlay"></div> -->
+     <!-- </div> -->
 
     <script src="js/jquery-1.11.2.min.js"></script>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
@@ -134,18 +96,36 @@
         $(document).ready(function(){
 
             var defaults = {
-                'effect': 'bounceIn',
-                'frodoVisible': 'frodo-visible',
-                'bodyReset': 'frodo-reset'
+                //Classes and ids
+                'frodoWrapper': 'frodo-wrapper',
+                'submitUrl': '?',
+                // 'frodoOverlay': 'frodo-overlay',
+                'frodoVisible': 'frodo-visible'
             };
 
             function getRandomInt(min, max) {
                 return Math.floor(Math.random() * (max - min + 1)) + min;
             }
 
+            //PLUGIN LOGIC
+            
+            //CONTAINERS
+            var body = $('body'),
+                frodoWrapper = '<div id="frodo-wrapper"></div>',
+                frodoInit = '<div id="frodo" class="frodo">\
+                    <form class="frodo-form" action="' + defaults.submitUrl + '" method="get" name="frodo-form"></form></div>' + 
+                    '<div class="frodo-overlay"></div>',
+                frodo = $('.frodo-form');
+
+            //Wrap all content with frodo wrapper
+            body.wrapInner(frodoWrapper);
+
+            //Append frodo and frodo-overlay
+            $('#' + defaults.frodoWrapper).append(frodoInit); 
+
             //EVENT HANDLERS
             // Ajax - jsonp
-            $('.btn').on('click', function () { 
+            $('.azm-social').on('click', function () { 
                 // var url = 'http://www.eniro.se.test.eniro.net/webmaster-content/wmc-js/jsonp.js',
                 var url = 'http://jurczynski.czest.pl/registerFailed.json?callback=myCallback',
                     url2 = 'http://jurczynski.czest.pl/registerSuccess.json?callback=myCallback',
@@ -171,7 +151,7 @@
                         // else {
                         //     span.fadeOut().remove();
                         // }
-                        var message = $('#message');
+                        var message = $('#frodo-login-message');
                         if (response.fail) {
                             message.empty();
                             message.text(response.message);
@@ -192,29 +172,30 @@
         
                 var panel = $('#frodo');
 
-                $('#frodo-overlay').toggleClass(defaults.frodoVisible);
+                $('.frodo-overlay').toggleClass(defaults.frodoVisible);
+                $(panel).toggleClass(defaults.frodoVisible);
                 
-                $('#frodo-wrapper').toggleClass('frodo-no-scroll');
+                $(frodoWrapper).toggleClass('frodo-no-scroll');
 
                 //Change panel visibility
-                (panel.hasClass(defaults.frodoVisible)) ? 
-                panel.removeClass(defaults.frodoVisible).removeClass(defaults.effect)
-                : panel.addClass(defaults.effect).addClass(defaults.frodoVisible);
+                // (panel.hasClass(defaults.frodoVisible)) ? 
+                // panel.removeClass(defaults.frodoVisible)
+                // : addClass(defaults.frodoVisible);
 
                 //Nice to have
                 // $('body').toggleClass(defaults.bodyReset);
             });
 
             //Exit button
-            $('.frodo-close').click(function() {
+            $('.frodo-btn-close').click(function() {
 
                 //Block mouse scroll when panel is open 
-                $('#frodo-wrapper').toggleClass('frodo-no-scroll');
+                $(frodoWrapper).removeClass('frodo-no-scroll');
 
                 //Remove uneccessary classes                
-                $('#frodo').removeClass(defaults.effect + ' ' + defaults.frodoVisible);
-                $('#frodo-overlay').removeClass(defaults.frodoVisible);
-                $('#message').empty();
+                $('#frodo').removeClass(defaults.frodoVisible);
+                $('.frodo-overlay').removeClass(defaults.frodoVisible);
+                $('#frodo-login-message').empty();
 
                 //Nice to have
                 // $('body').toggleClass(defaults.bodyReset);
