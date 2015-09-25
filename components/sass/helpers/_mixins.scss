@@ -10,6 +10,14 @@
   }
 }
 
+@mixin pull-right {
+  float: right !important;
+} 
+
+@mixin pull-left {
+  float: left !important;
+} 
+
 @mixin backImage($image) {
   background: url($image) no-repeat 50% 20% ; 
   -webkit-background-size: cover;
