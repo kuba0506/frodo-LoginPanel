@@ -18,7 +18,7 @@
     </head>
 <body>
 
-    <div id="frodo-wrapper">
+    <!-- <div id="frodo-wrapper"> -->
         
         <!-- Page content -->
         <a href="#" class="log-in" data-login>Log In</a>
@@ -33,7 +33,7 @@
         </div>
     
         <!-- Frodo LoginPanel -->
-        <div id="frodo" class="frodo">
+        <!-- <div id="frodo" class="frodo">
 
             <form class="frodo-form" action="?" method="get" name="frodo-form">
 
@@ -43,7 +43,7 @@
                 </h3>
 
                 <div class="frodo-login-box">
-                    <span id="frodo-login-message"></span>
+                    <span id="frodo-error-message"></span>
                     <input type="text" placeholder="Email" class="frodo-input" autofocus>
                     <input type="username" placeholder="Username" class="frodo-input">                    
                     <div class="frodo-login-footer">
@@ -81,11 +81,11 @@
                     </div>
                 </div>
             </form>
-        </div>
+        </div> -->
 
         <!-- Overlay -->
-        <div class="frodo-overlay"></div>
-     </div>
+        <!-- <div class="frodo-overlay"></div> -->
+     <!-- </div> -->
 
     <script src="js/jquery-1.11.2.min.js"></script>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
@@ -93,118 +93,7 @@
 
     <script>
 
-        $(document).ready(function(){
-
-            var defaults = {
-                //Classes and ids
-                'frodoWrapper': '#frodo-wrapper',
-                'frodo': 'frodo',
-                'submitUrl': '?',
-                // 'frodoOverlay': 'frodo-overlay',
-                'frodoVisible': 'frodo-visible'
-            };
-
-            function getRandomInt(min, max) {
-                return Math.floor(Math.random() * (max - min + 1)) + min;
-            }
-
-            //CACHED OBJECTS
-            var el = {};
-
-            //PLUGIN LOGIC
-            
-            //CONTAINERS
-            // var body = $('body'),
-            //     frodoWrapper = '<div id="frodo-wrapper"></div>',
-            //     frodoInit = '<div id="frodo" class="frodo">\
-            //         <form class="frodo-form" action="' + defaults.submitUrl + '" method="get" name="frodo-form"></form></div>' + 
-            //         '<div class="frodo-overlay"></div>',
-            //     frodo = $('.frodo-form');
-
-            //Wrap all content with frodo wrapper
-            // body.wrapInner(frodoWrapper);
-
-            //Append frodo and frodo-overlay
-            // $('#' + defaults.frodoWrapper).append(frodoInit); 
-
-            //EVENT HANDLERS
-            // Ajax - jsonp
-            $('.azm-social').on('click', function () { 
-                // var url = 'http://www.eniro.se.test.eniro.net/webmaster-content/wmc-js/jsonp.js',
-                var url = 'http://jurczynski.czest.pl/registerFailed.json?callback=myCallback',
-                    url2 = 'http://jurczynski.czest.pl/registerSuccess.json?callback=myCallback',
-                    address = [url, url2], index;
-
-                index = getRandomInt(0, address.length-1);
-
-                console.log(address[index]);
-
-                $.ajax({
-                    type: 'GET',
-                    url: address[index],
-                    dataType: 'jsonp',
-                    jsonpCallback: 'myCallback',
-                    success: function (response) {
-                        // var span = $('<span/>', {'id':'message'});
-                        // if (response.fail) {
-                        //     if (span) {
-                        //         span.empty();
-                        //     }
-                        //         span.text(response.message).fadeIn();
-                        //     }
-                        // else {
-                        //     span.fadeOut().remove();
-                        // }
-                        var message = $('#frodo-login-message');
-                        if (response.fail) {
-                            message.empty();
-                            message.text(response.message);
-                        } else {
-                            message.empty();
-                        }
-                    }
-                });
-            });
-
-
-
-
-            //Open login panel
-            $('[data-login]').on('click', function(e) {
-
-                e.preventDefault();
         
-                // var panel = $('#frodo');
-
-                $('.frodo-overlay').toggleClass(defaults.frodoVisible);
-                $('#' + defaults.frodo).toggleClass(defaults.frodoVisible);
-                
-                $(defaults.frodoWrapper).toggleClass('frodo-no-scroll');
-
-                //Change panel visibility
-                // (panel.hasClass(defaults.frodoVisible)) ? 
-                // panel.removeClass(defaults.frodoVisible)
-                // : addClass(defaults.frodoVisible);
-
-                //Nice to have
-                // $('body').toggleClass(defaults.bodyReset);
-            });
-
-            //Exit button
-            $('.frodo-btn-close').click(function() {
-
-                //Block mouse scroll when panel is open 
-                $(defaults.frodoWrapper).removeClass('frodo-no-scroll');
-
-                //Remove uneccessary classes                
-                $('#frodo').removeClass(defaults.frodoVisible);
-                $('.frodo-overlay').removeClass(defaults.frodoVisible);
-                $('#frodo-login-message').empty();
-
-                //Nice to have
-                // $('body').toggleClass(defaults.bodyReset);
-            });
-        });
     </script>
     <!--<script src="http://www.eniro.se.test.eniro.net/webmaster-content/wmc-js/jsonp.js"></script>-->
 </body>

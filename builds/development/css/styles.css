@@ -3,7 +3,7 @@
 
 /*
 FRODO */
-.frodo { color: #0088e3; box-shadow: 0 0 10px 0 rgba(164, 164, 164, 0.9), -15px 0 15px -20px rgba(164, 164, 164, 0.9), 15px 0 15px -20px rgba(164, 164, 164, 0.9); max-width: 400px; position: fixed; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%); z-index: 11; z-index: -1; opacity: 1; opacity: 0; -webkit-transition: all 0.2s linear; transition: all 0.2s linear; }
+.frodo { color: #0088e3; box-shadow: 0 0 10px 0 rgba(164, 164, 164, 0.9), -15px 0 15px -20px rgba(164, 164, 164, 0.9), 15px 0 15px -20px rgba(164, 164, 164, 0.9); max-width: 400px; position: fixed; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%); z-index: -1; z-index: 11; opacity: 0; opacity: 1; -webkit-transition: all 0.2s linear; transition: all 0.2s linear; }
 .frodo a { text-decoration: none; }
 
 .frodo-form { display: block; padding: 10px 0; background-color: #FFD716; background-color: #f7f7f7; box-shadow: 0 0 3px 3px #888; border-radius: 2px; }
