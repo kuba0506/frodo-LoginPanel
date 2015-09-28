@@ -18,7 +18,7 @@
     </head>
 <body>
 
-    <!-- <div id="frodo-wrapper"> -->
+    <div id="frodo-wrapper">
         
         <!-- Page content -->
         <a href="#" class="log-in" data-login>Log In</a>
@@ -33,7 +33,7 @@
         </div>
     
         <!-- Frodo LoginPanel -->
-       <!--  <div id="frodo" class="frodo">
+        <div id="frodo" class="frodo">
 
             <form class="frodo-form" action="?" method="get" name="frodo-form">
 
@@ -81,11 +81,11 @@
                     </div>
                 </div>
             </form>
-        </div> -->
+        </div>
 
         <!-- Overlay -->
-        <!-- <div class="frodo-overlay"></div> -->
-     <!-- </div> -->
+        <div class="frodo-overlay"></div>
+     </div>
 
     <script src="js/jquery-1.11.2.min.js"></script>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
@@ -97,7 +97,8 @@
 
             var defaults = {
                 //Classes and ids
-                'frodoWrapper': 'frodo-wrapper',
+                'frodoWrapper': '#frodo-wrapper',
+                'frodo': 'frodo',
                 'submitUrl': '?',
                 // 'frodoOverlay': 'frodo-overlay',
                 'frodoVisible': 'frodo-visible'
@@ -107,21 +108,24 @@
                 return Math.floor(Math.random() * (max - min + 1)) + min;
             }
 
+            //CACHED OBJECTS
+            var el = {};
+
             //PLUGIN LOGIC
             
             //CONTAINERS
-            var body = $('body'),
-                frodoWrapper = '<div id="frodo-wrapper"></div>',
-                frodoInit = '<div id="frodo" class="frodo">\
-                    <form class="frodo-form" action="' + defaults.submitUrl + '" method="get" name="frodo-form"></form></div>' + 
-                    '<div class="frodo-overlay"></div>',
-                frodo = $('.frodo-form');
+            // var body = $('body'),
+            //     frodoWrapper = '<div id="frodo-wrapper"></div>',
+            //     frodoInit = '<div id="frodo" class="frodo">\
+            //         <form class="frodo-form" action="' + defaults.submitUrl + '" method="get" name="frodo-form"></form></div>' + 
+            //         '<div class="frodo-overlay"></div>',
+            //     frodo = $('.frodo-form');
 
             //Wrap all content with frodo wrapper
-            body.wrapInner(frodoWrapper);
+            // body.wrapInner(frodoWrapper);
 
             //Append frodo and frodo-overlay
-            $('#' + defaults.frodoWrapper).append(frodoInit); 
+            // $('#' + defaults.frodoWrapper).append(frodoInit); 
 
             //EVENT HANDLERS
             // Ajax - jsonp
@@ -170,12 +174,12 @@
 
                 e.preventDefault();
         
-                var panel = $('#frodo');
+                // var panel = $('#frodo');
 
                 $('.frodo-overlay').toggleClass(defaults.frodoVisible);
-                $(panel).toggleClass(defaults.frodoVisible);
+                $('#' + defaults.frodo).toggleClass(defaults.frodoVisible);
                 
-                $(frodoWrapper).toggleClass('frodo-no-scroll');
+                $(defaults.frodoWrapper).toggleClass('frodo-no-scroll');
 
                 //Change panel visibility
                 // (panel.hasClass(defaults.frodoVisible)) ? 
@@ -190,7 +194,7 @@
             $('.frodo-btn-close').click(function() {
 
                 //Block mouse scroll when panel is open 
-                $(frodoWrapper).removeClass('frodo-no-scroll');
+                $(defaults.frodoWrapper).removeClass('frodo-no-scroll');
 
                 //Remove uneccessary classes                
                 $('#frodo').removeClass(defaults.frodoVisible);

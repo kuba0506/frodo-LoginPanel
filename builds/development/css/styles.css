@@ -6,7 +6,7 @@ FRODO */
 .frodo { color: #0088e3; box-shadow: 0 0 10px 0 rgba(164, 164, 164, 0.9), -15px 0 15px -20px rgba(164, 164, 164, 0.9), 15px 0 15px -20px rgba(164, 164, 164, 0.9); max-width: 400px; position: fixed; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%); z-index: 11; z-index: -1; opacity: 1; opacity: 0; -webkit-transition: all 0.2s linear; transition: all 0.2s linear; }
 .frodo a { text-decoration: none; }
 
-.frodo-form { display: block; padding: 10px 0; background-color: #f7f7f7; background-color: #FFD716; box-shadow: 0 0 3px 3px #888; border-radius: 2px; }
+.frodo-form { display: block; padding: 10px 0; background-color: #FFD716; background-color: #f7f7f7; box-shadow: 0 0 3px 3px #888; border-radius: 2px; }
 
 /** FRODO HEDAER */
 .frodo-header { font-size: 20px; color: #FFD716; color: #0088E3; text-transform: uppercase; margin-top: 0; font-weight: bold; padding: 0 38px; }
@@ -20,12 +20,13 @@ FRODO */
 .frodo-input:focus { border-color: #66afe9; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6); outline: 0 none; }
 
 /** FRODO SOCIAL */
-.frodo-social { padding: 0 20px; }
-.frodo-social:after, .frodo-social:before { display: table; content: ""; }
-.frodo-social:after { clear: both; }
+.frodo-social { padding: 0 20px; text-align: center; }
+.frodo-social:after { content: ""; display: block; width: 100%; margin-bottom: -1.2em; margin-bottom: -5px; }
 
-.frodo-provider { float: left !important; width: 50%; padding: 1%; text-align: center; }
+.frodo-provider { display: inline-block; width: 48.5%; text-align: center; vertical-align: top; margin-bottom: 10px; }
 .frodo-provider a { text-decoration: none; }
+
+.frodo-provider--reset { border: 0 none; height: 0 !important; margin: 0 !important; padding: 0; }
 
 .frodo-social-text { display: block; text-align: center; padding: 10px 0; color: #000; }
 .frodo-social-text span { color: #000; }
