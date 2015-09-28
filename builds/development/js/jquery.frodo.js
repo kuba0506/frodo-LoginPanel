@@ -30,8 +30,12 @@
                 //Classes and ids
                 frodoWrapper: '#frodo-wrapper',
                 frodo: 'frodo',
+                frodoOverlay: 'frodo-overlay',
                 frodoForm: 'frodo-form',
+                frodoClose: 'frodo-btn-close',
+                forodMessage: 'frodo-login-message',
                 frodoVisible: 'frodo-visible',
+                hideClass: 'frodo-hide',
 
                 //Settings, links
                 submitUrl: '?',
@@ -39,14 +43,15 @@
                 signUpLink: '#',
 
                 //Translation
-                loginTxt: 'Log In',
-                registerTxt: 'Sign Up',
+                loginTxt: 'Log in now',
+                registerTxt: 'Sign up now',
+                resetTxt: 'Password Reset',
                 userPlaceholder: 'Fullname',
                 passPlaceholder: 'Password',
                 passConfirmPlaceholder: 'Confirm password',
                 emailPlaceholder: 'Email',
                 emailResetPlaceholder: 'Your email address',
-                links: [ 'Forgot your password?', 'Sign up now' , 'Log in now'],
+                links: [ 'Forgot your password ?', 'Sign up now' , 'Log in now'],
                 login: 'Submit',
                 logWith: 'or with:'
                 
@@ -91,35 +96,46 @@
 
 
             function toggleForm(form) {
-              event.preventDefault();
 
               var loginBox = $('.frodo-login-box'),
+                  inputs = loginBox.find('input'),
                   forgot = $('.frodo-forgot'),
+                  signUp = $('.frodo-sign-up'),
                   headerTxt = $('.frodo-header').find('.frodo-header-txt'),
+                  fullname = loginBox.find('input[name=fullname]'),
+                  password = loginBox.find('input[name=password]'),
                   email = loginBox.find('input[name=email]'),
                   passwordConfirm = loginBox.find('input[name=passwordConfirm]'),
-                  passwordReset = loginBox.find('input[name=passwordReset]'),
-                  hideClass = 'frodo-hide';
+                  passwordReset = loginBox.find('input[name=passwordReset]');
 
                   if (form === 'sign-up') {
-                    $(email).add(passwordConfirm).toggleClass(hideClass).prop('disabled', function (index, oldProp) {
-                      return !oldProp;
-                    });
-                    forgot.text( function (i, text) {
-                      return text === defaults.links[0] ? defaults.links[2] : defaults.links[0];
-                    });
-                    headerTxt.text(function (i, text) {
-                      return text === defaults.loginTxt ? defaults.registerTxt : defaults.loginTxt;
-                    });
+                    if (!passwordReset.hasClass(defaults.hideClass)) {
+                      inputs.not(passwordReset).removeClass(defaults.hideClass).prop('disabled', false);
+                      passwordReset.addClass(defaults.hideClass).prop('disabled', true);
+                      headerTxt.text(defaults.registerTxt);
+                      signUp.text(defaults.loginTxt);
+                    } else {
+                      $(email).add(passwordConfirm).toggleClass(defaults.hideClass).prop('disabled', function (index, oldProp) {
+                        return !oldProp;
+                      });
+                      signUp.text( function (i, text) {
+                        return text === defaults.links[1] ? defaults.links[2] : defaults.links[1];
+                      });
+                      headerTxt.text(function (i, text) {
+                        return text === defaults.loginTxt ? defaults.registerTxt : defaults.loginTxt;
+                      });
+                    }
 
+                  } else if (form === 'reset') {
+                    inputs.not(passwordReset).addClass(defaults.hideClass).prop('disabled', true);
+                    passwordReset.removeClass(defaults.hideClass).prop('disabled', false);
+                    headerTxt.text(defaults.resetTxt);
                   } else {
-                    console.log('Reset');
-                    // loginBox.find('input').not(passwordReset).toggleClass(
-                    //   function () {
-                    //     return hideClass ? !$(this).hasClass(hideClass) : '113';
-                    //   }).prop('disabled', function (index, oldProp) {
-                    //   return !oldProp;
-                    // });
+                    fullname.add(password).removeClass(defaults.hideClass).prop('disabled', false);
+                    email.add(passwordConfirm).add(passwordReset).addClass(defaults.hideClass).prop('disabled', true);
+                    forgot.add(signUp).removeClass(defaults.hideClass);
+                    headerTxt.text(defaults.loginTxt);
+                    signUp.text(defaults.registerTxt);
                   }
             }
 
@@ -152,8 +168,7 @@
                         type: 'text',
                         name: 'fullname',
                         class: 'frodo-input',
-                        placeholder: defaults.userPlaceholder,
-                        autofocus: true
+                        placeholder: defaults.userPlaceholder
               }),
               password: $('<input/>', {
                         type: 'password',
@@ -259,6 +274,7 @@
             $('[data-login]').on('click', function(e) {
 
                 e.preventDefault();
+                toggleForm();
         
                 $('.frodo-overlay').toggleClass(defaults.frodoVisible);
                 $('#' + defaults.frodo).toggleClass(defaults.frodoVisible);
@@ -270,15 +286,16 @@
             });
 
             //Exit button
-            $('.frodo-btn-close').click(function() {
+            $('.' + defaults.frodoClose).click(function() {
 
                 //Block mouse scroll when panel is open 
                 $(defaults.frodoWrapper).removeClass('frodo-no-scroll');
 
                 //Remove uneccessary classes                
-                $('#frodo').removeClass(defaults.frodoVisible);
-                $('.frodo-overlay').removeClass(defaults.frodoVisible);
-                $('#frodo-login-message').empty();
+                $('#' + defaults.frodo).removeClass(defaults.frodoVisible);
+                $('.' + defaults.frodoOverlay).removeClass(defaults.frodoVisible);
+                $('#' + defaults.frodoMessage).empty();
+
 
                 //Nice to have
                 // $('body').toggleClass(defaults.bodyReset);
@@ -286,16 +303,16 @@
             // });
             
             //Register form        
-            $('body').on('click', '.frodo-forgot', function () {
+            $('body').on('click', '.frodo-sign-up', function (event) {
+              event.preventDefault();
               toggleForm('sign-up');
             });
 
             //Reset form
-            $('body').on('click', '.frodo-sign-up', function () {
-              toggleForm();
+            $('body').on('click', '.frodo-forgot', function (event) {
+              event.preventDefault();
+              toggleForm('reset');
             });
-            
-      
 
 
             // Ajax - jsonp
