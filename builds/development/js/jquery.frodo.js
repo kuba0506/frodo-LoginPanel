@@ -152,7 +152,12 @@
 -----------------------------CLOSE LOGIN PANEL--------------------------------------------------------------------
  */
     //Close login panel
-    $('.' + frodo.config.frodoHeader.closeBtn).on('click', frodo.closePanel);
+    // $('.' + frodo.config.frodoHeader.closeBtn).on('click', frodo.closePanel);
+    $(frodo.config.body).on('click', '.' + frodo.config.frodoHeader.closeBtn ,function () {
+    // $('.' + frodo.config.frodoHeader.closeBtn).on('click', function () {
+    // $('.' + frodo.config.frodoHeader.header).on('click', function () {
+        frodo.closePanel();
+    });
 
     $(frodo.config.body).on('keyup', function (event) {
         //If 'Escape' key is pressed
@@ -165,7 +170,7 @@
 -----------------------------REGISTER FORM HANDLER-----------------------------------------------------------------
  */
     //Register form handler       
-    $(frodo.config.body).on('click', '.frodo-sign-up', function (event) {
+    $(frodo.config.body).on('click', '.' +  frodo.config.frodoLogin.signUp, function (event) {
       event.preventDefault();
       frodo.toggleForm('sign-up');
     });
@@ -173,7 +178,8 @@
 -----------------------------RESET FORM HANDLER-----------------------------------------------------------------
  */
     //Reset form handler
-    $(frodo.config.body).on('click', '.frodo-forgot', function (event) {
+    $(frodo.config.body).on('click', '.' +  frodo.config.frodoLogin.forgot, function (event) {
+    // $(frodo.config.body).on('click', '.frodo-forgot', function (event) {
       event.preventDefault();
       frodo.toggleForm('reset');
     });
@@ -397,7 +403,8 @@
             password = loginBox.find('input[name=password]'),
             email = loginBox.find('input[name=email]'),
             passwordConfirm = loginBox.find('input[name=passwordConfirm]'),
-            passwordReset = loginBox.find('input[name=passwordReset]');
+            passwordReset = loginBox.find('input[name=passwordReset]'),
+            that = this;
 
             //Delete alert message
             this.showAlert(null, {
@@ -411,7 +418,6 @@
 
             //Check which form is used
             if (form === 'sign-up') {
-
                 //Go from 'forgot' to 'sign-up'
                 if (!passwordReset.hasClass(this.config.hideClass)) {
                   inputs.not(passwordReset).removeClass(this.config.hideClass).prop('disabled', false);
@@ -424,10 +430,10 @@
                     return !oldProp;
                   });
                   signUp.text( function (i, text) {
-                    return text === this.config.links[1] ? this.config.links[2] : this.config.links[1];
+                    return text === that.config.links[1] ? that.config.links[2] : that.config.links[1];
                   });
                   headerTxt.text(function (i, text) {
-                    return text === this.config.loginTxt ? this.config.registerTxt : this.config.loginTxt;
+                    return text === that.config.loginTxt ? that.config.registerTxt : that.config.loginTxt;
                   });
                 }
             } 
@@ -484,6 +490,8 @@
     Frodo.prototype.closePanel = function () {
          //Block mouse scroll when panel is open 
         $('#' + this.config.frodoWrapper).removeClass('frodo-no-scroll');
+
+        // console.log(frodo);
 
         //Remove uneccessary classes                
         $('#' + this.config.frodo).removeClass(this.config.frodoVisible);
