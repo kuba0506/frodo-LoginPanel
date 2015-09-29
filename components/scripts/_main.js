@@ -337,47 +337,49 @@
         socialWrapper: $('<div/>', { class: this.config.social })
     };
 
-            
-    /**
-     * CREATING HTML STRUCTURE
-     */
+    if ($('#' + this.config.frodoWrapper).length === 0) {
+        /**
+         * CREATING HTML STRUCTURE
+         */
 
-    //Wrap all content with frodo wrapper, and append frodo container and overlay
-    $(this.config.body).wrapInner(el.wrapper).
-          find('#' + this.config.frodoWrapper).
-          append(el.frodo.append(el.form), el.overlay);
+        //Wrap all content with frodo wrapper, and append frodo container and overlay
+        $(this.config.body).wrapInner(el.wrapper).
+              find('#' + this.config.frodoWrapper).
+              append(el.frodo.append(el.form), el.overlay);
 
-    //Insert form header
-    el.header.append(el.headerTxt, el.closeBtn);
-    $('.' + this.config.frodoForm).append(el.header);
+        //Insert form header
+        el.header.append(el.headerTxt, el.closeBtn);
+        $('.' + this.config.frodoForm).append(el.header);
 
-    //Append login box
-    el.frodoLinksWrapper.append(el.forgotLink, el.signUpLink)
-    el.loginFooter.append(el.frodoLinksWrapper, el.submitBtn);
-    el.message.append(el.messageTxt);
-    el.loginBox.append(el.message, el.email, el.fullname, 
-        el.password, el.passwordConfirm, el.passwordReset , el.loginFooter);
-    $('.' + this.config.frodoForm).append(el.loginBox);
+        //Append login box
+        el.frodoLinksWrapper.append(el.forgotLink, el.signUpLink)
+        el.loginFooter.append(el.frodoLinksWrapper, el.submitBtn);
+        el.message.append(el.messageTxt);
+        el.loginBox.append(el.message, el.email, el.fullname, 
+            el.password, el.passwordConfirm, el.passwordReset , el.loginFooter);
+        $('.' + this.config.frodoForm).append(el.loginBox);
 
-    //Append log with text
-    $('.' + this.config.frodoForm).append(el.logWith);
+        //Append log with text
+        $('.' + this.config.frodoForm).append(el.logWith);
 
-    //Append social buttons
-    el.socialWrapper.each(function() {
-      var btns = '';
+        //Append social buttons
+        el.socialWrapper.each(function() {
+          var btns = '';
 
-        for (var i=0, len = social.length; i < len; i++) {
-            btns += '<div class="frodo-provider">\
-                  <a class="azm-social azm-btn azm-' + social[i].provider + '" \
-                  href="' + social[i].link + '">\
-                  <i class="fa fa-' + social[i].provider + '"></i>' + social[i].text +'</a>\
-                </div>';
-        }
-      $(this).append(btns);
-    });
-    $('.' + this.config.frodoForm).append(el.socialWrapper);
+            for (var i=0, len = social.length; i < len; i++) {
+                btns += '<div class="frodo-provider">\
+                      <a class="azm-social azm-btn azm-' + social[i].provider + '" \
+                      href="' + social[i].link + '">\
+                      <i class="fa fa-' + social[i].provider + '"></i>' + social[i].text +'</a>\
+                    </div>';
+            }
+          $(this).append(btns);
+        });
+        $('.' + this.config.frodoForm).append(el.socialWrapper);
+        console.log('Login panel created');
+    }
+    
 
-    console.log('Login panel created');
  };
 
     /**
