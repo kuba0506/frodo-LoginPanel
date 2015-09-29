@@ -40,6 +40,7 @@
         frodoLogin: {
             box: 'frodo-login-box',
             message: 'frodo-message',
+            messageAlert: 'frodo-message-alert',
             input: 'frodo-input',
             footer: 'frodo-login-footer',
             linksWrapper: 'frodo-links',
@@ -85,57 +86,95 @@
             el2.text(txt2);
 
             return true;
-    }
+        }
 
-    var loginBox = $('.' + defaults.frodoLogin.box),
-        inputs = loginBox.find('input'),
-        headerTxt = $('.' + defaults.frodoHeader.header).find('.' + defaults.frodoHeader.text),
-        forgot = $('.' + defaults.frodoLogin.forgot),
-        signUp = $('.' + defaults.frodoLogin.signUp),
-        fullname = loginBox.find('input[name=fullname]'),
-        password = loginBox.find('input[name=password]'),
-        email = loginBox.find('input[name=email]'),
-        passwordConfirm = loginBox.find('input[name=passwordConfirm]'),
-        passwordReset = loginBox.find('input[name=passwordReset]');
+        var loginBox = $('.' + defaults.frodoLogin.box),
+            inputs = loginBox.find('input'),
+            headerTxt = $('.' + defaults.frodoHeader.header).find('.' + defaults.frodoHeader.text),
+            forgot = $('.' + defaults.frodoLogin.forgot),
+            signUp = $('.' + defaults.frodoLogin.signUp),
+            fullname = loginBox.find('input[name=fullname]'),
+            password = loginBox.find('input[name=password]'),
+            email = loginBox.find('input[name=email]'),
+            passwordConfirm = loginBox.find('input[name=passwordConfirm]'),
+            passwordReset = loginBox.find('input[name=passwordReset]');
 
+            //Delete alert message
+            showAlert(null, {
+                messageBox: defaults.frodoLogin.message,
+                text: defaults.frodoLogin.message + ' > span',
+                alert: defaults.frodoLogin.messageAlert
+            });
 
-        //Check which form is used
-        if (form === 'sign-up') {
+            //Clear form inputs
+            clearInputs();
 
-            //Go from 'forgot' to 'sign-up'
-            if (!passwordReset.hasClass(defaults.hideClass)) {
-              inputs.not(passwordReset).removeClass(defaults.hideClass).prop('disabled', false);
-              passwordReset.addClass(defaults.hideClass).prop('disabled', true);
-              changeTxt(headerTxt, defaults.registerTxt, signUp, defaults.loginTxt);
+            //Check which form is used
+            if (form === 'sign-up') {
+
+                //Go from 'forgot' to 'sign-up'
+                if (!passwordReset.hasClass(defaults.hideClass)) {
+                  inputs.not(passwordReset).removeClass(defaults.hideClass).prop('disabled', false);
+                  passwordReset.addClass(defaults.hideClass).prop('disabled', true);
+                  changeTxt(headerTxt, defaults.registerTxt, signUp, defaults.loginTxt);
+                } 
+                //Switch 'sign-up' to 'log-in'
+                else {
+                  $(email).add(passwordConfirm).toggleClass(defaults.hideClass).prop('disabled', function (index, oldProp) {
+                    return !oldProp;
+                  });
+                  signUp.text( function (i, text) {
+                    return text === defaults.links[1] ? defaults.links[2] : defaults.links[1];
+                  });
+                  headerTxt.text(function (i, text) {
+                    return text === defaults.loginTxt ? defaults.registerTxt : defaults.loginTxt;
+                  });
+                }
             } 
-            //Switch 'sign-up' to 'log-in'
-            else {
-              $(email).add(passwordConfirm).toggleClass(defaults.hideClass).prop('disabled', function (index, oldProp) {
-                return !oldProp;
-              });
-              signUp.text( function (i, text) {
-                return text === defaults.links[1] ? defaults.links[2] : defaults.links[1];
-              });
-              headerTxt.text(function (i, text) {
-                return text === defaults.loginTxt ? defaults.registerTxt : defaults.loginTxt;
-              });
+            //Form reset password
+            else if (form === 'reset') {
+                inputs.not(passwordReset).addClass(defaults.hideClass).prop('disabled', true);
+                passwordReset.removeClass(defaults.hideClass).prop('disabled', false);
+                changeTxt(headerTxt, defaults.resetTxt, signUp, defaults.registerTxt);
             }
-        } 
-        //Form reset password
-        else if (form === 'reset') {
-            inputs.not(passwordReset).addClass(defaults.hideClass).prop('disabled', true);
-            passwordReset.removeClass(defaults.hideClass).prop('disabled', false);
-            changeTxt(headerTxt, defaults.resetTxt, signUp, defaults.registerTxt);
-        }
 
-        //Close button reset form
-        else if (form === 'open') {
-            fullname.add(password).removeClass(defaults.hideClass).prop('disabled', false);
-            email.add(passwordConfirm).add(passwordReset).addClass(defaults.hideClass).prop('disabled', true);
-            changeTxt(headerTxt, defaults.loginTxt, signUp, defaults.links[1]);
-        }
+            //Close button reset form
+            else if (form === 'open') {
+                fullname.add(password).removeClass(defaults.hideClass).prop('disabled', false);
+                email.add(passwordConfirm).add(passwordReset).addClass(defaults.hideClass).prop('disabled', true);
+                changeTxt(headerTxt, defaults.loginTxt, signUp, defaults.links[1]);
+            }
 
         return true;
+    }
+
+    /**
+     * [showAlert show message above the form]
+     * @param  {[object]} data 
+     * @param  {[object]} box  
+     * @param  {[object]} text 
+     * @return {[boolean]}     
+     */
+    function showAlert(data, options) {
+        if (data === undefined) {
+            data = false;
+        }
+
+        // console.log(options.text);
+        if (data) {
+            if (data.fail) {
+                $('#' + options.messageBox).addClass(options.alert);
+                $('.' + options.text).empty().text(data.message);
+            } else {
+                $('#' + options.messageBox).removeClass(options.alert);
+                $('.' + options.text).empty();
+            }
+        } else {
+            $('#' + options.messageBox).removeClass(options.alert);
+            $('.' + options.text).empty();
+        }
+
+        return true;    
     }
 
      /**
@@ -150,12 +189,32 @@
         $('#' + defaults.frodo).removeClass(defaults.frodoVisible);
         $('.' + defaults.frodoOverlay).removeClass(defaults.frodoVisible);
         $('#' + defaults.frodoMessage).empty();
+        clearInputs();
+
+        // showAlert.call(defaults, {
+        //     messageBox: defaults.frodoLogin.message,
+        //     text: defaults.frodoLogin.message + ' > span',
+        //     alert: defaults.frodoLogin.messageAlert
+        // } );
 
         //Nice to have
         // $('body').toggleClass(defaults.bodyReset);
         
         return true;        
     }
+
+    /**
+     * [clearInputs - clear form input]
+     * @return {[boolean]}
+     */
+    function clearInputs() {
+        $('.' + defaults.frodoLogin.input).each( function () {
+            this.value = '';
+        });
+
+        return true;
+    }
+
 
     //TEMP - Array of social buttons
     var social = [
@@ -222,7 +281,11 @@
 
         //Login form
         loginBox: $('<div/>', { class: defaults.frodoLogin.box }),
-        message: $('<span/>', { id: defaults.frodoLogin.message }),
+        message: $('<div/>', { 
+                id: defaults.frodoLogin.message,
+                class: defaults.frodoLogin.message
+         }),
+        messageTxt: $('<span/>'),
         fullname: $('<input/>', {
                 type: 'text',
                 name: 'fullname',
@@ -296,6 +359,7 @@
     //Append login box
     el.frodoLinksWrapper.append(el.forgotLink, el.signUpLink)
     el.loginFooter.append(el.frodoLinksWrapper, el.submitBtn);
+    el.message.append(el.messageTxt);
     el.loginBox.append(el.message, el.email, el.fullname, 
         el.password, el.passwordConfirm, el.passwordReset , el.loginFooter);
     $('.' + defaults.frodoForm).append(el.loginBox);
@@ -327,13 +391,18 @@
     $('[data-login]').on('click', function(e) {
 
         e.preventDefault();
-        toggleForm('open');
 
         //Open / reset login panel
         $('.' + defaults.frodoOverlay).toggleClass(defaults.frodoVisible);
         $('#' + defaults.frodo).toggleClass(defaults.frodoVisible);
         $('#' + defaults.frodoWrapper).toggleClass('frodo-no-scroll');
-
+        showAlert(null, {
+            messageBox: defaults.frodoLogin.message,
+            text: defaults.frodoLogin.message + ' > span',
+            alert: defaults.frodoLogin.messageAlert
+        });
+        toggleForm('open');
+        clearInputs();
         //Nice to have
         // $('body').toggleClass(defaults.bodyReset);
     });
@@ -380,7 +449,7 @@
             success: function (response) {
                 // var span = $('<span/>', {'id':'message'});
                 // if (response.fail) {
-                //     if (span) {
+                //     if (span) {+++++++++++++++++++++++++++++++++++++++++++++
                 //         span.empty();
                 //     }
                 //         span.text(response.message).fadeIn();
@@ -388,13 +457,21 @@
                 // else {
                 //     span.fadeOut().remove();
                 // }
-                var message = $('#frodo-login-message');
-                if (response.fail) {
-                    message.empty();
-                    message.text(response.message);
-                } else {
-                    message.empty();
-                }
+                var messageTxt = $('#' + defaults.frodoLogin.message + ' > span'),
+                    messageBox = $('#' + defaults.frodoLogin.message);
+
+                showAlert(response, {
+                    messageBox: defaults.frodoLogin.message,
+                    text: defaults.frodoLogin.message + '> span',
+                    alert: defaults.frodoLogin.messageAlert
+                });
+                // if (response.fail) {
+                //     messageBox.addClass(defaults.frodoLogin.messageAlert);
+                //     messageTxt.empty().text(response.message);
+                // } else {
+                //     messageBox.removeClass(defaults.frodoLogin.messageAlert);
+                //     messageTxt.empty();
+                // }
             }
         });
     });
