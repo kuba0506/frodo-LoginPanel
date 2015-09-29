@@ -130,6 +130,7 @@
                     inputs.not(passwordReset).addClass(defaults.hideClass).prop('disabled', true);
                     passwordReset.removeClass(defaults.hideClass).prop('disabled', false);
                     headerTxt.text(defaults.resetTxt);
+                    signUp.text(defaults.registerTxt);
                   } else {
                     fullname.add(password).removeClass(defaults.hideClass).prop('disabled', false);
                     email.add(passwordConfirm).add(passwordReset).addClass(defaults.hideClass).prop('disabled', true);

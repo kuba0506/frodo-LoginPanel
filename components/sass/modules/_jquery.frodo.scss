@@ -91,9 +91,10 @@ FRODO
     transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
     width: 100%;
     font-size: 16px;
-    height: 20px;
-    padding: 20px;
     margin-bottom: 10px;
+    //Fix  - placeholder visibility in IE and Firefox
+    height: 40px; 
+    padding: 0 20px;
 }
 .frodo-input:focus {
     border-color: #66afe9;
@@ -201,6 +202,7 @@ FRODO
     display: block;
     line-height:19px;
     font-size: 12px;
+    outline: none !important;
     &:hover {
       text-decoration: underline;
     }
