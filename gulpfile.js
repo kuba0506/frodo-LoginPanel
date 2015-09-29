@@ -14,7 +14,7 @@ var gulp = require('gulp'),
 	plumber  = require('gulp-plumber'), 
 	rename  = require('gulp-rename'), 
 	minify = require('gulp-uglify');
-	// uglify  = require('gulp-uglify'),
+	// beautify = require('gulp-beautify'),
 	// sass  = require('gulp-sass'), 
 	// watch = require('gulp-watch');
 
@@ -46,10 +46,12 @@ gulp.task('js',function () {
 	.pipe(plumber())
 	.pipe(include())
 		.on('error', gutil.log)
-	// .pipe(watch(jsSources))
-	// .pipe(browserify())
 	.pipe(rename('jquery.frodo.js'))
 	.pipe(gulp.dest('builds/development/js'))
+	// .pipe(watch(jsSources))
+	// .pipe(browserify())
+	// .pipe(minify())
+	// .pipe(beautify({indentSize: 12}))
 	// .pipe(connect.reload())
 	// .pipe(watch())
 });

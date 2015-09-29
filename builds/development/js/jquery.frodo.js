@@ -511,3 +511,6 @@
     
      $('[data-login]').frodo();
 }(jQuery));
+
+
+///=include jquery.frodo.js
