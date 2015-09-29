@@ -7,8 +7,9 @@
   box-sizing: border-box;
 }
 
-/*
-FRODO
+
+/**
+ * FRODO
  */
 .frodo {
   a {
@@ -29,7 +30,30 @@ FRODO
   @include transition;
   @include transition(all, .3s, ease-in-out);
 }
+
+/**
+ * FRODO OVERLAY
+ */
+.frodo-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  opacity: 1; //test
+  opacity: 0; 
+  background-color: rgba(0, 0, 0, 0.70);
+  @include transition(all, .3s, ease-in-out);
+}
+
+/**
+ * FRODO FORM
+ */
 .frodo-form {
+  font-family: Arial, Helvetica, sans-serif; 
   display:block;
   padding: 10px 0;
   background-color: #FFD716;
@@ -39,8 +63,10 @@ FRODO
   box-shadow: 0 0 3px 3px #888;
   border-radius:2px;
 }
+
+
 /**
- * FRODO HEDAER, L
+ * FRODO HEDAER
  */
 .frodo-header {
   font-size:20px;
@@ -76,6 +102,14 @@ FRODO
     opacity: 0.5;
     text-decoration: none;
 }
+.frodo-message {
+    
+}
+
+/**
+ * FRODO LOGIN
+ */
+
 
 
 
@@ -156,9 +190,7 @@ FRODO
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);
     outline: 0 none;
 }
-.frodo-message {
-    
-}
+
 
 
 
@@ -182,23 +214,7 @@ FRODO
   @include clearfix;
 }
 
-/**
- * FRODO OVERLAY
- */
-.frodo-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -2;
-  opacity: 1; //test
-  opacity: 0; 
-  background-color: rgba(0, 0, 0, 0.70);
-  @include transition(all, .3s, ease-in-out);
-}
+
 
 
 /**
@@ -291,4 +307,41 @@ body {
 
 .mt20 {
   margin-top: 20px;
+}
+
+
+/**
+ * MEDIA QUERIES
+ */
+
+@media only screen and (max-width: 768px) {
+  .frodo {
+    width: 65%;
+    max-width: none;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .frodo {
+    width: 75%;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .frodo {
+    width: 90%;
+  }
+  .frodo-social {
+    margin-left: -2%;
+    margin-right: -2%;
+  }
+  .frodo-provider {
+    padding: 2%;
+  }
+  .frodo-links a {
+    line-height: 26px;
+  }
+}
+@media only screen and (max-width: 360px) {
+  .frodo {
+    width: 95%;
+  }
 }
