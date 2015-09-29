@@ -1,25 +1,10 @@
-// ;(function ($) {
-//   "use strict";
-
-//   //Default plugin settings
-//   var defaults = {
-//     lang: 'en',
-//     bgColor: null
-//   };
-
-//   //Constructor
-//   function Frodo(element, options) {
-//     var _this = this;
-
-//     //Config
-//     _this.config = $.extend(true, {}, defaults, options);
-
-//   }
-
-//   $.fn.frodo = function () {};
-// })(jQuery);
-// 
-
+/**
+ * Frodo.js v.1.0 - Multiprovider login panel
+ * Copyright (c) 2015, Jakub Jurczyñski
+ *
+ * Just add data-login attribute to any html element
+ * $([data-login]).frodo();
+ */
 ;(function( $ ) {
     "use strict";
 
@@ -116,12 +101,14 @@
  */
  function Frodo (element, options) {
     //Assign this to variable in order to use it also in callback functions
-    var frodo = this;
+    var frodo = this,
+        //Shorthand for frodo.config
+        config;
 
-    //CONFIG 
-    frodo.config = $.extend(true, {}, defaults, options);
+    //Config object 
+    frodo.config = config = $.extend(true, {}, defaults, options);
 
-    //ELEMENT WE CALL FUNCTION ON
+    //Element we call a function on
     frodo.element = element;
 
  /*
@@ -136,13 +123,13 @@
         e.preventDefault();
 
         //Open / reset login panel
-        $('.' + frodo.config.frodoOverlay).toggleClass(frodo.config.frodoVisible);
-        $('#' + frodo.config.frodo).toggleClass(frodo.config.frodoVisible);
-        $('#' + frodo.config.frodoWrapper).toggleClass('frodo-no-scroll');
+        $('.' + config.frodoOverlay).toggleClass(config.frodoVisible);
+        $('#' + config.frodo).toggleClass(config.frodoVisible);
+        $('#' + config.frodoWrapper).toggleClass('frodo-no-scroll');
         frodo.showAlert(null, {
-            messageBox: frodo.config.frodoLogin.message,
-            text: frodo.config.frodoLogin.message + ' > span',
-            alert: frodo.config.frodoLogin.messageAlert
+            messageBox: config.frodoLogin.message,
+            text: config.frodoLogin.message + ' > span',
+            alert: config.frodoLogin.messageAlert
         });
         frodo.toggleForm('open');
         frodo.clearInputs();
@@ -152,14 +139,11 @@
 -----------------------------CLOSE LOGIN PANEL--------------------------------------------------------------------
  */
     //Close login panel
-    // $('.' + frodo.config.frodoHeader.closeBtn).on('click', frodo.closePanel);
-    $(frodo.config.body).on('click', '.' + frodo.config.frodoHeader.closeBtn ,function () {
-    // $('.' + frodo.config.frodoHeader.closeBtn).on('click', function () {
-    // $('.' + frodo.config.frodoHeader.header).on('click', function () {
+    $(config.body).on('click', '.' + config.frodoHeader.closeBtn ,function () {
         frodo.closePanel();
     });
 
-    $(frodo.config.body).on('keyup', function (event) {
+    $(config.body).on('keyup', function (event) {
         //If 'Escape' key is pressed
         if (event.keyCode === 27) {
             frodo.closePanel();
@@ -170,7 +154,7 @@
 -----------------------------REGISTER FORM HANDLER-----------------------------------------------------------------
  */
     //Register form handler       
-    $(frodo.config.body).on('click', '.' +  frodo.config.frodoLogin.signUp, function (event) {
+    $(config.body).on('click', '.' +  config.frodoLogin.signUp, function (event) {
       event.preventDefault();
       frodo.toggleForm('sign-up');
     });
@@ -178,8 +162,7 @@
 -----------------------------RESET FORM HANDLER-----------------------------------------------------------------
  */
     //Reset form handler
-    $(frodo.config.body).on('click', '.' +  frodo.config.frodoLogin.forgot, function (event) {
-    // $(frodo.config.body).on('click', '.frodo-forgot', function (event) {
+    $(config.body).on('click', '.' +  config.frodoLogin.forgot, function (event) {
       event.preventDefault();
       frodo.toggleForm('reset');
     });
@@ -187,8 +170,7 @@
 -----------------------------AJAX FORM VALIDATION-----------------------------------------------------------------
  */
     // TEMP - Ajax - jsonp
-    $('.azm-social').on('click', function () { 
-        // var url = 'http://www.eniro.se.test.eniro.net/webmaster-content/wmc-js/jsonp.js',
+    $(config.body).on('click','.azm-social' , function () { 
         var url = 'http://jurczynski.czest.pl/registerFailed.json?callback=myCallback',
             url2 = 'http://jurczynski.czest.pl/registerSuccess.json?callback=myCallback',
             address = [url, url2], index;
@@ -201,34 +183,13 @@
             type: 'GET',
             url: address[index],
             dataType: 'jsonp',
-            jsonpCallback: 'myCallback',
-            success: function (response) {
-                // var span = $('<span/>', {'id':'message'});
-                // if (response.fail) {
-                //     if (span) {
-                //         span.empty();
-                //     }
-                //         span.text(response.message).fadeIn();
-                //     }
-                // else {
-                //     span.fadeOut().remove();
-                // }
-                var messageTxt = $('#' + frodo.config.frodoLogin.message + ' > span'),
-                    messageBox = $('#' + frodo.config.frodoLogin.message);
-
-                frodo.showAlert(response, {
-                    messageBox: frodo.config.frodoLogin.message,
-                    text: frodo.config.frodoLogin.message + '> span',
-                    alert: frodo.config.frodoLogin.messageAlert
-                });
-                // if (response.fail) {
-                //     messageBox.addClass(defaults.frodoLogin.messageAlert);
-                //     messageTxt.empty().text(response.message);
-                // } else {
-                //     messageBox.removeClass(defaults.frodoLogin.messageAlert);
-                //     messageTxt.empty();
-                // }
-            }
+            jsonpCallback: 'myCallback'
+        }).then(function (response) {
+            frodo.showAlert(response, {
+                messageBox: config.frodoLogin.message,
+                text: config.frodoLogin.message + '> span',
+                alert: config.frodoLogin.messageAlert
+        });
         });
     });
 
@@ -251,105 +212,107 @@
  */
 
  Frodo.prototype.init = function () {
+    //Shorthand for this.config
+    var config = this.config,
   
     //CACHED OBJECTS
-    var el = {
+        el = {
 
         //Main elemenets
-        wrapper: $('<div/>', { id: this.config.frodoWrapper }),
-        overlay:  $('<div/>', { class: this.config.frodoOverlay }),
-        frodo: $('<div/>', { id: this.config.frodo, class: this.config.frodo }),
+        wrapper: $('<div/>', { id: config.frodoWrapper }),
+        overlay:  $('<div/>', { class: config.frodoOverlay }),
+        frodo: $('<div/>', { id: config.frodo, class: config.frodo }),
         form: $('<form/>', { 
-                class: this.config.frodoForm, 
-                action: this.config.submitUrl,
-                method: this.config.method,
-                name: this.config.frodoForm
+                class: config.frodoForm, 
+                action: config.submitUrl,
+                method: config.method,
+                name: config.frodoForm
                  }),
 
         //Header
-        header: $('<h3/>', { class: this.config.frodoHeader.header }),
-        headerTxt: $('<span/>', { class: this.config.frodoHeader.text, html: this.config.loginTxt }),
+        header: $('<h3/>', { class: config.frodoHeader.header }),
+        headerTxt: $('<span/>', { class: config.frodoHeader.text, html: config.loginTxt }),
         closeBtn: $('<button/>', { 
-                class: this.config.frodoHeader.closeBtn, 
+                class: config.frodoHeader.closeBtn, 
                 type: 'button',
                 html: 'x'  }),
 
         //Login form
-        loginBox: $('<div/>', { class: this.config.frodoLogin.box }),
+        loginBox: $('<div/>', { class: config.frodoLogin.box }),
         message: $('<div/>', { 
-                id: this.config.frodoLogin.message,
-                class: this.config.frodoLogin.message
+                id: config.frodoLogin.message,
+                class: config.frodoLogin.message
          }),
         messageTxt: $('<span/>'),
         fullname: $('<input/>', {
                 type: 'text',
                 name: 'fullname',
-                class: this.config.frodoLogin.input,
-                placeholder: this.config.userPlaceholder
+                class: config.frodoLogin.input,
+                placeholder: config.userPlaceholder
         }),
         password: $('<input/>', {
                 type: 'password',
                 name: 'password',
-                class: this.config.frodoLogin.input ,
-                placeholder: this.config.passPlaceholder
+                class: config.frodoLogin.input ,
+                placeholder: config.passPlaceholder
         }),
         passwordConfirm: $('<input/>', {
                 type: 'password',
                 name: 'passwordConfirm',
-                class: this.config.frodoLogin.input + ' ' + this.config.hideClass,
-                placeholder: this.config.passConfirmPlaceholder,
+                class: config.frodoLogin.input + ' ' + config.hideClass,
+                placeholder: config.passConfirmPlaceholder,
                 disabled: true
         }),
         email: $('<input/>', {
                 type: 'email',
                 name: 'email',
-                class: this.config.frodoLogin.input + ' ' + this.config.hideClass,
-                placeholder: this.config.emailPlaceholder,
+                class: config.frodoLogin.input + ' ' + config.hideClass,
+                placeholder: config.emailPlaceholder,
                 disabled: true
         }),
         passwordReset: $('<input/>', {
                 type: 'email',
                 name: 'passwordReset',
-                class: this.config.frodoLogin.input + ' ' + this.config.hideClass,
-                placeholder: this.config.emailResetPlaceholder,
+                class: config.frodoLogin.input + ' ' + config.hideClass,
+                placeholder: config.emailResetPlaceholder,
                 disabled: true
         }),
-        loginFooter: $('<div/>', { class: this.config.frodoLogin.footer }),
-        frodoLinksWrapper: $('<div/>', { class: this.config.frodoLogin.linksWrapper }),
+        loginFooter: $('<div/>', { class: config.frodoLogin.footer }),
+        frodoLinksWrapper: $('<div/>', { class: config.frodoLogin.linksWrapper }),
         forgotLink: $('<a/>', { 
-                href: this.config.forgotLink,
-                class: this.config.frodoLogin.forgot, 
-                html: this.config.links[0] 
+                href: config.forgotLink,
+                class: config.frodoLogin.forgot, 
+                html: config.links[0] 
         }), 
         signUpLink: $('<a/>', { 
-                href: this.config.signUpLink,
-                class: this.config.frodoLogin.signUp, 
-                html: this.config.links[1] 
+                href: config.signUpLink,
+                class: config.frodoLogin.signUp, 
+                html: config.links[1] 
         }),
         submitBtn: $('<button/>', {
-                class: this.config.frodoLogin.submit ,
+                class: config.frodoLogin.submit ,
                 type: 'submit',
-                html: this.config.login    
+                html: config.login    
         }),
 
         //Social 
-        logWith: $('<span/>', { class: this.config.log, html: this.config.logWith }),
-        socialWrapper: $('<div/>', { class: this.config.social })
+        logWith: $('<span/>', { class: config.log, html: config.logWith }),
+        socialWrapper: $('<div/>', { class: config.social })
     };
 
-    if ($('#' + this.config.frodoWrapper).length === 0) {
+    if ($('#' + config.frodoWrapper).length === 0) {
         /**
          * CREATING HTML STRUCTURE
          */
 
         //Wrap all content with frodo wrapper, and append frodo container and overlay
-        $(this.config.body).wrapInner(el.wrapper).
-              find('#' + this.config.frodoWrapper).
+        $(config.body).wrapInner(el.wrapper).
+              find('#' + config.frodoWrapper).
               append(el.frodo.append(el.form), el.overlay);
 
         //Insert form header
         el.header.append(el.headerTxt, el.closeBtn);
-        $('.' + this.config.frodoForm).append(el.header);
+        $('.' + config.frodoForm).append(el.header);
 
         //Append login box
         el.frodoLinksWrapper.append(el.forgotLink, el.signUpLink)
@@ -357,10 +320,10 @@
         el.message.append(el.messageTxt);
         el.loginBox.append(el.message, el.email, el.fullname, 
             el.password, el.passwordConfirm, el.passwordReset , el.loginFooter);
-        $('.' + this.config.frodoForm).append(el.loginBox);
+        $('.' + config.frodoForm).append(el.loginBox);
 
         //Append log with text
-        $('.' + this.config.frodoForm).append(el.logWith);
+        $('.' + config.frodoForm).append(el.logWith);
 
         //Append social buttons
         el.socialWrapper.each(function() {
@@ -375,10 +338,9 @@
             }
           $(this).append(btns);
         });
-        $('.' + this.config.frodoForm).append(el.socialWrapper);
+        $('.' + config.frodoForm).append(el.socialWrapper);
         console.log('Login panel created');
     }
-    
 
  };
 
@@ -396,11 +358,14 @@
             return true;
         }
 
-        var loginBox = $('.' + this.config.frodoLogin.box),
+        //Shorthand for this.config
+        var config = this.config,
+
+            loginBox = $('.' + config.frodoLogin.box),
             inputs = loginBox.find('input'),
-            headerTxt = $('.' + this.config.frodoHeader.header).find('.' + this.config.frodoHeader.text),
-            forgot = $('.' + this.config.frodoLogin.forgot),
-            signUp = $('.' + this.config.frodoLogin.signUp),
+            headerTxt = $('.' + config.frodoHeader.header).find('.' + config.frodoHeader.text),
+            forgot = $('.' + config.frodoLogin.forgot),
+            signUp = $('.' + config.frodoLogin.signUp),
             fullname = loginBox.find('input[name=fullname]'),
             password = loginBox.find('input[name=password]'),
             email = loginBox.find('input[name=email]'),
@@ -410,9 +375,9 @@
 
             //Delete alert message
             this.showAlert(null, {
-                messageBox: this.config.frodoLogin.message,
-                text: this.config.frodoLogin.message + ' > span',
-                alert: this.config.frodoLogin.messageAlert
+                messageBox: config.frodoLogin.message,
+                text: config.frodoLogin.message + ' > span',
+                alert: config.frodoLogin.messageAlert
             });
 
             //Clear form inputs
@@ -421,14 +386,14 @@
             //Check which form is used
             if (form === 'sign-up') {
                 //Go from 'forgot' to 'sign-up'
-                if (!passwordReset.hasClass(this.config.hideClass)) {
-                  inputs.not(passwordReset).removeClass(this.config.hideClass).prop('disabled', false);
-                  passwordReset.addClass(this.config.hideClass).prop('disabled', true);
-                  changeTxt(headerTxt, this.config.registerTxt, signUp, this.config.loginTxt);
+                if (!passwordReset.hasClass(config.hideClass)) {
+                  inputs.not(passwordReset).removeClass(config.hideClass).prop('disabled', false);
+                  passwordReset.addClass(config.hideClass).prop('disabled', true);
+                  changeTxt(headerTxt, config.registerTxt, signUp, config.loginTxt);
                 } 
                 //Switch 'sign-up' to 'log-in'
                 else {
-                  $(email).add(passwordConfirm).toggleClass(this.config.hideClass).prop('disabled', function (index, oldProp) {
+                  $(email).add(passwordConfirm).toggleClass(config.hideClass).prop('disabled', function (index, oldProp) {
                     return !oldProp;
                   });
                   signUp.text( function (i, text) {
@@ -441,16 +406,16 @@
             } 
             //Form reset password
             else if (form === 'reset') {
-                inputs.not(passwordReset).addClass(this.config.hideClass).prop('disabled', true);
-                passwordReset.removeClass(this.config.hideClass).prop('disabled', false);
-                changeTxt(headerTxt, this.config.resetTxt, signUp, this.config.registerTxt);
+                inputs.not(passwordReset).addClass(config.hideClass).prop('disabled', true);
+                passwordReset.removeClass(config.hideClass).prop('disabled', false);
+                changeTxt(headerTxt, config.resetTxt, signUp, config.registerTxt);
             }
 
             //Close button reset form
             else if (form === 'open') {
-                fullname.add(password).removeClass(this.config.hideClass).prop('disabled', false);
-                email.add(passwordConfirm).add(passwordReset).addClass(this.config.hideClass).prop('disabled', true);
-                changeTxt(headerTxt, this.config.loginTxt, signUp, this.config.links[1]);
+                fullname.add(password).removeClass(config.hideClass).prop('disabled', false);
+                email.add(passwordConfirm).add(passwordReset).addClass(config.hideClass).prop('disabled', true);
+                changeTxt(headerTxt, config.loginTxt, signUp, config.links[1]);
             }
 
         return true;
@@ -490,25 +455,19 @@
      * @return {[boolean]} 
      */
     Frodo.prototype.closePanel = function () {
-         //Block mouse scroll when panel is open 
-        $('#' + this.config.frodoWrapper).removeClass('frodo-no-scroll');
+        //Shorthand for this.config
+        var config = this.config;
+
+        //Block mouse scroll when panel is open 
+        $('#' + config.frodoWrapper).removeClass('frodo-no-scroll');
 
         // console.log(frodo);
 
         //Remove uneccessary classes                
-        $('#' + this.config.frodo).removeClass(this.config.frodoVisible);
-        $('.' + this.config.frodoOverlay).removeClass(this.config.frodoVisible);
-        $('#' + this.config.frodoMessage).empty();
+        $('#' + config.frodo).removeClass(config.frodoVisible);
+        $('.' + config.frodoOverlay).removeClass(config.frodoVisible);
+        $('#' + config.frodoMessage).empty();
         this.clearInputs();
-
-        // showAlert.call(defaults, {
-        //     messageBox: defaults.frodoLogin.message,
-        //     text: defaults.frodoLogin.message + ' > span',
-        //     alert: defaults.frodoLogin.messageAlert
-        // } );
-
-        //Nice to have
-        // $('body').toggleClass(defaults.bodyReset);
         
         return true;        
     };
@@ -518,7 +477,10 @@
      * @return {[boolean]}
      */
     Frodo.prototype.clearInputs = function () {
-        $('.' + this.config.frodoLogin.input).each( function () {
+        //Shorthand for this.config
+        var config = this.config;
+
+        $('.' + config.frodoLogin.input).each( function () {
             this.value = '';
         });
 
@@ -536,11 +498,16 @@
 
     $.fn.frodo = function (options) {
 
-        new Frodo(this, options);
+        new Frodo(this.filter('[data-login]'), options);
 
         return this;
     };
 
 })( jQuery );
 
-///=include jquery.frodo.js
+//Initialization of a plugin
+;(function ($) {
+    "use strict";
+    
+     $('[data-login]').frodo();
+}(jQuery));
