@@ -452,7 +452,6 @@
             data = false;
         }
 
-        // console.log(options.text);
         if (data) {
             if (data.fail) {
                 $('#' + options.messageBox).addClass(options.alert);

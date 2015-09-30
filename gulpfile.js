@@ -71,6 +71,7 @@ gulp.task('sass', function () {
 	}))
 	.on('error', gutil.log)
 	.pipe(autoprefixer(' > 2%'))
+	.pipe(rename('jquery.frodo.css'))
 	// .pipe(sass(
 	// 	{ outputStyle: 'compact' }))
 	.pipe(gulp.dest(cssSources))
