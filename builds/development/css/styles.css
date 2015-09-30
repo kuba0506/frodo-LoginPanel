@@ -51,6 +51,10 @@
 
 .frodo-provider--reset { border: 0 none; height: 0 !important; margin: 0 !important; padding: 0; }
 
+.frodo-btn { font-size: 14px; font-weight: normal; display: inline-block; width: 100%; height: 40px; padding: 0 5px; margin: 0; color: #fff; opacity: 1; text-decoration: none !important; -webkit-transition: al, .3s, ease; transition: al, .3s, ease; line-height: 40px; text-align: center; border-radius: 2px; }
+.frodo-btn:hover, .frodo-btn:focus, .frodo-btn:active { outline: 0; opacity: 0.7; color: #fff; text-decoration: none !important; }
+.frodo-btn i { font-size: 21px; line-height: 40px; padding-right: 15px; vertical-align: middle; }
+
 .frodo-log-with { display: block; text-align: center; padding: 10px 0; color: #000; }
 .frodo-log-with span { color: #000; }
 
@@ -76,3 +80,122 @@
   .frodo-provider { padding: 2%; }
   .frodo-links a { line-height: 26px; } }
 @media only screen and (max-width: 360px) { .frodo { width: 95%; } }
+/******************************************************/
+/********************* Icons **************************/
+/*.azm-btn i:after { content: ""; position: absolute; top: 6px; left: 70%; width: 1px; height: 28px; background: #ccc; background: rgba(255, 255, 255, 0.3);
+}*/
+.frodo-btn-android { background: #8ec147; }
+
+.frodo-btn-apple { background: #777; }
+
+.frodo-btn-behance { background: #0077ff; }
+
+.frodo-btn-bitcoin { background: #f79012; }
+
+.frodo-btn-buysellads { background: #c90100; }
+
+.frodo-btn-codepen { background: #444; }
+
+.frodo-btn-css3 { background: #0270bb; }
+
+.frodo-btn-delicious { background: #31a9ff; }
+
+.frodo-btn-deviantart { background: #05cc47; }
+
+.frodo-btn-digg { background: #0093cc; }
+
+.frodo-btn-dribbble { background: #ea4c89; }
+
+.frodo-btn-dropbox { background: #007ee5; }
+
+.frodo-btn-drupal { background: #0073ba; }
+
+.frodo-btn-email-1 { background: #35c7ed; }
+
+.frodo-btn-email-2 { background: #35c7ed; }
+
+.frodo-btn-facebook { background: #4862a3; }
+
+.frodo-btn-flickr { background: #ff1981; }
+
+.frodo-btn-foursquare { background: #f04d7a; }
+
+.frodo-btn-git { background: #f64d27; }
+
+.frodo-btn-github { background: #999; }
+
+.frodo-btn-google { background: #3f85f4; }
+
+.frodo-btn-google-plus { background: #dd4b39; }
+
+.frodo-btn-html5 { background: #e54d26; }
+
+.frodo-btn-instagram { background: #3d6b92; }
+
+.frodo-btn-joomla { background: #fc8f30; }
+
+.frodo-btn-jsfiddle { background: #4679bd; }
+
+.frodo-btn-lastfm { background: #df1c23; }
+
+.frodo-btn-linkedin { background: #0177b5; }
+
+.frodo-btn-linux { background: #39a6df; }
+
+.frodo-btn-maxcdn { background: #ff5b02; }
+
+.frodo-btn-medium { background: #333; }
+
+.frodo-btn-pagelines { background: #444; }
+
+.frodo-btn-paypal { background: #009cde; }
+
+.frodo-btn-pinterest { background: #db242c; }
+
+.frodo-btn-reddit { background: #ff4500; }
+
+.frodo-btn-rss { background: #fc8f55; }
+
+.frodo-btn-share { background: #01924b; }
+
+.frodo-btn-skype { background: #00aff0; }
+
+.frodo-btn-slideshare { background: #0679b5; }
+
+.frodo-btn-soundcloud { background: #ff4e00; }
+
+.frodo-btn-spotify { background: #84bd00; }
+
+.frodo-btn-stack-exchange { background: #366fb3; }
+
+.frodo-btn-stack-overflow { background: #07c; }
+
+.frodo-btn-stumbleupon { background: #ea4b24; }
+
+.frodo-btn-trello { background: #026aa7; }
+
+.frodo-btn-tumblr { background: #2c4762; }
+
+.frodo-btn-twitter { background: #55acee; }
+
+.frodo-btn-vimeo { background: #44bbff; }
+
+.frodo-btn-vine { background: #00bf8f; }
+
+.frodo-btn-vk { background: #6281a3; }
+
+.frodo-btn-whatsapp { background: #59ac23; }
+
+.frodo-btn-windows { background: #00bcf2; }
+
+.frodo-btn-wordpress { background: #1e8cbe; }
+
+.frodo-btn-xing { background: #006464; }
+
+.frodo-btn-yahoo { background: #5210c4; }
+
+.frodo-btn-yelp { background: #c41200; }
+
+.frodo-btn-youtube { background: #d02022; }
+
+.frodo-btn-youtube-play { background: #d02022; }

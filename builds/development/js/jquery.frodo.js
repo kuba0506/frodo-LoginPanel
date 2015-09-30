@@ -350,7 +350,7 @@
 
                 for (var i = 0, len = social.length; i < len; i++) {
                     btns += '<div class="frodo-provider">\
-                          <a class="azm-social azm-btn azm-' + social[i].provider + '" \
+                          <a class="frodo-btn frodo-btn-' + social[i].provider + '" \
                           href="' + social[i].link + '">\
                           <i class="fa fa-' + social[i].provider + '"></i>' + social[i].text + '</a>\
                         </div>';
