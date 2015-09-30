@@ -13,6 +13,7 @@ var gulp = require('gulp'),
 	reload = browserSync.reload,
 	plumber  = require('gulp-plumber'), 
 	rename  = require('gulp-rename'), 
+	prettify = require('gulp-jsbeautifier'),
 	minify = require('gulp-uglify');
 	// beautify = require('gulp-beautify'),
 	// sass  = require('gulp-sass'), 
@@ -47,6 +48,7 @@ gulp.task('js',function () {
 	.pipe(include())
 		.on('error', gutil.log)
 	.pipe(rename('jquery.frodo.js'))
+	.pipe(prettify({config: '.jsbeautifyrc', mode: 'VERIFY_AND_WRITE'}))
 	.pipe(gulp.dest('builds/development/js'))
 	// .pipe(watch(jsSources))
 	// .pipe(browserify())
@@ -102,6 +104,17 @@ gulp.task('connect', function () {
 //Html
 gulp.task('html', function () {
 	gulp.src(htmlSources)
+	// .pipe(prettify({
+	//         braceStyle: "collapse",
+	//         indentChar: " ",
+	//         indentScripts: "keep",
+	//         indentSize: 0,
+	//         maxPreserveNewlines: 10,
+	//         preserveNewlines: true,
+	//         unformatted: ["a", "sub", "sup", "b", "i", "u"],
+	//         wrapLineLength: 0
+	// 	}))
+	// .pipe(gulp.dest(htmlSources))
 	// .pipe(watch(htmlSources))
 	// .pipe(connect.reload());
 });
