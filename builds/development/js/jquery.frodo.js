@@ -6,13 +6,21 @@
  * $([data-login]).frodo();
  */
 ;
-(function($) {
+(function($, global) {
     "use strict";
 
     //Default plugin settings 
     var defaults = {
 
         lang: 'en',
+        redirect_uri: (function (global) {
+            if (!global.location.origin) {
+                global.location.origin = global.location.protocol + '//' + global.location.hostname
+                                          + (global.location.port ? global.location.port : '');
+            }
+
+            return global.location.origin;
+        })(window),
 
         //Classes and ids
         body: 'body',
@@ -66,7 +74,7 @@
     var social = [{
         provider: 'facebook',
         text: 'Facebook',
-        link: '#'
+        link: 'http://localhost:8082/facebook/authorize'
     }, {
         provider: 'twitter',
         text: 'Twitter',
@@ -164,7 +172,7 @@
 -----------------------------AJAX FORM VALIDATION-----------------------------------------------------------------
  */
         // TEMP - Ajax - jsonp
-        $(config.body).on('click', '.azm-social', function() {
+        $(config.body).on('click', '.frodo-btn', function() {
             var url = 'http://jurczynski.czest.pl/registerFailed.json?callback=myCallback',
                 url2 = 'http://jurczynski.czest.pl/registerSuccess.json?callback=myCallback',
                 address = [url, url2],
@@ -351,7 +359,7 @@
                 for (var i = 0, len = social.length; i < len; i++) {
                     btns += '<div class="frodo-provider">\
                           <a class="frodo-btn frodo-btn-' + social[i].provider + '" \
-                          href="' + social[i].link + '">\
+                          href="' + social[i].link  + '?' + 'redirect_uri=' +  config.redirect_uri +  '">\
                           <i class="fa fa-' + social[i].provider + '"></i>' + social[i].text + '</a>\
                         </div>';
                 }
@@ -359,6 +367,7 @@
             });
             $('.' + config.frodoForm).append(el.socialWrapper);
             console.log('Login panel created');
+            console.log('Redirect domain: ', config.redirect_uri);
         }
 
     };
@@ -529,4 +538,4 @@
     "use strict";
 
     $('[data-login]').frodo();
-}(jQuery));
+}(jQuery, window));
