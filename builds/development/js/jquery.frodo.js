@@ -6,96 +6,10 @@
  * $([data-login]).frodo();
  */
 ;
-(function($, global) {
+(function($) {
     "use strict";
 
-    //Default plugin settings 
-    var defaults = {
 
-        lang: 'en',
-        redirect_uri: (function (global) {
-            if (!global.location.origin) {
-                global.location.origin = global.location.protocol + '//' + global.location.hostname
-                                          + (global.location.port ? global.location.port : '');
-            }
-
-            return global.location.origin;
-        })(window),
-
-        //Classes and ids
-        body: 'body',
-        frodoWrapper: 'frodo-wrapper',
-        frodo: 'frodo',
-        frodoOverlay: 'frodo-overlay',
-        frodoForm: 'frodo-form',
-        frodoHeader: {
-            header: 'frodo-header',
-            text: 'frodo-header-txt',
-            closeBtn: 'frodo-btn-close'
-        },
-        frodoLogin: {
-            box: 'frodo-login-box',
-            message: 'frodo-message',
-            messageAlert: 'frodo-message-alert',
-            input: 'frodo-input',
-            footer: 'frodo-login-footer',
-            linksWrapper: 'frodo-links',
-            forgot: 'frodo-forgot',
-            signUp: 'frodo-sign-up',
-            submit: 'frodo-btn-submit'
-        },
-        log: 'frodo-log-with',
-        social: 'frodo-social',
-        //Helpers
-        frodoVisible: 'frodo-visible',
-        hideClass: 'frodo-hide',
-
-        //Settings
-        method: 'get',
-        submitUrl: '?',
-        forgotLink: '#',
-        signUpLink: '#',
-
-        //Translation
-        loginTxt: 'Log in',
-        registerTxt: 'Sign up',
-        resetTxt: 'Password Reset',
-        userPlaceholder: 'Fullname',
-        passPlaceholder: 'Password',
-        passConfirmPlaceholder: 'Confirm password',
-        emailPlaceholder: 'Email',
-        emailResetPlaceholder: 'Your email address',
-        links: ['Forgot your password ?', 'Sign up now', 'Log in now'],
-        login: 'Submit',
-        logWith: 'or with:'
-    };
-
-    //TEMP - Array of social buttons
-    var social = [{
-        provider: 'facebook',
-        text: 'Facebook',
-        link: 'http://localhost:8082/facebook/authorize'
-    }, {
-        provider: 'twitter',
-        text: 'Twitter',
-        link: '#'
-    }, {
-        provider: 'google-plus',
-        text: 'Google++',
-        link: '#'
-    }, {
-        provider: 'linkedin',
-        text: 'LinkedIn',
-        link: '#'
-    }, {
-        provider: 'android',
-        text: 'Android',
-        link: '#'
-    }, {
-        provider: 'skype',
-        text: 'Skype',
-        link: '#'
-    }];
 
 
     /*
@@ -172,7 +86,7 @@
 -----------------------------AJAX FORM VALIDATION-----------------------------------------------------------------
  */
         // TEMP - Ajax - jsonp
-        $(config.body).on('click', '.frodo-btn', function() {
+        $(config.body).on('click', '.azm-social', function() {
             var url = 'http://jurczynski.czest.pl/registerFailed.json?callback=myCallback',
                 url2 = 'http://jurczynski.czest.pl/registerSuccess.json?callback=myCallback',
                 address = [url, url2],
@@ -359,7 +273,7 @@
                 for (var i = 0, len = social.length; i < len; i++) {
                     btns += '<div class="frodo-provider">\
                           <a class="frodo-btn frodo-btn-' + social[i].provider + '" \
-                          href="' + social[i].link  + '?' + 'redirect_uri=' +  config.redirect_uri +  '">\
+                          href="' + social[i].link + '">\
                           <i class="fa fa-' + social[i].provider + '"></i>' + social[i].text + '</a>\
                         </div>';
                 }
@@ -367,7 +281,6 @@
             });
             $('.' + config.frodoForm).append(el.socialWrapper);
             console.log('Login panel created');
-            console.log('Redirect domain: ', config.redirect_uri);
         }
 
     };
@@ -530,6 +443,86 @@
         return this;
     };
 
+    //Default plugin settings 
+    var defaults = {
+
+        lang: 'en',
+
+        //Classes and ids
+        body: 'body',
+        frodoWrapper: 'frodo-wrapper',
+        frodo: 'frodo',
+        frodoOverlay: 'frodo-overlay',
+        frodoForm: 'frodo-form',
+        frodoHeader: {
+            header: 'frodo-header',
+            text: 'frodo-header-txt',
+            closeBtn: 'frodo-btn-close'
+        },
+        frodoLogin: {
+            box: 'frodo-login-box',
+            message: 'frodo-message',
+            messageAlert: 'frodo-message-alert',
+            input: 'frodo-input',
+            footer: 'frodo-login-footer',
+            linksWrapper: 'frodo-links',
+            forgot: 'frodo-forgot',
+            signUp: 'frodo-sign-up',
+            submit: 'frodo-btn-submit'
+        },
+        log: 'frodo-log-with',
+        social: 'frodo-social',
+        //Helpers
+        frodoVisible: 'frodo-visible',
+        hideClass: 'frodo-hide',
+
+        //Settings
+        method: 'get',
+        submitUrl: '?',
+        forgotLink: '#',
+        signUpLink: '#',
+
+        //Translation
+        loginTxt: 'Log in',
+        registerTxt: 'Sign up',
+        resetTxt: 'Password Reset',
+        userPlaceholder: 'Fullname',
+        passPlaceholder: 'Password',
+        passConfirmPlaceholder: 'Confirm password',
+        emailPlaceholder: 'Email',
+        emailResetPlaceholder: 'Your email address',
+        links: ['Forgot your password ?', 'Sign up now', 'Log in now'],
+        login: 'Submit',
+        logWith: 'or with:'
+    };
+
+    //TEMP - Array of social buttons
+    var social = [{
+        provider: 'facebook',
+        text: 'Facebook',
+        link: '#'
+    }, {
+        provider: 'twitter',
+        text: 'Twitter',
+        link: '#'
+    }, {
+        provider: 'google-plus',
+        text: 'Google++',
+        link: '#'
+    }, {
+        provider: 'linkedin',
+        text: 'LinkedIn',
+        link: '#'
+    }, {
+        provider: 'android',
+        text: 'Android',
+        link: '#'
+    }, {
+        provider: 'skype',
+        text: 'Skype',
+        link: '#'
+    }];
+
 })(jQuery);
 
 //Initialization of a plugin
@@ -538,4 +531,4 @@
     "use strict";
 
     $('[data-login]').frodo();
-}(jQuery, window));
+}(jQuery));

@@ -8,92 +8,7 @@
 ;(function ($) {
     "use strict";
 
-    //Default plugin settings 
-    var defaults = {
-
-        lang: 'en',
-
-        //Classes and ids
-        body: 'body',
-        frodoWrapper: 'frodo-wrapper',
-        frodo: 'frodo',
-        frodoOverlay: 'frodo-overlay',
-        frodoForm: 'frodo-form',
-        frodoHeader: {
-            header: 'frodo-header',
-            text: 'frodo-header-txt',
-            closeBtn: 'frodo-btn-close'
-        },
-        frodoLogin: {
-            box: 'frodo-login-box',
-            message: 'frodo-message',
-            messageAlert: 'frodo-message-alert',
-            input: 'frodo-input',
-            footer: 'frodo-login-footer',
-            linksWrapper: 'frodo-links',
-            forgot: 'frodo-forgot',
-            signUp: 'frodo-sign-up',
-            submit: 'frodo-btn-submit'
-        },
-        log: 'frodo-log-with',
-        social: 'frodo-social',
-        //Helpers
-        frodoVisible: 'frodo-visible',
-        hideClass: 'frodo-hide',
-
-        //Settings
-        method: 'get',
-        submitUrl: '?',
-        forgotLink: '#',
-        signUpLink: '#',
-
-        //Translation
-        loginTxt: 'Log in',
-        registerTxt: 'Sign up',
-        resetTxt: 'Password Reset',
-        userPlaceholder: 'Fullname',
-        passPlaceholder: 'Password',
-        passConfirmPlaceholder: 'Confirm password',
-        emailPlaceholder: 'Email',
-        emailResetPlaceholder: 'Your email address',
-        links: [ 'Forgot your password ?', 'Sign up now', 'Log in now'],
-        login: 'Submit',
-        logWith: 'or with:'
-    };
-
-        //TEMP - Array of social buttons
-    var social = [
-        {
-            provider: 'facebook',
-            text: 'Facebook',
-            link: '#'
-        },
-        {
-            provider: 'twitter',
-            text: 'Twitter',
-            link: '#'
-        },
-        {
-            provider: 'google-plus',
-            text: 'Google++',
-            link: '#'
-        },
-        {
-            provider: 'linkedin',
-            text: 'LinkedIn',
-            link: '#'
-        },
-        {
-            provider: 'android',
-            text: 'Android',
-            link: '#'
-        },
-        {
-            provider: 'skype',
-            text: 'Skype',
-            link: '#'
-        } 
-    ];
+    
 
 
 /*
@@ -502,6 +417,93 @@
 
         return this;
     };
+
+    //Default plugin settings 
+    var defaults = {
+
+        lang: 'en',
+
+        //Classes and ids
+        body: 'body',
+        frodoWrapper: 'frodo-wrapper',
+        frodo: 'frodo',
+        frodoOverlay: 'frodo-overlay',
+        frodoForm: 'frodo-form',
+        frodoHeader: {
+            header: 'frodo-header',
+            text: 'frodo-header-txt',
+            closeBtn: 'frodo-btn-close'
+        },
+        frodoLogin: {
+            box: 'frodo-login-box',
+            message: 'frodo-message',
+            messageAlert: 'frodo-message-alert',
+            input: 'frodo-input',
+            footer: 'frodo-login-footer',
+            linksWrapper: 'frodo-links',
+            forgot: 'frodo-forgot',
+            signUp: 'frodo-sign-up',
+            submit: 'frodo-btn-submit'
+        },
+        log: 'frodo-log-with',
+        social: 'frodo-social',
+        //Helpers
+        frodoVisible: 'frodo-visible',
+        hideClass: 'frodo-hide',
+
+        //Settings
+        method: 'get',
+        submitUrl: '?',
+        forgotLink: '#',
+        signUpLink: '#',
+
+        //Translation
+        loginTxt: 'Log in',
+        registerTxt: 'Sign up',
+        resetTxt: 'Password Reset',
+        userPlaceholder: 'Fullname',
+        passPlaceholder: 'Password',
+        passConfirmPlaceholder: 'Confirm password',
+        emailPlaceholder: 'Email',
+        emailResetPlaceholder: 'Your email address',
+        links: [ 'Forgot your password ?', 'Sign up now', 'Log in now'],
+        login: 'Submit',
+        logWith: 'or with:'
+    };
+
+        //TEMP - Array of social buttons
+    var social = [
+        {
+            provider: 'facebook',
+            text: 'Facebook',
+            link: '#'
+        },
+        {
+            provider: 'twitter',
+            text: 'Twitter',
+            link: '#'
+        },
+        {
+            provider: 'google-plus',
+            text: 'Google++',
+            link: '#'
+        },
+        {
+            provider: 'linkedin',
+            text: 'LinkedIn',
+            link: '#'
+        },
+        {
+            provider: 'android',
+            text: 'Android',
+            link: '#'
+        },
+        {
+            provider: 'skype',
+            text: 'Skype',
+            link: '#'
+        } 
+    ];
 
 })( jQuery );
 
