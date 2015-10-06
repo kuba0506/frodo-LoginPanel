@@ -82,6 +82,15 @@
             event.preventDefault();
             frodo.toggleForm('reset');
         });
+
+        /*
+-----------------------------FORM VALIDATION HANDLER --------------------------------------------------------
+ */
+        $(config.body).on('focus', 'input', function() {
+            var submit = $('.' + config.frodoLogin.submit);
+            submit.prop('disabled', true);
+        });
+
         /*
 -----------------------------AJAX FORM VALIDATION-----------------------------------------------------------------
  */
@@ -233,7 +242,6 @@
                 submitBtn: $('<button/>', {
                     class: config.frodoLogin.submit,
                     type: 'submit',
-                    disabled: true,
                     html: config.login
                 }),
 
@@ -295,6 +303,8 @@
         }
 
     };
+
+    Frodo.prototype.validate = function() {};
 
     /**
      * [toggleForm switch forms]
@@ -407,10 +417,14 @@
      */
     Frodo.prototype.closePanel = function() {
         //Shorthand for this.config
-        var config = this.config;
+        var config = this.config,
+            submit = $('.' + config.frodoLogin.submit);
 
         //Block mouse scroll when panel is open 
         $('#' + config.frodoWrapper).removeClass('frodo-no-scroll');
+
+        //Enable submit btn
+        submit.prop('disabled', false);
 
         //Remove uneccessary classes                
         $('#' + config.frodo).removeClass(config.frodoVisible);

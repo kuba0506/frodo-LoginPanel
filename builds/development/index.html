@@ -64,14 +64,12 @@
     var file = document.querySelector('input[type ="file"]');
 
     file.addEventListener('change', function () {
-        // console.log(this.files[0].size);
         fileInfo(this.files);
         console.log(this.files)
     });
 
     var string = ['This is a blob text'];
     var blob = new Blob(string, {type: 'text/plain'});
-    // blob.type = 'text/plain';
 
     console.log(blob);
 
