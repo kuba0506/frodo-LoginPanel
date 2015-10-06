@@ -149,6 +149,10 @@
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);
     outline: 0 none;
 }
+.frodo-input:focus.frodo-err {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(255, 0, 0, 0.6); 
+  border-color: #f00
+}
 .frodo-links  {
   @include pull-left;
   a {
@@ -292,7 +296,10 @@
 .frodo-relative {
   position: relative;
 }
-.frodo-error {
+.frodo-err {
+  border: 1px solid #f00; 
+}
+.frodo-err-msg {
   font-size: 14px; 
   color: #f00;
   position: absolute;

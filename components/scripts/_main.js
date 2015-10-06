@@ -85,9 +85,10 @@
  /*
 -----------------------------FORM VALIDATION HANDLER --------------------------------------------------------
  */
-        $(config.body).on('focus', 'input', function () {
+        $(config.body).on('keyup', 'input', function (event) {
             var submit = $('.' + config.frodoLogin.submit);
             submit.prop('disabled', true);
+            frodo.validate(event);
         });
 
  /*
@@ -169,12 +170,12 @@
                     class: config.frodoLogin.message
              }),
             messageTxt: $('<span/>'),
-            inputWrapper: $('<div/>', { class: 'relative' }).append($('<span/>', { class: config.hideClass })),
-            fullname: $('<input/>', {
-                    type: 'text',
-                    name: 'fullname',
+            inputWrapper: $('<div/>', { class: 'frodo-relative' }).append($('<span/>', { class: config.hideClass })),
+            email: $('<input/>', {
+                    type: 'email',
+                    name: 'email',
                     class: config.frodoLogin.input,
-                    placeholder: config.userPlaceholder
+                    placeholder: config.emailPlaceholder
             }),
             password: $('<input/>', {
                     type: 'password',
@@ -182,18 +183,18 @@
                     class: config.frodoLogin.input ,
                     placeholder: config.passPlaceholder
             }),
+            fullname: $('<input/>', {
+                    type: 'text',
+                    name: 'fullname',
+                    class: config.frodoLogin.input + ' ' + config.hideClass,
+                    placeholder: config.userPlaceholder,
+                    disabled: true
+            }),
             passwordConfirm: $('<input/>', {
                     type: 'password',
                     name: 'passwordConfirm',
                     class: config.frodoLogin.input + ' ' + config.hideClass,
                     placeholder: config.passConfirmPlaceholder,
-                    disabled: true
-            }),
-            email: $('<input/>', {
-                    type: 'email',
-                    name: 'email',
-                    class: config.frodoLogin.input + ' ' + config.hideClass,
-                    placeholder: config.emailPlaceholder,
                     disabled: true
             }),
             passwordReset: $('<input/>', {
@@ -245,12 +246,14 @@
             el.loginFooter.append(el.frodoLinksWrapper, el.submitBtn);
             el.message.append(el.messageTxt);
             //Wrap inputs in div
-            var elArray = [el.email, el.fullname, el.password, el.passwordConfirm, el.passwordReset];
+            var elArray = [el.email, el.password, el.fullname, el.passwordConfirm, el.passwordReset];
 
              elArray = $.map(elArray, function (value, index) {
                 return el.inputWrapper.clone().prepend(value);
              });
+
             el.loginBox.append(el.message, elArray, el.loginFooter);
+            console.log(el.loginBox);
             $('.' + config.frodoForm).append(el.loginBox);
 
             //Append log with text
@@ -275,7 +278,75 @@
 
     };
 
-    Frodo.prototype.validate = function () {};
+    Frodo.prototype.validate = function (event) {
+        function checkInputName(name) {
+           return $(event.target).attr('name') === name; 
+        }
+
+        var config = this.config,
+            input = $(event.target),
+            error = $('span', input.parent()),
+
+            //Test values
+            fullnamePattern = /([A-ZÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð]{1}[a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšž]{1,30}[- ]{0,1}|[A-ZÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð]{1}[- \']{1}[A-ZÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð]{0,1}[a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšž]{1,30}[- ]{0,1}|[a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšž]{1,2}[ -\']{1}[A-ZÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð]{1}[a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšž]{1,30}){2,5}/;
+
+        if (checkInputName('fullname')) {
+            var is_ok = fullnamePattern.test(input.val()); 
+
+            console.log(is_ok);
+
+            if (!is_ok) {
+                input.addClass('frodo-err');
+                error.removeClass(config.hideClass).text(config.fullnameError).addClass('frodo-err-msg');
+            } else {
+                input.removeClass('frodo-err');
+                error.addClass(config.hideClass).text('').removeClass('frodo-err-msg'); 
+            }
+        }
+        if (checkInputName('email')) {
+            console.log('email');
+            var is_ok = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+            if (!is_ok) {
+                input.addClass('frodo-err');
+                error.removeClass(config.hideClass).text(config.emailErr).addClass('frodo-err-msg');
+            } else {
+                input.removeClass('frodo-err');
+                error.addClass(config.hideClass).text('').removeClass('frodo-err-msg');
+            }
+        }
+        if (checkInputName('password')) {
+            console.log('password');
+            input.addClass('frodo-err');
+            error.removeClass(config.hideClass).text(config.passwordShortErr).addClass('frodo-err-msg');
+        }
+        if (checkInputName('passwordConfirm')) {
+            console.log('passwordConfirm');
+            input.addClass('frodo-err');
+            error.removeClass(config.hideClass).text(config.passwordMatchErr).addClass('frodo-err-msg');
+        }
+        if (checkInputName('passwordReset')) {
+            console.log('passwordReset');
+            input.addClass('frodo-err');
+            error.removeClass(config.hideClass).text(config.passwordShortErr).addClass('frodo-err-msg');
+        }
+
+
+
+
+
+        // $(event.target)
+
+        // console.log(event.target.getAttribute('name'));
+        // name == email
+        // name == fullname
+        // name == password
+        // name == passwordConfirm
+        // name == passwordReset
+        // this.config.frodoLogin.input.on('keyup', function (e) {
+        //     console.log(e.keyCode);
+        // });
+    };
 
     /**
      * [toggleForm switch forms]
@@ -489,10 +560,10 @@
         login: 'Submit',
         logWith: 'or with:',
         //Errors
-        errorFullname: 'Please type your full name',
-        errorEmail: 'Invalid email address format',
-        errorPassShort: 'Your pasword is too short',
-        errorPassMatch: 'Passwords do not match'
+        fullnameError: 'Please type your full name',
+        emailErr: 'Invalid email address format',
+        passwordShortErr: 'Your pasword is too short',
+        passwordMatchErr: 'Passwords do not match'
 
     };
 
