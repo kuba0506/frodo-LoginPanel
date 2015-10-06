@@ -176,6 +176,11 @@
                     class: config.frodoLogin.message
                 }),
                 messageTxt: $('<span/>'),
+                inputWrapper: $('<div/>', {
+                    class: 'relative'
+                }).append($('<span/>', {
+                    class: config.hideClass
+                })),
                 fullname: $('<input/>', {
                     type: 'text',
                     name: 'fullname',
@@ -228,6 +233,7 @@
                 submitBtn: $('<button/>', {
                     class: config.frodoLogin.submit,
                     type: 'submit',
+                    disabled: true,
                     html: config.login
                 }),
 
@@ -259,8 +265,13 @@
             el.frodoLinksWrapper.append(el.forgotLink, el.signUpLink)
             el.loginFooter.append(el.frodoLinksWrapper, el.submitBtn);
             el.message.append(el.messageTxt);
-            el.loginBox.append(el.message, el.email, el.fullname,
-                el.password, el.passwordConfirm, el.passwordReset, el.loginFooter);
+            //Wrap inputs in div
+            var elArray = [el.email, el.fullname, el.password, el.passwordConfirm, el.passwordReset];
+
+            elArray = $.map(elArray, function(value, index) {
+                return el.inputWrapper.clone().prepend(value);
+            });
+            el.loginBox.append(el.message, elArray, el.loginFooter);
             $('.' + config.frodoForm).append(el.loginBox);
 
             //Append log with text
@@ -401,8 +412,6 @@
         //Block mouse scroll when panel is open 
         $('#' + config.frodoWrapper).removeClass('frodo-no-scroll');
 
-        // console.log(frodo);
-
         //Remove uneccessary classes                
         $('#' + config.frodo).removeClass(config.frodoVisible);
         $('.' + config.frodoOverlay).removeClass(config.frodoVisible);
@@ -493,7 +502,13 @@
         emailResetPlaceholder: 'Your email address',
         links: ['Forgot your password ?', 'Sign up now', 'Log in now'],
         login: 'Submit',
-        logWith: 'or with:'
+        logWith: 'or with:',
+        //Errors
+        errorFullname: 'Please type your full name',
+        errorEmail: 'Invalid email address format',
+        errorPassShort: 'Your pasword is too short',
+        errorPassMatch: 'Passwords do not match'
+
     };
 
     //TEMP - Array of social buttons
