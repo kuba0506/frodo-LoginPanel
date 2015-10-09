@@ -54,30 +54,30 @@
     <script src="js/jquery.frodo.js"></script>
 
     <script>
-        function fileInfo(files) {
-            var files = files;
+    //     function fileInfo(files) {
+    //         var files = files;
 
-            for (var i = 0,len = files.length; i < len; i++) {
-                console.log(files[i].name, files[i].size, files[i].type, files[i].lastModifiedDate);
-            }
-        }
-    var file = document.querySelector('input[type ="file"]');
+    //         for (var i = 0,len = files.length; i < len; i++) {
+    //             console.log(files[i].name, files[i].size, files[i].type, files[i].lastModifiedDate);
+    //         }
+    //     }
+    // var file = document.querySelector('input[type ="file"]');
 
-    file.addEventListener('change', function () {
-        fileInfo(this.files);
-        console.log(this.files)
-    });
+    // file.addEventListener('change', function () {
+    //     fileInfo(this.files);
+    //     console.log(this.files)
+    // });
 
-    var string = ['This is a blob text'];
-    var blob = new Blob(string, {type: 'text/plain'});
+    // var string = ['This is a blob text'];
+    // var blob = new Blob(string, {type: 'text/plain'});
 
-    console.log(blob);
+    // console.log(blob);
 
-    var worker = new Worker('js/test.js');
+    // var worker = new Worker('js/test.js');
 
-    worker.onmessage = function (e) {
-        console.log('URL content: ', e.data);
-    };
+    // worker.onmessage = function (e) {
+    //     console.log('URL content: ', e.data);
+    // };
     </script>
 </body>
 </html>

@@ -180,7 +180,7 @@
                 //Login form
                 loginBox: $('<div/>', {
                     class: config.frodoLogin.box
-                }),
+                }).after('<p>Test</p>'),
                 message: $('<div/>', {
                     id: config.frodoLogin.message,
                     class: config.frodoLogin.message
@@ -191,6 +191,13 @@
                 }).append($('<span/>', {
                     class: config.hideClass
                 })),
+                fullname: $('<input/>', {
+                    type: 'text',
+                    name: 'fullname',
+                    class: config.frodoLogin.input + ' ' + config.hideClass,
+                    placeholder: config.userPlaceholder,
+                    disabled: true
+                }),
                 email: $('<input/>', {
                     type: 'email',
                     name: 'email',
@@ -203,23 +210,16 @@
                     class: config.frodoLogin.input,
                     placeholder: config.passPlaceholder
                 }),
-                fullname: $('<input/>', {
-                    type: 'text',
-                    name: 'fullname',
-                    class: config.frodoLogin.input + ' ' + config.hideClass,
-                    placeholder: config.userPlaceholder,
-                    disabled: true
-                }),
                 passwordConfirm: $('<input/>', {
                     type: 'password',
-                    name: 'passwordConfirm',
+                    name: 'password_confirm',
                     class: config.frodoLogin.input + ' ' + config.hideClass,
                     placeholder: config.passConfirmPlaceholder,
                     disabled: true
                 }),
                 passwordReset: $('<input/>', {
                     type: 'email',
-                    name: 'passwordReset',
+                    name: 'password_reset',
                     class: config.frodoLogin.input + ' ' + config.hideClass,
                     placeholder: config.emailResetPlaceholder,
                     disabled: true
@@ -274,15 +274,15 @@
             el.frodoLinksWrapper.append(el.forgotLink, el.signUpLink)
             el.loginFooter.append(el.frodoLinksWrapper, el.submitBtn);
             el.message.append(el.messageTxt);
-            //Wrap inputs in div
-            var elArray = [el.email, el.password, el.fullname, el.passwordConfirm, el.passwordReset];
 
+            //Append form
+            var elArray = [el.fullname, el.email, el.password, el.passwordConfirm, el.passwordReset];
+            // console.log(el.loginBox);
             elArray = $.map(elArray, function(value, index) {
                 return el.inputWrapper.clone().prepend(value);
             });
-
-            el.loginBox.append(el.message, elArray, el.loginFooter);
             console.log(el.loginBox);
+            el.loginBox.append(el.message, elArray, el.loginFooter);
             $('.' + config.frodoForm).append(el.loginBox);
 
             //Append log with text
@@ -360,21 +360,6 @@
             error.removeClass(config.hideClass).text(config.passwordShortErr).addClass('frodo-err-msg');
         }
 
-
-
-
-
-        // $(event.target)
-
-        // console.log(event.target.getAttribute('name'));
-        // name == email
-        // name == fullname
-        // name == password
-        // name == passwordConfirm
-        // name == passwordReset
-        // this.config.frodoLogin.input.on('keyup', function (e) {
-        //     console.log(e.keyCode);
-        // });
     };
 
     /**
@@ -426,7 +411,7 @@
             }
             //Switch 'sign-up' to 'log-in'
             else {
-                $(email).add(passwordConfirm).toggleClass(config.hideClass).prop('disabled', function(index, oldProp) {
+                email.add(passwordConfirm).toggleClass(config.hideClass).prop('disabled', function(index, oldProp) {
                     return !oldProp;
                 });
                 signUp.text(function(i, text) {
@@ -446,8 +431,10 @@
 
         //Close button reset form
         else if (form === 'open') {
-            fullname.add(password).removeClass(config.hideClass).prop('disabled', false);
-            email.add(passwordConfirm).add(passwordReset).addClass(config.hideClass).prop('disabled', true);
+            email.add(password).removeClass(config.hideClass).prop('disabled', false);
+            fullname.add(passwordConfirm).add(passwordReset).prop('disabled', true);
+            // fullname.add(password).removeClass(config.hideClass).prop('disabled', false);
+            // email.add(passwordConfirm).add(passwordReset).addClass(config.hideClass).prop('disabled', true);
             changeTxt(headerTxt, config.loginTxt, signUp, config.links[1]);
         }
 
