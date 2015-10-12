@@ -444,7 +444,6 @@
         }
 
         function toggleInputs (inputs, arr) {
-            
             inputs.map(function (value) {
                 if (arr.indexOf(value.attr('name')) !== -1 ) 
                     $(value).removeClass(config.hideClass).prop('disabled', false); 
@@ -463,9 +462,7 @@
             reset = [input.passwordReset.attr('name')],
             inputs = aggregateInputs(el.input),
             headerTxt = $('.' + config.frodoHeader.text),
-            signUpTxt = $('.' + config.frodoLogin.signUp),
-            that = this;
-
+            signUpTxt = $('.' + config.frodoLogin.signUp);
 
             //Delete alert message
             this.showAlert(null, {
@@ -476,31 +473,30 @@
 
             //Clear form inputs
             this.clearInputs();
-
+            console.log(inputs.filter(function (el) {
+                return el.attr('disabled');
+            }).length);
             //Check which form is used
             if (form === 'signup') {
-                //Check if form switched
-                if (headerTxt.text() === config.loginTxt) {
+                //Check if is either login or reset form
+                if (headerTxt.text() === config.loginTxt || headerTxt.text() === config.resetTxt) {
                  toggleInputs(inputs, signup);
                  changeTxt(headerTxt, config.registerTxt);
                  changeTxt(signUpTxt, config.links[2]);
-                 // formChanged = true;
                 } else {
                  toggleInputs(inputs, init);
                  changeTxt(headerTxt, config.loginTxt);
                  changeTxt(signUpTxt, config.links[1]);
-                 // formChanged = false;
                 }
             } 
             //Form reset password
             else if (form === 'reset') {
-                //Show
                 toggleInputs(inputs, reset);
                 changeTxt(headerTxt, config.resetTxt);
                 changeTxt(signUpTxt, config.links[1]); 
             }
 
-            //Close button reset form
+            //Form login, init state
             else if (form === 'init') {
                 toggleInputs(inputs, init);
                 changeTxt(headerTxt, config.loginTxt);
