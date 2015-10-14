@@ -40,6 +40,11 @@
             //Helpers
             frodoVisible: 'frodo-visible',
             hideClass: 'frodo-hide',
+            //Error class
+            errorClass: {
+                input: 'frodo-err-input',
+                msg: 'frodo-err-msg'
+            },
 
             //Settings
             method: 'get',
@@ -58,7 +63,11 @@
             emailResetPlaceholder: 'Your email address',
             links: [ 'Forgot your password ?', 'Sign up now', 'Log in now'],
             login: 'Submit',
-            logWith: 'or with:'
+            logWith: 'or with:',
+            //Errors
+            errors: {
+                email: 'Invalid email address format'
+            }
         };
 
     //CACHED OBJECTS
@@ -89,6 +98,9 @@
                     id: defaults.frodoLogin.message,
                     class: defaults.frodoLogin.message
              }).append($('<span/>')),
+            inputWrapper: $('<div/>', { class: 'frodo-input-wrapper' } )
+                            .append($('<span/>', { class:  'frodo-err-msg' })),
+            // inputError: $('<span/>', { class:  'frodo-err-msg' }),
             input: {
                 fullname: $('<input/>', {
                         type: 'text',
@@ -258,6 +270,7 @@
  */
         $(config.body).on('keyup', 'input', function (event) {
             var submit = $('.' + config.frodoLogin.submit);
+
             submit.prop('disabled', true);
             frodo.validate(event);
         });
@@ -319,9 +332,6 @@
 
             //Check if there is only one instace of plugin
         if ($('#' + config.frodoWrapper).length === 0) {
-            /**
-             * CREATING HTML STRUCTURE
-             */
 
            //Wrap all content with frodo wrapper, and append frodo container and overlay
             $(config.body).wrapInner(el.wrapper).
@@ -333,13 +343,18 @@
             $('.' + config.frodoForm).append(el.header);
 
             //Append login box
-            el.frodoLinksWrapper.append(el.forgotLink, el.signUpLink)
+            el.frodoLinksWrapper.append(el.forgotLink, el.signUpLink);
             el.loginFooter.append(el.frodoLinksWrapper, el.submitBtn);
             
+            //Create array of all inputs
             for (var input in el.input) {
                 inputs.push(el.input[input]);
             }
-
+            //Wrap each input with wrapper
+            inputs = inputs.map(function(input) {
+                return el.inputWrapper.clone().prepend(input);
+            });
+            //Finally append everything into box
             el.loginBox.append(el.message, inputs , el.loginFooter);
             $('.' + config.frodoForm).append(el.loginBox);
 
@@ -366,17 +381,59 @@
     };
 
     Frodo.prototype.validate = function (event) {
+
+        //Get input name
+        function getInputName(event) {
+            return input.attr('name');
+        }
+
+        //Check input name
         function checkInputName(name) {
-           return $(event.target).attr('name') === name; 
+           var event = event || event;
+
+           return getInputName(event) === name; 
+        }
+
+        //Get input value
+        function getInputValue(input) {
+            return input.val();
+        }
+
+        //Validate email
+        function checkEmail(email) {
+            var pattern = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+            return pattern.test(getInputValue(email));
+        }
+        function validateInput(input) {
+
         }
 
         var config = this.config,
             input = $(event.target),
-            error = $('span', input.parent()),
+            valid = false,
+            error = $('span', input.parent());
 
-            //Test values
-            fullnamePattern = /([A-ZÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð]{1}[a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšž]{1,30}[- ]{0,1}|[A-ZÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð]{1}[- \']{1}[A-ZÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð]{0,1}[a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšž]{1,30}[- ]{0,1}|[a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšž]{1,2}[ -\']{1}[A-ZÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð]{1}[a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšž]{1,30}){2,5}/;
+        //Email
+        if (checkInputName('email')) {
+            //If email is wrong
+            if (!checkEmail(input)) {
+                input.addClass(config.errorClass.input);
+                error.text(config.errors.email).addClass(config.errorClass.msg);
+            } else {
+                input.removeClass(config.errorClass.input);
+                error.text('').removeClass(config.errorClass.msg);
+            }
+        }
 
+        //Password
+        if (checkInputName('password')) {
+            console.log('password');
+            input.addClass('frodo-err');
+            error.removeClass(config.hideClass).text(config.passwordShortErr).addClass('frodo-err-msg');
+        }
+
+        //Fullname
         if (checkInputName('fullname')) {
             var is_ok = fullnamePattern.test(input.val()); 
 
@@ -390,28 +447,15 @@
                 error.addClass(config.hideClass).text('').removeClass('frodo-err-msg'); 
             }
         }
-        if (checkInputName('email')) {
-            console.log('email');
-            var is_ok = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-            if (!is_ok) {
-                input.addClass('frodo-err');
-                error.removeClass(config.hideClass).text(config.emailErr).addClass('frodo-err-msg');
-            } else {
-                input.removeClass('frodo-err');
-                error.addClass(config.hideClass).text('').removeClass('frodo-err-msg');
-            }
-        }
-        if (checkInputName('password')) {
-            console.log('password');
-            input.addClass('frodo-err');
-            error.removeClass(config.hideClass).text(config.passwordShortErr).addClass('frodo-err-msg');
-        }
+        //Passsword confirm
         if (checkInputName('passwordConfirm')) {
             console.log('passwordConfirm');
             input.addClass('frodo-err');
             error.removeClass(config.hideClass).text(config.passwordMatchErr).addClass('frodo-err-msg');
         }
+
+        //Paswword reset
         if (checkInputName('passwordReset')) {
             console.log('passwordReset');
             input.addClass('frodo-err');
@@ -473,9 +517,7 @@
 
             //Clear form inputs
             this.clearInputs();
-            console.log(inputs.filter(function (el) {
-                return el.attr('disabled');
-            }).length);
+
             //Check which form is used
             if (form === 'signup') {
                 //Check if is either login or reset form
