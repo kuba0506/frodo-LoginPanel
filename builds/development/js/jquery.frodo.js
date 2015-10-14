@@ -443,6 +443,18 @@
             return pattern.test(getInputValue(email));
         }
 
+        function checkPassword(password) {
+            var val = getInputValue(password),
+                status = false;
+
+            if (val.length > 8 || val.length !== 0)
+                status = true;
+            else
+                status = false;
+
+            return status;
+        }
+
         function validateInput(input) {
 
         }
@@ -470,6 +482,9 @@
 
         //Password
         if (checkInputName('password')) {
+            if (checkPassword(input)) {
+                console.log('ok');
+            }
             console.log('password');
             input.addClass('frodo-err');
             error.removeClass(config.hideClass).text(config.passwordShortErr).addClass('frodo-err-msg');
