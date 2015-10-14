@@ -230,6 +230,7 @@
                 alert: config.frodoLogin.messageAlert
             });
             frodo.toggleForm('init');
+            frodo.clearErrors();
             frodo.clearInputs();
         });
 
@@ -251,18 +252,18 @@
  /*
 -----------------------------REGISTER FORM HANDLER-----------------------------------------------------------------
  */
-        //Register form handler       
         $(config.body).on('click', '.' +  config.frodoLogin.signUp, function (event) {
           event.preventDefault();
           frodo.toggleForm('signup');
+          frodo.clearErrors();
         });
  /*
 -----------------------------RESET FORM HANDLER-----------------------------------------------------------------
  */
-        //Reset form handler
         $(config.body).on('click', '.' +  config.frodoLogin.forgot, function (event) {
           event.preventDefault();
           frodo.toggleForm('reset');
+          frodo.clearErrors();
         });
 
  /*
@@ -380,6 +381,19 @@
 
     };
 
+    Frodo.prototype.clearErrors = function () {
+        var loginBox = $('.' + defaults.frodoLogin.box),
+            errMsg = defaults.errorClass.msg,
+            errInput = defaults.errorClass.input,
+            input = loginBox.find('.' + errInput),
+            msg = loginBox.find('.' + errMsg);
+
+        input.removeClass(errInput);
+        msg.text('').removeClass(errMsg);
+
+        return true;
+    };
+
     Frodo.prototype.validate = function (event) {
 
         //Get input name
@@ -399,6 +413,7 @@
             return input.val();
         }
 
+
         //Validate email
         function checkEmail(email) {
             var pattern = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
@@ -414,6 +429,8 @@
             valid = false,
             error = $('span', input.parent());
 
+        var is_ok = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i; //DELETE !!!!!
+
         //Email
         if (checkInputName('email')) {
             //If email is wrong
@@ -421,8 +438,10 @@
                 input.addClass(config.errorClass.input);
                 error.text(config.errors.email).addClass(config.errorClass.msg);
             } else {
+                // console.log(frodo);
                 input.removeClass(config.errorClass.input);
                 error.text('').removeClass(config.errorClass.msg);
+                this.clearErrors();
             }
         }
 

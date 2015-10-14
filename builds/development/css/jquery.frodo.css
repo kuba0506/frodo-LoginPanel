@@ -25,7 +25,7 @@
 /** FRODO LOGIN FORM */
 .frodo-login-box { margin: 0 auto; border-bottom: 1px solid #dadada; padding: 0 20px 10px; }
 
-.frodo-input { background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 2px; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset; color: #555; display: block; font-size: 14px !important; height: 34px; line-height: 1.42857; -webkit-transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s; transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s; width: 100%; margin-bottom: 10px; height: 40px; padding: 0 20px; }
+.frodo-input { background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 2px; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset; color: #555; display: block; font-size: 14px !important; height: 34px; line-height: 1.42857; -webkit-transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s; transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s; width: 100%; height: 40px; padding: 0 20px; }
 
 .frodo-input:focus { border-color: #66afe9; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6); outline: 0 none; }
 
@@ -65,11 +65,11 @@
 .frodo-login-footer:after { clear: both; }
 
 /** Helpers */
-.frodo-input-wrapper { position: relative; }
+.frodo-input-wrapper { position: relative; margin: 15px 0; }
 
 .frodo-err-input { border: 1px solid #f00 !important; }
 
-.frodo-err-msg { font-size: 14px; color: #f00; position: absolute; right: 10px; top: -30px; line-height: 38px; }
+.frodo-err-msg { font-size: 13px; color: #f00; position: absolute; right: 10px; top: -25px; line-height: 36px; }
 
 .frodo-visible { opacity: 1; }
 

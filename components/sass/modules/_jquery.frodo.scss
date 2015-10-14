@@ -138,7 +138,7 @@
     line-height: 1.42857;
     transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
     width: 100%;
-    margin-bottom: 10px;
+    // margin-bottom: 10px;
     //Fix  - placeholder visibility in IE and Firefox
     height: 40px; 
     padding: 0 20px;
@@ -292,11 +292,11 @@
 /**
  * Helpers
  */
-.frodo-input-wrapper { position: relative; }
+.frodo-input-wrapper { position: relative; margin: 15px 0; }
 
 .frodo-err-input { border: 1px solid #f00 !important; }
 
-.frodo-err-msg { font-size: 14px; color: #f00; position: absolute; right: 10px; top: -30px; line-height: 38px; }
+.frodo-err-msg { font-size: 13px; color: #f00; position: absolute; right: 10px; top: -25px; line-height: 36px; }
 
 .frodo-visible {
   opacity: 1;
