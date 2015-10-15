@@ -475,7 +475,7 @@
             // console.log(form);
             // console.log(config.errorClass.msg);
 
-            if (valid && errors < 2) {
+            if (valid && errors < 1) {
                 return frodo.submitDisabled(false);
             } else {
                 return frodo.submitDisabled(true);
@@ -506,6 +506,7 @@
             } else {
                 input.removeClass(config.errorClass.input);
                 error.text('').removeClass(config.errorClass.msg);
+                errors = $('.' + config.errorClass.input).length;
                 // this.clearErrors();
                 validateInput(true);
             }
@@ -519,6 +520,7 @@
             } else {
                 input.removeClass(config.errorClass.input);
                 error.text('').removeClass(config.errorClass.msg);
+                errors = $('.' + config.errorClass.input).length;
                 // this.clearErrors();
                 validateInput(true);
             }
