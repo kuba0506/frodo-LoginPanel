@@ -66,7 +66,8 @@
             logWith: 'or',
             //Errors
             errors: {
-                email: 'Invalid email address format'
+                email: 'Invalid email address format',
+                password: 'Password should be at least 8 characters'
             }
         };
 
@@ -422,7 +423,10 @@
         function getInputValue(input) {
             return input.val();
         }
-
+        //Get input length
+        function getInputLength(input) {
+            return getInputValue(input).length;
+        }
 
 
         //Validate email
@@ -432,19 +436,23 @@
             return pattern.test(getInputValue(email));
         }
         function checkPassword(password) {
-            var val = getInputValue(password),
-                status = false;
+            var val = getInputLength(password);
 
-            if (val.length > 8 || val.length !== 0)
-                status = true;
+            if (val < 8 || val === 0)
+                return  false;
             else
-                status = false;
-
-            return status;
+                return true;
         }
 
         function validateInput(valid) {
-            if (valid) {
+            // var form = $('.' + config.frodoLogin.box),
+            //     errors = form.find('.' + config.errorClass.input);
+
+            console.log(errors);
+            // console.log(form);
+            // console.log(config.errorClass.msg);
+
+            if (valid && errors < 2) {
                 return frodo.submitDisabled(false);
             } else {
                 return frodo.submitDisabled(true);
@@ -454,6 +462,7 @@
         var frodo = this, 
             config = this.config,
             input = $(event.target),
+            errors = $('.' + config.errorClass.input).length,
             submitBtn = $('.' + config.frodoLogin.submit),
             valid = false,
             error = $('span', input.parent());
@@ -463,6 +472,7 @@
         //Disable submit btn 
         // submitBtn.prop('disabled', true);
         // this.submitDisabled();
+        // 
 
         //Email
         if (checkInputName('email')) {
@@ -473,19 +483,32 @@
             } else {
                 input.removeClass(config.errorClass.input);
                 error.text('').removeClass(config.errorClass.msg);
-                this.clearErrors();
+                // this.clearErrors();
                 validateInput(true);
             }
         }
 
         //Password
         if (checkInputName('password')) {
-            if (checkPassword(input)) {
-                console.log('ok');
+            if (!checkPassword(input)) {
+                input.addClass(config.errorClass.input);
+                error.text(config.errors.password).addClass(config.errorClass.msg);
+            } else {
+                input.removeClass(config.errorClass.input);
+                error.text('').removeClass(config.errorClass.msg);
+                // this.clearErrors();
+                validateInput(true);
             }
-            console.log('password');
-            input.addClass('frodo-err');
-            error.removeClass(config.hideClass).text(config.passwordShortErr).addClass('frodo-err-msg');
+            // console.log(getInputLength(input));
+            // checkPassword(input);            
+            // if (!checkPassword(input)) {
+
+            // }
+            //     input.addClass(config.errorClass.input);
+            //     error.text(config.errors.email).addClass(config.errorClass.msg);
+            // console.log('password');
+            // input.addClass('frodo-err');
+            // error.removeClass(config.hideClass).text(config.passwordShortErr).addClass('frodo-err-msg');
         }
 
         //Fullname
