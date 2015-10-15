@@ -281,7 +281,7 @@
             event.preventDefault();
             frodo.toggleForm('signup');
             frodo.clearErrors();
-            // frodo.submitDisabled();
+            frodo.submitDisabled();
         });
         /*
 -----------------------------RESET FORM HANDLER-----------------------------------------------------------------
@@ -290,7 +290,7 @@
             event.preventDefault();
             frodo.toggleForm('reset');
             frodo.clearErrors();
-            // frodo.submitDisabled();
+            frodo.submitDisabled();
         });
 
         /*
@@ -373,9 +373,16 @@
             el.loginFooter.append(el.frodoLinksWrapper, el.submitBtn);
 
             //Create array of all inputs
-            for (var input in el.input) {
-                inputs.push(el.input[input]);
+            //more efficient way
+            var keys = Object.keys(el.input);
+            for (var i = 0, len = keys.length; i < len; i++) {
+                inputs.push(el.input[keys[i]]);
             }
+            //Slower method
+            // for (var input in el.input) {
+            //     inputs.push(el.input[input]);
+            // }
+            
             //Wrap each input with wrapper
             inputs = inputs.map(function(input) {
                 return el.inputWrapper.clone().prepend(input);
