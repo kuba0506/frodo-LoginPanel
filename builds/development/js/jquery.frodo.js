@@ -64,7 +64,7 @@
         emailResetPlaceholder: 'Your email address',
         links: ['Forgot your password ?', 'Sign up now', 'Log in now'],
         login: 'Submit',
-        logWith: 'or with:',
+        logWith: 'or',
         //Errors
         errors: {
             email: 'Invalid email address format'
@@ -446,6 +446,7 @@
         }
 
 
+
         //Validate email
         function checkEmail(email) {
             var pattern = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
@@ -465,11 +466,16 @@
             return status;
         }
 
-        function validateInput(input) {
-
+        function validateInput(valid) {
+            if (valid) {
+                return frodo.submitDisabled(false);
+            } else {
+                return frodo.submitDisabled(true);
+            }
         }
 
-        var config = this.config,
+        var frodo = this,
+            config = this.config,
             input = $(event.target),
             submitBtn = $('.' + config.frodoLogin.submit),
             valid = false,
@@ -488,11 +494,10 @@
                 input.addClass(config.errorClass.input);
                 error.text(config.errors.email).addClass(config.errorClass.msg);
             } else {
-                // console.log(frodo);
                 input.removeClass(config.errorClass.input);
                 error.text('').removeClass(config.errorClass.msg);
                 this.clearErrors();
-                this.submitDisabled(false);
+                validateInput(true);
             }
         }
 
