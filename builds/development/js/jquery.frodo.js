@@ -561,10 +561,15 @@
         }
 
         function aggregateInputs(obj) {
-            var inputs = [];
+            var inputs = [],
+                keys = Object.keys(obj);
 
-            for (var input in obj)
-                inputs.push(obj[input])
+            //Fater method
+            for (var i = 0, len = keys.length; i < len;  i++) 
+                inputs.push(obj[keys[i]]);
+            
+            /*for (var input in obj)
+                inputs.push(obj[input])*/
 
             return inputs;
         }
@@ -701,7 +706,7 @@
     };
 
     /*
-    -------------------M E T H O D S  END --------------------------------------------------
+    -------------------M E T H O D S  END -------------------------------------------------- 
      */
 
     $.fn.frodo = function(options) {
