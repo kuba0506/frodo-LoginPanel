@@ -232,6 +232,9 @@
             frodo.toggleForm('init');
             frodo.clearErrors();
             frodo.clearInputs();
+
+            //Enable submit btn
+            frodo.submitDisabled(false);
         });
 
  /*
@@ -256,6 +259,7 @@
           event.preventDefault();
           frodo.toggleForm('signup');
           frodo.clearErrors();
+          // frodo.submitDisabled();
         });
  /*
 -----------------------------RESET FORM HANDLER-----------------------------------------------------------------
@@ -264,15 +268,14 @@
           event.preventDefault();
           frodo.toggleForm('reset');
           frodo.clearErrors();
+          // frodo.submitDisabled();
         });
 
  /*
 -----------------------------FORM VALIDATION HANDLER --------------------------------------------------------
  */
         $(config.body).on('keyup', 'input', function (event) {
-            var submit = $('.' + config.frodoLogin.submit);
-
-            submit.prop('disabled', true);
+            frodo.submitDisabled();
             frodo.validate(event);
         });
 
@@ -394,6 +397,18 @@
         return true;
     };
 
+    //Change submit button disabled state
+    Frodo.prototype.submitDisabled = function (bool) {
+        // var bool = undefined ?
+        
+        console.log(typeof bool); 
+            submitBtn = $('.' + defaults.frodoLogin.submit);
+
+        submitBtn.prop('disabled', bool);
+
+        return true;
+    };
+
     Frodo.prototype.validate = function (event) {
 
         //Get input name
@@ -438,10 +453,15 @@
 
         var config = this.config,
             input = $(event.target),
+            submitBtn = $('.' + config.frodoLogin.submit),
             valid = false,
             error = $('span', input.parent());
 
         var is_ok = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i; //DELETE !!!!!
+
+        //Disable submit btn 
+        // submitBtn.prop('disabled', true);
+        // this.submitDisabled();
 
         //Email
         if (checkInputName('email')) {
@@ -622,9 +642,6 @@
         //Block mouse scroll when panel is open 
         $('#' + config.frodoWrapper).removeClass('frodo-no-scroll');
 
-        //Enable submit btn
-        submit.prop('disabled', false);
-
         //Remove uneccessary classes                
         $('#' + config.frodo).removeClass(config.frodoVisible);
         $('.' + config.frodoOverlay).removeClass(config.frodoVisible);
@@ -648,6 +665,7 @@
 
         return true;
     };
+
 
     //TEMP - shuffle random url
     Frodo.prototype.getRandomInt = function (min, max) {
