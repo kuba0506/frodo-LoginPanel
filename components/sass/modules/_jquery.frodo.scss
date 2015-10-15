@@ -71,7 +71,6 @@
   font-size:20px;
   color: #FFD716; 
   color: #0088E3;
-  text-transform: uppercase;
   margin-top: 0;
   font-weight:bold;
   padding: 0 38px;
@@ -160,9 +159,7 @@
     line-height:19px;
     font-size: 12px;
     outline: none !important;
-    &:hover {
-      text-decoration: underline;
-    }
+    text-decoration: underline;
   }
 }
 .frodo-btn-submit {
@@ -280,6 +277,8 @@
     display: block;
     text-align: center;
     padding: 10px 0;
+    font-weight: bold;
+    text-transform: uppercase;
     color: #000; 
     span {
       color: #000; 

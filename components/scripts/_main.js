@@ -259,7 +259,7 @@
           event.preventDefault();
           frodo.toggleForm('signup');
           frodo.clearErrors();
-          // frodo.submitDisabled();
+          frodo.submitDisabled(false);
         });
  /*
 -----------------------------RESET FORM HANDLER-----------------------------------------------------------------
@@ -268,14 +268,14 @@
           event.preventDefault();
           frodo.toggleForm('reset');
           frodo.clearErrors();
-          // frodo.submitDisabled();
+          frodo.submitDisabled(false);
         });
 
  /*
 -----------------------------FORM VALIDATION HANDLER --------------------------------------------------------
  */
         $(config.body).on('keyup', 'input', function (event) {
-            frodo.submitDisabled();
+            frodo.submitDisabled(true);
             frodo.validate(event);
         });
 
@@ -399,14 +399,9 @@
 
     //Change submit button disabled state
     Frodo.prototype.submitDisabled = function (bool) {
-        // var bool = undefined ?
-        
-        console.log(typeof bool); 
-            submitBtn = $('.' + defaults.frodoLogin.submit);
+        var submitBtn = $('.' + defaults.frodoLogin.submit);
 
-        submitBtn.prop('disabled', bool);
-
-        return true;
+        return submitBtn.prop('disabled', bool);
     };
 
     Frodo.prototype.validate = function (event) {
@@ -474,6 +469,7 @@
                 input.removeClass(config.errorClass.input);
                 error.text('').removeClass(config.errorClass.msg);
                 this.clearErrors();
+                this.submitDisabled(false);
             }
         }
 
@@ -647,6 +643,7 @@
         $('.' + config.frodoOverlay).removeClass(config.frodoVisible);
         $('#' + config.frodoMessage).empty();
         this.clearInputs();
+        this.submitDisabled(false);
         
         return true;        
     };

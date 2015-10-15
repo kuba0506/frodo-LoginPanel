@@ -256,7 +256,7 @@
             frodo.clearInputs();
 
             //Enable submit btn
-            frodo.submitDisabled();
+            frodo.submitDisabled(false);
         });
 
         /*
@@ -281,7 +281,7 @@
             event.preventDefault();
             frodo.toggleForm('signup');
             frodo.clearErrors();
-            frodo.submitDisabled();
+            frodo.submitDisabled(false);
         });
         /*
 -----------------------------RESET FORM HANDLER-----------------------------------------------------------------
@@ -290,7 +290,7 @@
             event.preventDefault();
             frodo.toggleForm('reset');
             frodo.clearErrors();
-            frodo.submitDisabled();
+            frodo.submitDisabled(false);
         });
 
         /*
@@ -373,16 +373,9 @@
             el.loginFooter.append(el.frodoLinksWrapper, el.submitBtn);
 
             //Create array of all inputs
-            //more efficient way
-            var keys = Object.keys(el.input);
-            for (var i = 0, len = keys.length; i < len; i++) {
-                inputs.push(el.input[keys[i]]);
+            for (var input in el.input) {
+                inputs.push(el.input[input]);
             }
-            //Slower method
-            // for (var input in el.input) {
-            //     inputs.push(el.input[input]);
-            // }
-            
             //Wrap each input with wrapper
             inputs = inputs.map(function(input) {
                 return el.inputWrapper.clone().prepend(input);
@@ -430,9 +423,7 @@
     Frodo.prototype.submitDisabled = function(bool) {
         var submitBtn = $('.' + defaults.frodoLogin.submit);
 
-        submitBtn.prop('disabled', bool);
-
-        return true;
+        return submitBtn.prop('disabled', bool);
     };
 
     Frodo.prototype.validate = function(event) {
@@ -500,8 +491,8 @@
                 // console.log(frodo);
                 input.removeClass(config.errorClass.input);
                 error.text('').removeClass(config.errorClass.msg);
-                this.submitDisabled(false);
                 this.clearErrors();
+                this.submitDisabled(false);
             }
         }
 
@@ -561,15 +552,10 @@
         }
 
         function aggregateInputs(obj) {
-            var inputs = [],
-                keys = Object.keys(obj);
+            var inputs = [];
 
-            //Fater method
-            for (var i = 0, len = keys.length; i < len;  i++) 
-                inputs.push(obj[keys[i]]);
-            
-            /*for (var input in obj)
-                inputs.push(obj[input])*/
+            for (var input in obj)
+                inputs.push(obj[input])
 
             return inputs;
         }
@@ -680,6 +666,7 @@
         $('.' + config.frodoOverlay).removeClass(config.frodoVisible);
         $('#' + config.frodoMessage).empty();
         this.clearInputs();
+        this.submitDisabled(false);
 
         return true;
     };
@@ -706,7 +693,7 @@
     };
 
     /*
-    -------------------M E T H O D S  END -------------------------------------------------- 
+    -------------------M E T H O D S  END --------------------------------------------------
      */
 
     $.fn.frodo = function(options) {

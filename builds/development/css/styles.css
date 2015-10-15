@@ -12,7 +12,7 @@
 .frodo-form { font-family: Arial, Helvetica, sans-serif; display: block; padding: 10px 0; background-color: #FFD716; background-color: #f7f7f7; -moz-box-shadow: 0 0 3px 3px #888; -webkit-box-shadow: 0 0 3px 3px #888; box-shadow: 0 0 3px 3px #888; border-radius: 2px; }
 
 /** FRODO HEDAER */
-.frodo-header { font-size: 20px; color: #FFD716; color: #0088E3; text-transform: uppercase; margin-top: 0; font-weight: bold; padding: 0 38px; }
+.frodo-header { font-size: 20px; color: #FFD716; color: #0088E3; margin-top: 0; font-weight: bold; padding: 0 38px; }
 
 .frodo-btn-close { color: #000; float: right; font-size: 21px; font-weight: 700; line-height: 1; opacity: 0.2; text-shadow: 0 1px 0 #fff; background: rgba(0, 0, 0, 0); color: #000; border: 0 none; cursor: pointer; padding: 0; -webkit-transition: opacity .3s linear; -moz-transition: opacity .3s linear; -ms-transition: opacity .3s linear; -o-transition: opacity .3s linear; transition: opacity .3s linear; }
 
@@ -32,8 +32,7 @@
 .frodo-input:focus.frodo-err { box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(255, 0, 0, 0.6); border-color: red; }
 
 .frodo-links { float: left !important; }
-.frodo-links a { color: #8a8a8a; display: block; line-height: 19px; font-size: 12px; outline: none !important; }
-.frodo-links a:hover { text-decoration: underline; }
+.frodo-links a { color: #8a8a8a; display: block; line-height: 19px; font-size: 12px; outline: none !important; text-decoration: underline; }
 
 .frodo-btn-submit { float: right !important; -moz-transition: all 0.2s linear; -webkit-transition: all 0.2s linear; transition: all 0.2s linear; -moz-user-select: none; background-image: none; border: 1px solid #d43f3a; border-radius: 2px; cursor: pointer; display: inline-block; font-size: 14px; font-weight: 400; line-height: 1.42857; margin-bottom: 0; padding: 6px 12px; text-align: center; vertical-align: middle; white-space: nowrap; background-color: #d9534f; color: #fff; }
 .frodo-btn-submit:hover { background-color: #c9302c; border-color: #ac2925; color: #fff; }
@@ -58,7 +57,7 @@
 .frodo-btn:hover, .frodo-btn:focus, .frodo-btn:active { outline: 0; opacity: 0.7; color: #fff; text-decoration: none !important; }
 .frodo-btn i { font-size: 21px; line-height: 40px; padding-right: 15px; vertical-align: middle; }
 
-.frodo-log-with { display: block; text-align: center; padding: 10px 0; color: #000; }
+.frodo-log-with { display: block; text-align: center; padding: 10px 0; font-weight: bold; text-transform: uppercase; color: #000; }
 .frodo-log-with span { color: #000; }
 
 .frodo-login-footer:after, .frodo-login-footer:before { display: table; content: ""; }
