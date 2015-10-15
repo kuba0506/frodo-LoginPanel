@@ -427,7 +427,7 @@
         function getInputLength(input) {
             return getInputValue(input).length;
         }
-
+        // console.log(getInputLength(input));
 
         //Validate email
         function checkEmail(email) {
