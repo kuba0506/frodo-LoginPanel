@@ -83,7 +83,8 @@
                     class: defaults.frodoForm, 
                     action: defaults.submitUrl,
                     method: defaults.method,
-                    name: defaults.frodoForm
+                    name: defaults.frodoForm,
+                    novalidate: true
                      }),
 
             //Header
@@ -443,20 +444,27 @@
         function inputIsEmpty(input) {
              var val = getInputLength(input);
 
-             return val === 0;
+             return !val;
+        }
+        function anyInputEmpty() {
+           var anyEmpty = $('.' + config.frodoLogin.box).find('.' + config.frodoLogin.input).not(':disabled').filter(function() {
+                return !$(this).val();
+            }).length;
+            
+            return anyEmpty; 
         }
 
         function checkPassword(password) {
             var val = getInputLength(password);
 
-            if (val < 8)
+            if (val < 8 || inputIsEmpty(password))
                 return  false;
             else
                 return true;
         }
         function validateInput() {
 
-            if (errors < 1) {
+            if (errors < 1 && anyInputEmpty() === 0) {
                 return frodo.submitDisabled(false);
             } else {
                 return frodo.submitDisabled(true);
@@ -466,12 +474,14 @@
         var frodo = this, 
             config = this.config,
             input = $(event.target),
-            errors = $('.' + config.errorClass.input).length,
+            errors = null,
+            anyEmpty = null,
             submitBtn = $('.' + config.frodoLogin.submit),
             valid = false,
             error = $('span', input.parent());
 
-
+            var inputy = anyInputEmpty();
+            console.log(inputy);
         //Disable submit btn 
         // submitBtn.prop('disabled', true);
         // this.submitDisabled();
@@ -487,6 +497,7 @@
                 input.removeClass(config.errorClass.input);
                 error.text('').removeClass(config.errorClass.msg);
                 errors = $('.' + config.errorClass.input).length;
+                // anyEmpty = 
                 // this.clearErrors();
                 validateInput();
             }
@@ -508,7 +519,6 @@
 
         //Fullname
         if (checkInputName('fullname')) {
-            // var is_ok = fullnamePattern.test(input.val()); 
             if (inputIsEmpty(input)) {
                 input.addClass(config.errorClass.input);
                 error.text(config.errors.fullname).addClass(config.errorClass.msg);
