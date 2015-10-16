@@ -308,6 +308,12 @@
             frodo.submitDisabled(true);
             frodo.validate(event);
         });
+        $(config.body).on('submit', '.' + config.frodoForm, function(event) {
+            event.preventDefault();
+            frodo.validate(event);
+            // frodo.submitDisabled(true);
+            // frodo.validate(event);
+        });
 
         /*
 -----------------------------AJAX FORM VALIDATION-----------------------------------------------------------------
@@ -481,6 +487,7 @@
                 return !$(this).val();
             }).length;
 
+
             return anyEmpty;
         }
 
@@ -514,6 +521,7 @@
         function validateInput() {
 
             if (errors < 1 && anyInputEmpty() === 0) {
+
                 return frodo.submitDisabled(false);
             } else {
                 return frodo.submitDisabled(true);
@@ -532,7 +540,13 @@
         //Disable submit btn 
         // submitBtn.prop('disabled', true);
         // this.submitDisabled();
-        // 
+
+        //If submit button was clicked
+        if (getInputName() === config.frodoForm) {
+            console.log('submit');
+            validateInput();
+        }
+
 
         //Email
         if (checkInputType('email')) {
