@@ -484,11 +484,32 @@
 
         function anyInputEmpty() {
             var anyEmpty = $('.' + config.frodoLogin.box).find('.' + config.frodoLogin.input).not(':disabled').filter(function() {
-                return !$(this).val();
-            }).length;
+                    return !$(this).val();
+                }),
+                errMsg = anyEmpty.find('span');
 
+            //if submit btn
+            if (getInputName() === config.frodoForm) {
+                anyEmpty.each(function() {
+                    var input = $(this),
+                        errMsg = $('span', input.parent()),
+                        type = input.attr('type'),
+                        errors = config.errors;
 
-            return anyEmpty;
+                    if (type === 'text') {
+                        input.addClass(config.errorClass.input);
+                        errMsg.text(errors.fullname).addClass(config.errorClass.msg);
+                    } else if (type === 'password') {
+                        input.addClass(config.errorClass.input);
+                        errMsg.text(errors.password).addClass(config.errorClass.msg);
+                    } else if (type === 'email') {
+                        input.addClass(config.errorClass.input);
+                        errMsg.text(errors.email).addClass(config.errorClass.msg);
+                    }
+                });
+            }
+
+            return anyEmpty.length;
         }
 
         function checkPassword(password) {
@@ -537,13 +558,8 @@
             valid = false,
             error = $('span', input.parent());
 
-        //Disable submit btn 
-        // submitBtn.prop('disabled', true);
-        // this.submitDisabled();
-
         //If submit button was clicked
         if (getInputName() === config.frodoForm) {
-            console.log('submit');
             validateInput();
         }
 
