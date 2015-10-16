@@ -69,6 +69,7 @@
         errors: {
             email: 'Invalid email address format',
             password: 'Password should be at least 8 characters',
+            passwordNotMatch: 'Passwords don\'t match',
             fullname: 'Invalid username'
         }
     };
@@ -139,16 +140,20 @@
                 placeholder: defaults.emailPlaceholder
             }),
             password: $('<input/>', {
+                id: 'firstPassword',
+                class: defaults.frodoLogin.input,
                 type: 'password',
                 name: 'password',
-                class: defaults.frodoLogin.input,
+                'data-if-match': '#secondPassword',
                 placeholder: defaults.passPlaceholder
             }),
             passwordConfirm: $('<input/>', {
+                id: 'secondPassword',
+                class: defaults.frodoLogin.input + ' ' + defaults.hideClass,
                 type: 'password',
                 name: 'passwordConfirm',
-                class: defaults.frodoLogin.input + ' ' + defaults.hideClass,
                 placeholder: defaults.passConfirmPlaceholder,
+                'data-if-match': '#firstPassword',
                 disabled: true
             }),
             passwordReset: $('<input/>', {
@@ -488,6 +493,23 @@
                 return true;
         }
 
+        function setErrors(bool, name) {
+            var errors = config.errors,
+                errName = errors[name];
+            // var ifMatch = input.data('if-match'),
+            //     firstPass = getInputValue($('#' + 'firstPassword' )),
+            //     secondPass = getInputValue($('#' + 'secondPassword' ));
+
+            //     console.log('firstPass', firstPass);
+            //     console.log('secondPass', secondPass);
+            if (bool) {
+                input.addClass(config.errorClass.input);
+                error.text(errName).addClass(config.errorClass.msg);
+            } else {
+                input.removeClass(config.errorClass.input);
+                error.text('').removeClass(config.errorClass.msg);
+            }
+        }
         //Check if there is no empty inputs or error messages 
         function validateInput() {
 
@@ -514,29 +536,26 @@
 
         //Email
         if (checkInputType('email')) {
-            //If email is wrong
+
+            // If email is wrong
             if (!checkEmail(input)) {
-                input.addClass(config.errorClass.input);
-                error.text(config.errors.email).addClass(config.errorClass.msg);
+                setErrors(true, 'email');
             } else {
-                input.removeClass(config.errorClass.input);
-                error.text('').removeClass(config.errorClass.msg);
+                setErrors(false, 'email');
                 errors = $('.' + config.errorClass.input).length;
                 validateInput();
             }
         }
 
-        //Password && Password reset
+        //All passwords
         if (checkInputType('password')) {
-            // if (checkInputName('password')) {
+
+            //If any error occurs
             if (!checkPassword(input)) {
-                input.addClass(config.errorClass.input);
-                error.text(config.errors.password).addClass(config.errorClass.msg);
+                setErrors(true, 'password');
             } else {
-                input.removeClass(config.errorClass.input);
-                error.text('').removeClass(config.errorClass.msg);
+                setErrors(false, 'password');
                 errors = $('.' + config.errorClass.input).length;
-                // this.clearErrors();
                 validateInput();
             }
         }
@@ -544,23 +563,13 @@
         //Fullname
         if (checkInputType('text')) {
             if (inputIsEmpty(input)) {
-                input.addClass(config.errorClass.input);
-                error.text(config.errors.fullname).addClass(config.errorClass.msg);
+                setErrors(true, 'fullname');
             } else {
-                input.removeClass(config.errorClass.input);
-                error.text('').removeClass(config.errorClass.msg);
+                setErrors(false, 'password');
                 errors = $('.' + config.errorClass.input).length;
                 validateInput();
             }
         }
-
-        //Passsword confirm
-        // if (checkInputName('passwordConfirm')) {
-        //     console.log('passwordConfirm');
-        //     input.addClass('frodo-err');
-        //     error.removeClass(config.hideClass).text(config.passwordMatchErr).addClass('frodo-err-msg');
-        // }
-
     };
 
     /**
