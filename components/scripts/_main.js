@@ -67,7 +67,8 @@
             //Errors
             errors: {
                 email: 'Invalid email address format',
-                password: 'Password should be at least 8 characters'
+                password: 'Password should be at least 8 characters',
+                fullname: 'Invalid username'
             }
         };
 
@@ -329,7 +330,8 @@
     Frodo.prototype.init = function () {
         //Shorthand for this.config
         var config = this.config,
-            inputs = [];
+            inputs = [], 
+            keys = [];
 
             /**
              * CREATING HTML STRUCTURE
@@ -352,9 +354,12 @@
             el.loginFooter.append(el.frodoLinksWrapper, el.submitBtn);
             
             //Create array of all inputs
-            for (var input in el.input) {
-                inputs.push(el.input[input]);
+            var keys = Object.keys(el.input);
+
+            for (var i = 0, len = keys.length; i < len; i++) {
+                inputs.push(el.input[keys[i]]);
             }
+
             //Wrap each input with wrapper
             inputs = inputs.map(function(input) {
                 return el.inputWrapper.clone().prepend(input);
@@ -427,7 +432,6 @@
         function getInputLength(input) {
             return getInputValue(input).length;
         }
-        // console.log(getInputLength(input));
 
         //Validate email
         function checkEmail(email) {
@@ -435,24 +439,24 @@
 
             return pattern.test(getInputValue(email));
         }
+
+        function inputIsEmpty(input) {
+             var val = getInputLength(input);
+
+             return val === 0;
+        }
+
         function checkPassword(password) {
             var val = getInputLength(password);
 
-            if (val < 8 || val === 0)
+            if (val < 8)
                 return  false;
             else
                 return true;
         }
+        function validateInput() {
 
-        function validateInput(valid) {
-            // var form = $('.' + config.frodoLogin.box),
-            //     errors = form.find('.' + config.errorClass.input);
-
-            console.log(errors);
-            // console.log(form);
-            // console.log(config.errorClass.msg);
-
-            if (valid && errors < 1) {
+            if (errors < 1) {
                 return frodo.submitDisabled(false);
             } else {
                 return frodo.submitDisabled(true);
@@ -467,7 +471,6 @@
             valid = false,
             error = $('span', input.parent());
 
-        var is_ok = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i; //DELETE !!!!!
 
         //Disable submit btn 
         // submitBtn.prop('disabled', true);
@@ -485,7 +488,7 @@
                 error.text('').removeClass(config.errorClass.msg);
                 errors = $('.' + config.errorClass.input).length;
                 // this.clearErrors();
-                validateInput(true);
+                validateInput();
             }
         }
 
@@ -499,32 +502,21 @@
                 error.text('').removeClass(config.errorClass.msg);
                 errors = $('.' + config.errorClass.input).length;
                 // this.clearErrors();
-                validateInput(true);
+                validateInput();
             }
-            // console.log(getInputLength(input));
-            // checkPassword(input);            
-            // if (!checkPassword(input)) {
-
-            // }
-            //     input.addClass(config.errorClass.input);
-            //     error.text(config.errors.email).addClass(config.errorClass.msg);
-            // console.log('password');
-            // input.addClass('frodo-err');
-            // error.removeClass(config.hideClass).text(config.passwordShortErr).addClass('frodo-err-msg');
         }
 
         //Fullname
         if (checkInputName('fullname')) {
-            var is_ok = fullnamePattern.test(input.val()); 
-
-            console.log(is_ok);
-
-            if (!is_ok) {
-                input.addClass('frodo-err');
-                error.removeClass(config.hideClass).text(config.fullnameError).addClass('frodo-err-msg');
+            // var is_ok = fullnamePattern.test(input.val()); 
+            if (inputIsEmpty(input)) {
+                input.addClass(config.errorClass.input);
+                error.text(config.errors.fullname).addClass(config.errorClass.msg);
             } else {
-                input.removeClass('frodo-err');
-                error.addClass(config.hideClass).text('').removeClass('frodo-err-msg'); 
+               input.removeClass(config.errorClass.input); 
+               error.text('').removeClass(config.errorClass.msg);
+               errors = $('.' + config.errorClass.input).length;
+               validateInput();
             }
         }
 
@@ -559,10 +551,12 @@
         }
 
         function aggregateInputs (obj) {
-            var inputs = [];
+            var inputs = [],
+                keys = Object.keys(obj);
 
-            for (var input in obj)
-                inputs.push(obj[input])
+            for (var i = 0, len = keys.length; i < len; i++) {
+                inputs.push(obj[keys[i]]);
+            }
 
             return inputs;
         }
