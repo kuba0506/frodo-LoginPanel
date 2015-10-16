@@ -414,15 +414,16 @@
     Frodo.prototype.validate = function (event) {
 
         //Get input name
-        function getInputName(event) {
+        function getInputName() {
             return input.attr('name');
         }
+        function getInputType() {
+            return input.attr('type');
+        }
 
-        //Check input name
-        function checkInputName(name) {
-           var event = event || event;
-
-           return getInputName(event) === name; 
+        //Chek input type
+        function checkInputType(name) {
+            return getInputType() === name;
         }
 
         //Get input value
@@ -462,6 +463,8 @@
             else
                 return true;
         }
+
+        //Check if there is no empty inputs or error messages 
         function validateInput() {
 
             if (errors < 1 && anyInputEmpty() === 0) {
@@ -480,15 +483,13 @@
             valid = false,
             error = $('span', input.parent());
 
-            var inputy = anyInputEmpty();
-            console.log(inputy);
         //Disable submit btn 
         // submitBtn.prop('disabled', true);
         // this.submitDisabled();
         // 
 
         //Email
-        if (checkInputName('email')) {
+        if (checkInputType('email')) {
             //If email is wrong
             if (!checkEmail(input)) {
                 input.addClass(config.errorClass.input);
@@ -497,14 +498,13 @@
                 input.removeClass(config.errorClass.input);
                 error.text('').removeClass(config.errorClass.msg);
                 errors = $('.' + config.errorClass.input).length;
-                // anyEmpty = 
-                // this.clearErrors();
                 validateInput();
             }
         }
 
-        //Password
-        if (checkInputName('password')) {
+        //Password && Password reset
+        if (checkInputType('password')) {
+        // if (checkInputName('password')) {
             if (!checkPassword(input)) {
                 input.addClass(config.errorClass.input);
                 error.text(config.errors.password).addClass(config.errorClass.msg);
@@ -518,7 +518,7 @@
         }
 
         //Fullname
-        if (checkInputName('fullname')) {
+        if (checkInputType('text')) {
             if (inputIsEmpty(input)) {
                 input.addClass(config.errorClass.input);
                 error.text(config.errors.fullname).addClass(config.errorClass.msg);
@@ -531,18 +531,11 @@
         }
 
         //Passsword confirm
-        if (checkInputName('passwordConfirm')) {
-            console.log('passwordConfirm');
-            input.addClass('frodo-err');
-            error.removeClass(config.hideClass).text(config.passwordMatchErr).addClass('frodo-err-msg');
-        }
-
-        //Paswword reset
-        if (checkInputName('passwordReset')) {
-            console.log('passwordReset');
-            input.addClass('frodo-err');
-            error.removeClass(config.hideClass).text(config.passwordShortErr).addClass('frodo-err-msg');
-        }
+        // if (checkInputName('passwordConfirm')) {
+        //     console.log('passwordConfirm');
+        //     input.addClass('frodo-err');
+        //     error.removeClass(config.hideClass).text(config.passwordMatchErr).addClass('frodo-err-msg');
+        // }
 
     };
 
