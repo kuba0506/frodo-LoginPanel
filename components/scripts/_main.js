@@ -12,6 +12,8 @@
     var defaults = {
 
             lang: 'en',
+            currentForm: null,
+            forms: ['login', 'signup', 'reset'],
 
             //Classes and ids
             body: 'body',
@@ -54,7 +56,7 @@
 
             //Translation
             loginTxt: 'Log in',
-            registerTxt: 'Sign up',
+            signUpTxt: 'Sign up',
             resetTxt: 'Password Reset',
             userPlaceholder: 'Fullname',
             passPlaceholder: 'Password',
@@ -397,6 +399,10 @@
               $(this).append(btns);
             });
             $('.' + config.frodoForm).append(el.socialWrapper);
+
+            //Set value of current form
+            config.currentForm = config.forms[0];
+
             console.log('Login panel created');
         }
 
@@ -424,19 +430,21 @@
 
     Frodo.prototype.validate = function (event) {
 
+        /**
+         * HELPERS
+         */
         //Get input name
         function getInputName() {
             return input.attr('name');
         }
+        //Get input type
         function getInputType() {
             return input.attr('type');
         }
-
         //Chek input type
         function checkInputType(name) {
             return getInputType() === name;
         }
-
         //Get input value
         function getInputValue(input) {
             return input.val();
@@ -445,19 +453,30 @@
         function getInputLength(input) {
             return getInputValue(input).length;
         }
+        function inputIsEmpty(input) {
+             var val = getInputLength(input);
 
+             return !val;
+        }
+        /**
+         * VALIDATORS
+         */
         //Validate email
         function checkEmail(email) {
             var pattern = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
             return pattern.test(getInputValue(email));
         }
+        //Validate password
+        function checkPassword(password) {
+            var val = getInputLength(password);
 
-        function inputIsEmpty(input) {
-             var val = getInputLength(input);
-
-             return !val;
+            if (val < 8 || inputIsEmpty(password))
+                return  false;
+            else
+                return true;
         }
+
         function anyInputEmpty() {
            var anyEmpty = $('.' + config.frodoLogin.box).find('.' + config.frodoLogin.input).not(':disabled').filter(function() {
                     return !$(this).val();
@@ -488,17 +507,13 @@
             return anyEmpty.length; 
         }
 
-        function checkPassword(password) {
-            var val = getInputLength(password);
-
-            if (val < 8 || inputIsEmpty(password))
-                return  false;
-            else
-                return true;
-        }
         function setErrors(bool, name) {
             var errors = config.errors,
                 errName = errors[name];
+
+            if (config.currentForm === config.forms[1]) {
+                console.log('You can check if passwords match');
+            }
             // var ifMatch = input.data('if-match'),
             //     firstPass = getInputValue($('#' + 'firstPassword' )),
             //     secondPass = getInputValue($('#' + 'secondPassword' ));
@@ -635,22 +650,26 @@
 
             //Check which form is used
             if (form === 'signup') {
-                //Check if is either login or reset form
+                //Check if is either login or reset form, switch to signup
                 if (headerTxt.text() === config.loginTxt || headerTxt.text() === config.resetTxt) {
                  toggleInputs(inputs, signup);
-                 changeTxt(headerTxt, config.registerTxt);
+                 changeTxt(headerTxt, config.signUpTxt);
                  changeTxt(signUpTxt, config.links[2]);
+                 config.currentForm = config.forms[1];
+                 //Switch to login
                 } else {
                  toggleInputs(inputs, init);
                  changeTxt(headerTxt, config.loginTxt);
                  changeTxt(signUpTxt, config.links[1]);
+                 config.currentForm = config.forms[0];
                 }
             } 
             //Form reset password
             else if (form === 'reset') {
                 toggleInputs(inputs, reset);
                 changeTxt(headerTxt, config.resetTxt);
-                changeTxt(signUpTxt, config.links[1]); 
+                changeTxt(signUpTxt, config.links[1]);
+                config.currentForm = config.forms[2];
             }
 
             //Form login, init state
@@ -658,6 +677,7 @@
                 toggleInputs(inputs, init);
                 changeTxt(headerTxt, config.loginTxt);
                 changeTxt(signUpTxt, config.links[1]);
+                config.currentForm = config.forms[0];
             }
 
         return true;
