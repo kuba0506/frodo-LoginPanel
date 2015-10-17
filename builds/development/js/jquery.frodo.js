@@ -306,14 +306,26 @@
         /*
 -----------------------------FORM VALIDATION HANDLER --------------------------------------------------------
  */
-        $(config.body).on('input', 'input', function(event) {
+        $(config.body).on('keyup', 'input', function(event) {
             frodo.submitDisabled(true);
             frodo.validate(event);
+
+            //If user press 'enter'
+            if (event.keyCode === 13) {
+                $('.' + config.frodoForm).trigger('submit');
+            }
         });
         $(config.body).on('submit', '.' + config.frodoForm, function(event) {
             event.preventDefault();
             frodo.validate(event);
             //Ajax submit
+        });
+
+        //If user press 'enter'
+        $(config.body).on('keyup', function(event) {
+            if (event.keyCode === 13) {
+                $('.' + config.frodoForm).trigger('submit');
+            }
         });
 
         /*
