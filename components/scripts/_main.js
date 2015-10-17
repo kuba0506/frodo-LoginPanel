@@ -284,15 +284,14 @@
  /*
 -----------------------------FORM VALIDATION HANDLER --------------------------------------------------------
  */
-        $(config.body).on('keyup', 'input', function (event) {
+        $(config.body).on('input', 'input', function (event) {
             frodo.submitDisabled(true);
             frodo.validate(event);
         });
         $(config.body).on('submit', '.' + config.frodoForm , function (event) {
             event.preventDefault();
             frodo.validate(event);
-            // frodo.submitDisabled(true);
-            // frodo.validate(event);
+            //Ajax submit
         });
 
  /*
@@ -524,17 +523,18 @@
 
             var ifMatch = password.data('if-match'),
                 currentVal = getInputValue(password).length,
-                matchVal = $(ifMatch).val().length;
+                matchVal = $(ifMatch).val().length,
+                allErrors = $('[data-if-match]', $('.' + config.frodoForm)).siblings('span');
                 
                 //Compare only if match password is >= 8
                 if (matchVal >= 8) {
-                console.log('Current: ', getInputValue(password));
-                console.log('Match: ', $(ifMatch).val());
                     //Compare values
-                    if (currentVal === matchVal) {
-                        error.text('').removeClass(config.errorClass.msg);
-                    } else {
+                    if (currentVal !== matchVal) {
                         error.text(config.errors.passwordNotMatch).addClass(config.errorClass.msg);
+                        frodo.submitDisabled(true);
+                    } else {
+                        allErrors.text('').removeClass(config.errorClass.msg);
+                        validateInput();
                     }
                 }
             
@@ -585,16 +585,16 @@
                 setErrors(true, 'password');
                 //Check for passwords match (only in case of singup form)
                 if (config.currentForm === config.forms[1]) {
-                    passwordsMatch(input)
+                    passwordsMatch(input);
                 }
             } else {
                 setErrors(false, 'password');
+                errors = $('.' + config.errorClass.input).length;
                 //Check for passwords match (only in case of singup form)
+                validateInput();
                 if (config.currentForm === config.forms[1]) {
                     passwordsMatch(input);
                 }
-                errors = $('.' + config.errorClass.input).length;
-                validateInput();
             }
         }
 
