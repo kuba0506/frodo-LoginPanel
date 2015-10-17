@@ -295,6 +295,7 @@
 .frodo-err-input { border: 1px solid #f00 !important; }
 
 .frodo-err-msg { font-size: 13px; color: #f00; position: absolute; right: 10px; top: -25px; line-height: 36px; }
+// .frodo-err-msg + .frodo-err-msg { top: 0; }
 
 .frodo-visible {
   opacity: 1;

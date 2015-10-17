@@ -534,15 +534,6 @@
             var errors = config.errors,
                 errName = errors[name];
 
-            if (config.currentForm === config.forms[1]) {
-                console.log('You can check if passwords match');
-            }
-            // var ifMatch = input.data('if-match'),
-            //     firstPass = getInputValue($('#' + 'firstPassword' )),
-            //     secondPass = getInputValue($('#' + 'secondPassword' ));
-
-            //     console.log('firstPass', firstPass);
-            //     console.log('secondPass', secondPass);
             if (bool) {
                 input.addClass(config.errorClass.input);
                 error.text(errName).addClass(config.errorClass.msg);
@@ -551,11 +542,30 @@
                 error.text('').removeClass(config.errorClass.msg);
             }
         }
+        //Check for passwords match (only in case of singup form)
+        function passwordsMatch(password) {
+
+            var ifMatch = password.data('if-match'),
+                currentVal = getInputValue(password).length,
+                matchVal = $(ifMatch).val().length;
+
+            //Compare only if match password is >= 8
+            if (matchVal >= 8) {
+                console.log('Current: ', getInputValue(password));
+                console.log('Match: ', $(ifMatch).val());
+                //Compare values
+                if (currentVal === matchVal) {
+                    error.text('').removeClass(config.errorClass.msg);
+                } else {
+                    error.text(config.errors.passwordNotMatch).addClass(config.errorClass.msg);
+                }
+            }
+
+        }
         //Check if there is no empty inputs or error messages 
         function validateInput() {
 
             if (errors < 1 && anyInputEmpty() === 0) {
-
                 return frodo.submitDisabled(false);
             } else {
                 return frodo.submitDisabled(true);
@@ -596,8 +606,16 @@
             //If any error occurs
             if (!checkPassword(input)) {
                 setErrors(true, 'password');
+                //Check for passwords match (only in case of singup form)
+                if (config.currentForm === config.forms[1]) {
+                    passwordsMatch(input)
+                }
             } else {
                 setErrors(false, 'password');
+                //Check for passwords match (only in case of singup form)
+                if (config.currentForm === config.forms[1]) {
+                    passwordsMatch(input);
+                }
                 errors = $('.' + config.errorClass.input).length;
                 validateInput();
             }
