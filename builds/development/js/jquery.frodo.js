@@ -85,11 +85,13 @@
             id: defaults.frodoWrapper
         }),
         overlay: $('<div/>', {
-            class: defaults.frodoOverlay + ' ' + defaults.hideClass
+            class: defaults.frodoOverlay
+                // class: defaults.frodoOverlay + ' ' + defaults.hideClass
         }),
         frodo: $('<div/>', {
             id: defaults.frodo,
-            class: defaults.frodo + ' ' + defaults.hideClass
+            class: defaults.frodo
+                // class: defaults.frodo + ' ' + defaults.hideClass
         }),
         form: $('<form/>', {
             class: defaults.frodoForm,
@@ -260,6 +262,7 @@
 
             //Reset frodo, wrapper and overlay classes
             frodo.resetMainClasses();
+            $('#' + defaults.frodoWrapper).addClass(defaults.noScroll);
 
             //Reset err message
             frodo.showAlert(null, {
@@ -294,9 +297,9 @@
 
         $(body).on('keyup', function(event) {
             //If 'Escape' key is pressed
-            if (event.keyCode === 27) {
-                frodo.closePanel();
-            }
+            // if (event.keyCode === 27) {
+            //     frodo.closePanel();
+            // }
         });
 
         /*
@@ -475,9 +478,8 @@
 
 
     Frodo.prototype.resetMainClasses = function() {
-        $('.' + this.config.frodoOverlay).toggleClass(this.config.hideClass);
-        $('#' + this.config.frodo).toggleClass(this.config.hideClass);
-        $('#' + this.config.frodoWrapper).toggleClass(this.config.noScroll);
+        $('.' + defaults.frodoOverlay).toggleClass(defaults.frodoVisible);
+        $('#' + defaults.frodo).toggleClass(defaults.frodoVisible);
 
         return true;
     };
@@ -823,6 +825,7 @@
 
         //Remove uneccessary classes                
         this.resetMainClasses();
+        $('#' + defaults.frodoWrapper).removeClass(defaults.noScroll);
         this.clearInputs();
         this.submitDisabled(false);
 
