@@ -245,6 +245,10 @@
 
             //Enable submit btn
             frodo.submitDisabled(false);
+            var len =  $('.' + config.frodoLogin.input).not(':disabled');
+            console.log(len.first().attr('name'));
+            $('.' + config.frodoLogin.input).not(':disabled').first().focus();
+
         });
 
  /*
@@ -284,7 +288,7 @@
  /*
 -----------------------------FORM VALIDATION HANDLER --------------------------------------------------------
  */
-        $(config.body).on('keyup', 'input', function (event) {
+        $(config.body).on('input', 'input', function (event) {
             frodo.submitDisabled(true);
             frodo.validate(event);
 
@@ -534,12 +538,14 @@
         function passwordsMatch(password) {
 
             var ifMatch = password.data('if-match'),
-                currentVal = getInputValue(password).length,
-                matchVal = $(ifMatch).val().length,
+                currentVal = getInputValue(password),
+                matchVal = $(ifMatch).val(),
                 allErrors = $('[data-if-match]', $('.' + config.frodoForm)).siblings('span');
                 
                 //Compare only if match password is >= 8
-                if (matchVal >= 8) {
+                if (matchVal.length >= 8) {
+                    console.log('Current: ', currentVal);
+                    console.log('Match to: ', matchVal);
                     //Compare values
                     if (currentVal !== matchVal) {
                         error.text(config.errors.passwordNotMatch).addClass(config.errorClass.msg);
