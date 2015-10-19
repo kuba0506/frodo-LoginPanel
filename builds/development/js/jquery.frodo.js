@@ -398,12 +398,11 @@
     Frodo.prototype.init = function() {
         //Shorthand for this.config
         var config = this.config,
+            frodoWrapper = $('#' + config.frodoWrapper),
             inputs = [],
             keys = [],
-            frodoWrapper = $('#' + config.frodoWrapper),
             keys = null;
 
-        console.log(frodoWrapper);
         /**
          * CREATING HTML STRUCTURE
          */
@@ -609,8 +608,6 @@
 
             //Compare only if match password is >= 8
             if (matchVal.length >= 8) {
-                console.log('Current: ', currentVal);
-                console.log('Match to: ', matchVal);
                 //Compare values
                 if (currentVal !== matchVal) {
                     error.text(config.errors.passwordNotMatch).addClass(config.errorClass.msg);
@@ -865,8 +862,6 @@
 
         return this;
     };
-
-
 
 })(jQuery);
 
