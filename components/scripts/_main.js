@@ -42,6 +42,7 @@
             //Helpers
             frodoVisible: 'frodo-visible',
             hideClass: 'frodo-hide',
+            noScroll: 'frodo-no-scroll',
             //Error class
             errorClass: {
                 input: 'frodo-err-input',
@@ -211,13 +212,17 @@
         //Assign this to variable in order to use it also in callback functions
         var frodo = this,
             //Shorthand for frodo.config
-            config;
+            config,
+            body;
 
         //Config object 
         frodo.config = config = $.extend(true, {}, defaults, options);
 
         //Element we call a function on
         frodo.element = element;
+
+        //Shorthand for config.body
+        body = config.body;
 
  /*
 -----------------------------E V E N T  H A N D L E R S BEGIN----------------------------------------------------------
@@ -226,21 +231,28 @@
  /*
 -----------------------------OPEN LOGIN PANEL--------------------------------------------------------------------
  */
-        frodo.element.on('click', function(e) {
+        frodo.element.on('click', function(event) {
 
-            e.preventDefault();
+            //Prevent default behaviour
+            frodo.stopEvent(event);
 
-            //Open / reset login panel
-            $('.' + config.frodoOverlay).toggleClass(config.frodoVisible);
-            $('#' + config.frodo).toggleClass(config.frodoVisible);
-            $('#' + config.frodoWrapper).toggleClass('frodo-no-scroll');
+            //Reset frodo, wrapper and overlay classes
+            frodo.resetMainClasses();
+
+            //Reset err message
             frodo.showAlert(null, {
                 messageBox: config.frodoLogin.message,
                 text: config.frodoLogin.message + ' > span',
                 alert: config.frodoLogin.messageAlert
             });
+
+            //Rest form to login
             frodo.toggleForm('init');
+
+            //Clear errors
             frodo.clearErrors();
+
+            //Clear inputs
             frodo.clearInputs();
 
             //Enable submit btn
@@ -254,11 +266,11 @@
 -----------------------------CLOSE LOGIN PANEL--------------------------------------------------------------------
  */
         //Close login panel
-        $(config.body).on('click', '.' + config.frodoHeader.closeBtn, function () {
+        $(body).on('click', '.' + config.frodoHeader.closeBtn, function () {
             frodo.closePanel();
         });
 
-        $(config.body).on('keyup', function (event) {
+        $(body).on('keyup', function (event) {
             //If 'Escape' key is pressed
             if (event.keyCode === 27) {
                 frodo.closePanel();
@@ -268,8 +280,8 @@
  /*
 -----------------------------REGISTER FORM HANDLER-----------------------------------------------------------------
  */
-        $(config.body).on('click', '.' +  config.frodoLogin.signUp, function (event) {
-          event.preventDefault();
+        $(body).on('click', '.' +  config.frodoLogin.signUp, function (event) {
+          frodo.stopEvent(event);
           frodo.toggleForm('signup');
           frodo.clearErrors();
           frodo.submitDisabled(false);
@@ -280,8 +292,8 @@
  /*
 -----------------------------RESET FORM HANDLER-----------------------------------------------------------------
  */
-        $(config.body).on('click', '.' +  config.frodoLogin.forgot, function (event) {
-          event.preventDefault();
+        $(body).on('click', '.' +  config.frodoLogin.forgot, function (event) {
+          frodo.stopEvent(event);
           frodo.toggleForm('reset');
           frodo.clearErrors();
           frodo.submitDisabled(false);
@@ -293,7 +305,7 @@
  /*
 -----------------------------FORM VALIDATION HANDLER --------------------------------------------------------
  */
-        $(config.body).on('input', 'input', function (event) {
+        $(body).on('input', 'input', function (event) {
             frodo.submitDisabled(true);
             frodo.validate(event);
 
@@ -302,14 +314,14 @@
                 $('.' + config.frodoForm).trigger('submit');
             }
         });
-        $(config.body).on('submit', '.' + config.frodoForm , function (event) {
-            event.preventDefault();
+        $(body).on('submit', '.' + config.frodoForm , function (event) {
+            frodo.stopEvent(event);
             frodo.validate(event);
             //Ajax submit
         });
 
         //If user press 'enter'
-        $(config.body).on('keyup', function (event) {
+        $(body).on('keyup', function (event) {
             if (event.keyCode === 13) {
                 $('.' + config.frodoForm).trigger('submit');
             }
@@ -319,7 +331,7 @@
 -----------------------------AJAX FORM VALIDATION-----------------------------------------------------------------
  */
         // TEMP - Ajax - jsonp
-        $(config.body).on('click', '.frodo-btn', function () {
+        $(body).on('click', '.frodo-btn', function () {
             var url = 'http://jurczynski.czest.pl/registerFailed.json?callback=myCallback',
                 url2 = 'http://jurczynski.czest.pl/registerSuccess.json?callback=myCallback',
                 address = [url, url2],
@@ -365,14 +377,17 @@
         //Shorthand for this.config
         var config = this.config,
             inputs = [], 
-            keys = [];
+            keys = [],
+            frodoWrapper = $('#' + config.frodoWrapper),
+            keys = null;
 
+            console.log(frodoWrapper);
             /**
              * CREATING HTML STRUCTURE
              */
 
-            //Check if there is only one instace of plugin
-        if ($('#' + config.frodoWrapper).length === 0) {
+        //Check if there is only one instace of plugin
+        if (frodoWrapper.length === 0) {
 
            //Wrap all content with frodo wrapper, and append frodo container and overlay
             $(config.body).wrapInner(el.wrapper).
@@ -388,7 +403,7 @@
             el.loginFooter.append(el.frodoLinksWrapper, el.submitBtn);
             
             //Create array of all inputs
-            var keys = Object.keys(el.input);
+            keys = Object.keys(el.input);
 
             for (var i = 0, len = keys.length; i < len; i++) {
                 inputs.push(el.input[keys[i]]);
@@ -424,8 +439,26 @@
             config.currentForm = config.forms[0];
 
             console.log('Login panel created');
+        } else {
+            return false;
         }
 
+    };
+
+    Frodo.prototype.stopEvent = function(e) {
+        var e = e || window.event;
+
+        e.preventDefault();
+        e.stopPropagation();
+    };
+
+
+    Frodo.prototype.resetMainClasses = function () {
+        $('.' + this.config.frodoOverlay).toggleClass(this.config.frodoVisible);
+        $('#' + this.config.frodo).toggleClass(this.config.frodoVisible);
+        $('#' + this.config.frodoWrapper).toggleClass(this.config.noScroll);
+
+        return true;
     };
 
     Frodo.prototype.clearErrors = function () {
@@ -442,12 +475,12 @@
     };
 
     Frodo.prototype.focusFirst = function () {
-        return $('.' + defaults.frodoLogin.input).not(':disabled').first().focus();
+        return $('.' + this.config.frodoLogin.input).not(':disabled').first().focus();
     };
 
     //Change submit button disabled state
     Frodo.prototype.submitDisabled = function (bool) {
-        var submitBtn = $('.' + defaults.frodoLogin.submit);
+        var submitBtn = $('.' + this.config.frodoLogin.submit);
 
         return submitBtn.prop('disabled', bool);
     };
