@@ -1,5 +1,5 @@
 /**
- * Frodo.js v.1.0 - Multiprovider login panel
+ * Frodo.js v.1.1 - Multiprovider login panel
  * Copyright (c) 2015, Jakub Jurczyñski
  *
  * Just add data-login attribute to any html element
@@ -85,11 +85,11 @@
             id: defaults.frodoWrapper
         }),
         overlay: $('<div/>', {
-            class: defaults.frodoOverlay
+            class: defaults.frodoOverlay + ' ' + defaults.hideClass
         }),
         frodo: $('<div/>', {
             id: defaults.frodo,
-            class: defaults.frodo
+            class: defaults.frodo + ' ' + defaults.hideClass
         }),
         form: $('<form/>', {
             class: defaults.frodoForm,
@@ -475,8 +475,8 @@
 
 
     Frodo.prototype.resetMainClasses = function() {
-        $('.' + this.config.frodoOverlay).toggleClass(this.config.frodoVisible);
-        $('#' + this.config.frodo).toggleClass(this.config.frodoVisible);
+        $('.' + this.config.frodoOverlay).toggleClass(this.config.hideClass);
+        $('#' + this.config.frodo).toggleClass(this.config.hideClass);
         $('#' + this.config.frodoWrapper).toggleClass(this.config.noScroll);
 
         return true;
@@ -822,9 +822,7 @@
         $('#' + config.frodoWrapper).removeClass('frodo-no-scroll');
 
         //Remove uneccessary classes                
-        $('#' + config.frodo).removeClass(config.frodoVisible);
-        $('.' + config.frodoOverlay).removeClass(config.frodoVisible);
-        $('#' + config.frodoMessage).empty();
+        this.resetMainClasses();
         this.clearInputs();
         this.submitDisabled(false);
 
