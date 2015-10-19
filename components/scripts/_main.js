@@ -245,10 +245,9 @@
 
             //Enable submit btn
             frodo.submitDisabled(false);
-            var len =  $('.' + config.frodoLogin.input).not(':disabled');
-            console.log(len.first().attr('name'));
-            $('.' + config.frodoLogin.input).not(':disabled').first().focus();
 
+            //Set focus on first not disabled input
+            frodo.focusFirst();
         });
 
  /*
@@ -274,6 +273,9 @@
           frodo.toggleForm('signup');
           frodo.clearErrors();
           frodo.submitDisabled(false);
+
+          //Set focus on first not disabled input
+          frodo.focusFirst();
         });
  /*
 -----------------------------RESET FORM HANDLER-----------------------------------------------------------------
@@ -283,6 +285,9 @@
           frodo.toggleForm('reset');
           frodo.clearErrors();
           frodo.submitDisabled(false);
+
+          //Set focus on first not disabled input
+          frodo.focusFirst();
         });
 
  /*
@@ -434,6 +439,10 @@
         msg.text('').removeClass(errMsg);
 
         return true;
+    };
+
+    Frodo.prototype.focusFirst = function () {
+        return $('.' + defaults.frodoLogin.input).not(':disabled').first().focus();
     };
 
     //Change submit button disabled state
