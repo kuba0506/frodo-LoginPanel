@@ -297,9 +297,9 @@
 
         $(body).on('keyup', function(event) {
             //If 'Escape' key is pressed
-            // if (event.keyCode === 27) {
-            //     frodo.closePanel();
-            // }
+            if (event.keyCode === 27 && config.currentForm !== null) {
+                frodo.closePanel();
+            }
         });
 
         /*
@@ -828,6 +828,7 @@
         $('#' + defaults.frodoWrapper).removeClass(defaults.noScroll);
         this.clearInputs();
         this.submitDisabled(false);
+        config.currentForm = null;
 
         return true;
     };
