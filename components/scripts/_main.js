@@ -31,6 +31,7 @@
             box: 'frodo-login-box',
             message: 'frodo-message',
             messageAlert: 'frodo-message-alert',
+            messageSuccess: 'frodo-message-success',
             input: 'frodo-input',
             footer: 'frodo-login-footer',
             linksWrapper: 'frodo-links',
@@ -368,7 +369,7 @@
                 frodo.showAlert(response, {
                     messageBox: config.frodoLogin.message,
                     text: config.frodoLogin.message + '> span',
-                    alert: config.frodoLogin.messageAlert
+                    alert: config.frodoLogin.messageSuccess
                 });
             });
         });

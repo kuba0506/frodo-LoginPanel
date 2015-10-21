@@ -102,15 +102,23 @@
   font-size: 14px;
   text-align: center;
   font-weight: bold;
-  color: #a94442;
+  
 }
-.frodo-message-alert {
+.frodo-message-alert, .frodo-message-success {
   padding: 10px 5px;
   margin-bottom: 20px;
-  border: 1px solid #ebccd1;
-  background-color: #F2DEDE;
   -webkit-border-radius: 2px;
      border-radius: 2px;   
+}
+.frodo-message-alert {
+    border: 1px solid #ebccd1;
+    background-color: #F2DEDE;
+    color: #a94442;
+}
+.frodo-message-success {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #3c763d;
 }
 
 /**
