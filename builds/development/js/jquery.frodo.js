@@ -261,8 +261,7 @@
             frodo.stopEvent(event);
 
             //Reset frodo, wrapper and overlay classes
-            frodo.resetMainClasses();
-            $('#' + defaults.frodoWrapper).addClass(defaults.noScroll);
+            frodo.resetMainClasses(true);
 
             //Reset err message
             frodo.showAlert(null, {
@@ -333,6 +332,7 @@
         $(body).on('input', 'input', function(event) {
             frodo.submitDisabled(true);
             frodo.validate(event);
+            frodo.stopEvent(event);
 
             //If user press 'enter'
             if (event.keyCode === 13) {
@@ -343,13 +343,6 @@
             frodo.stopEvent(event);
             frodo.validate(event);
             //Ajax submit
-        });
-
-        //If user press 'enter'
-        $(body).on('keyup', function(event) {
-            if (event.keyCode === 13) {
-                $('.' + config.frodoForm).trigger('submit');
-            }
         });
 
         /*
@@ -477,9 +470,10 @@
     };
 
 
-    Frodo.prototype.resetMainClasses = function() {
-        $('.' + defaults.frodoOverlay).toggleClass(defaults.frodoVisible);
-        $('#' + defaults.frodo).toggleClass(defaults.frodoVisible);
+    Frodo.prototype.resetMainClasses = function(state) {
+        $('.' + defaults.frodoOverlay).toggleClass(defaults.frodoVisible, state);
+        $('#' + defaults.frodo).toggleClass(defaults.frodoVisible, state);
+        $('#' + defaults.frodoWrapper).addClass(defaults.noScroll, state);
 
         return true;
     };
