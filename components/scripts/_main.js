@@ -369,7 +369,7 @@
                 frodo.showAlert(response, {
                     messageBox: config.frodoLogin.message,
                     text: config.frodoLogin.message + '> span',
-                    alert: config.frodoLogin.messageSuccess
+                    alert: config.frodoLogin.messageAlert
                 });
             });
         });
