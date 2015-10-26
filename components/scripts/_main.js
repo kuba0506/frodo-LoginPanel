@@ -9,13 +9,16 @@
 (function($) {
     "use strict";
 
-
-    //Default plugin settings 
+    /*
+    DEFAULT PLUGIN SETTINGS 
+     */
     var defaults = {
 
         lang: 'en',
         version: 'basic',
         provider: ['eniro', 'facebook', 'google-plus'],
+
+
         currentForm: null,
         forms: ['login', 'signup', 'reset'],
 
@@ -81,8 +84,80 @@
         }
     };
 
-    //TRANSLATIONS
-    var translation = [
+    /*
+    MAIN CONFIG    
+     */
+    var frodoConfig = {
+        //State values
+        currentForm: null,
+        forms: ['login', 'signup', 'reset'],
+
+        //Classes and ids
+        body: 'body',
+        frodoWrapper: 'frodo-wrapper',
+        frodo: 'frodo',
+        frodoOverlay: 'frodo-overlay',
+        frodoForm: 'frodo-form',
+        frodoHeader: {
+            header: 'frodo-header',
+            text: 'frodo-header-txt',
+            closeBtn: 'frodo-btn-close'
+        },
+        frodoLogin: {
+            box: 'frodo-login-box',
+            message: 'frodo-message',
+            messageAlert: 'frodo-message-alert',
+            messageSuccess: 'frodo-message-success',
+            input: 'frodo-input',
+            footer: 'frodo-login-footer',
+            linksWrapper: 'frodo-links',
+            forgot: 'frodo-forgot',
+            signUp: 'frodo-sign-up',
+            submit: 'frodo-btn-submit'
+        },
+        log: 'frodo-log-with',
+        social: 'frodo-social',
+        //Helpers
+        frodoVisible: 'frodo-visible',
+        hideClass: 'frodo-hide',
+        noScroll: 'frodo-no-scroll',
+        //Error class
+        errorClass: {
+            input: 'frodo-err-input',
+            msg: 'frodo-err-msg'
+        },
+
+        //Settings
+        method: 'get',
+        submitUrl: '?',
+        forgotLink: '#',
+        signUpLink: '#',
+
+        //Translation DELETE!!!!!!!
+        loginTxt: 'Log in',
+        signUpTxt: 'Sign up',
+        resetTxt: 'Password Reset',
+        userPlaceholder: 'Fullname',
+        passPlaceholder: 'Password',
+        passConfirmPlaceholder: 'Confirm password',
+        emailPlaceholder: 'Email',
+        emailResetPlaceholder: 'Your email address',
+        links: ['Forgot your password ?', 'Sign up now', 'Log in now'],
+        login: 'Submit',
+        logWith: 'or',
+        //Errors
+        errors: {
+            email: 'Invalid email address format',
+            password: 'Password should be at least 8 characters',
+            passwordNotMatch: 'Passwords don\'t match',
+            fullname: 'Invalid username'
+        }
+    };
+
+    /*
+    TRANSLATIONS
+     */
+    var translation = 
         {
             'en': {
                     loginTxt: 'Log in',
@@ -104,13 +179,17 @@
                         fullname: 'Invalid username'
                     }
                 
-            }
-        },
-        {'se': {}},
-        {'no': {}},
-        {'dk': {}}
-    ];
+            },
+            'se': {
+                    loginTxt: 'Sweden'
+            },
+            'no': {},
+            'dk': {}
+        };
 
+    /*
+    SOCIAL BUTTONS 
+     */
     //TEMP - Array of social buttons
     // var social = [];
     // {% for s in socials %}
@@ -165,6 +244,7 @@
         }
     ];
 
+    //DELETE !!!
     var social = [{
         provider: 'facebook',
         text: 'Facebook',
@@ -193,47 +273,46 @@
 
     //CACHED OBJECTS
     var el = {
-
         //Main elemenets
         wrapper: $('<div/>', {
-            id: defaults.frodoWrapper
+            id: frodoConfig.frodoWrapper
         }),
         overlay: $('<div/>', {
-            class: defaults.frodoOverlay
+            class: frodoConfig.frodoOverlay
         }),
         frodo: $('<div/>', {
-            id: defaults.frodo,
-            class: defaults.frodo
+            id: frodoConfig.frodo,
+            class: frodoConfig.frodo
         }),
         form: $('<form/>', {
-            class: defaults.frodoForm,
-            action: defaults.submitUrl,
-            method: defaults.method,
-            name: defaults.frodoForm,
+            class: frodoConfig.frodoForm,
+            action: frodoConfig.submitUrl,
+            method: frodoConfig.method,
+            name: frodoConfig.frodoForm,
             novalidate: true
         }),
 
         //Header
         header: $('<h3/>', {
-            class: defaults.frodoHeader.header
+            class: frodoConfig.frodoHeader.header
         }),
         headerTxt: $('<span/>', {
-            class: defaults.frodoHeader.text,
-            html: defaults.loginTxt
+            class: frodoConfig.frodoHeader.text,
+            html: frodoConfig.loginTxt
         }),
         closeBtn: $('<button/>', {
-            class: defaults.frodoHeader.closeBtn,
+            class: frodoConfig.frodoHeader.closeBtn,
             type: 'button',
             html: 'x'
         }),
 
         //Login form
         loginBox: $('<div/>', {
-            class: defaults.frodoLogin.box
+            class: frodoConfig.frodoLogin.box
         }),
         message: $('<div/>', {
-            id: defaults.frodoLogin.message,
-            class: defaults.frodoLogin.message
+            id: frodoConfig.frodoLogin.message,
+            class: frodoConfig.frodoLogin.message
         }).append($('<span/>')),
         inputWrapper: $('<div/>', {
                 class: 'frodo-input-wrapper'
@@ -245,71 +324,71 @@
             fullname: $('<input/>', {
                 type: 'text',
                 name: 'fullname',
-                class: defaults.frodoLogin.input + ' ' + defaults.hideClass,
-                placeholder: defaults.userPlaceholder,
+                class: frodoConfig.frodoLogin.input + ' ' + frodoConfig.hideClass,
+                placeholder: frodoConfig.userPlaceholder,
                 disabled: true
             }),
             email: $('<input/>', {
                 type: 'email',
                 name: 'email',
-                class: defaults.frodoLogin.input,
-                placeholder: defaults.emailPlaceholder
+                class: frodoConfig.frodoLogin.input,
+                placeholder: frodoConfig.emailPlaceholder
             }),
             password: $('<input/>', {
                 id: 'firstPassword',
-                class: defaults.frodoLogin.input,
+                class: frodoConfig.frodoLogin.input,
                 type: 'password',
                 name: 'password',
                 'data-if-match': '#secondPassword',
-                placeholder: defaults.passPlaceholder
+                placeholder: frodoConfig.passPlaceholder
             }),
             passwordConfirm: $('<input/>', {
                 id: 'secondPassword',
-                class: defaults.frodoLogin.input + ' ' + defaults.hideClass,
+                class: frodoConfig.frodoLogin.input + ' ' + frodoConfig.hideClass,
                 type: 'password',
                 name: 'passwordConfirm',
-                placeholder: defaults.passConfirmPlaceholder,
+                placeholder: frodoConfig.passConfirmPlaceholder,
                 'data-if-match': '#firstPassword',
                 disabled: true
             }),
             passwordReset: $('<input/>', {
                 type: 'email',
                 name: 'passwordReset',
-                class: defaults.frodoLogin.input + ' ' + defaults.hideClass,
-                placeholder: defaults.emailResetPlaceholder,
+                class: frodoConfig.frodoLogin.input + ' ' + frodoConfig.hideClass,
+                placeholder: frodoConfig.emailResetPlaceholder,
                 disabled: true
             })
 
         },
         loginFooter: $('<div/>', {
-            class: defaults.frodoLogin.footer
+            class: frodoConfig.frodoLogin.footer
         }),
         frodoLinksWrapper: $('<div/>', {
-            class: defaults.frodoLogin.linksWrapper
+            class: frodoConfig.frodoLogin.linksWrapper
         }),
         forgotLink: $('<a/>', {
-            href: defaults.forgotLink,
-            class: defaults.frodoLogin.forgot,
-            html: defaults.links[0]
+            href: frodoConfig.forgotLink,
+            class: frodoConfig.frodoLogin.forgot,
+            html: frodoConfig.links[0]
         }),
         signUpLink: $('<a/>', {
-            href: defaults.signUpLink,
-            class: defaults.frodoLogin.signUp,
-            html: defaults.links[1]
+            href: frodoConfig.signUpLink,
+            class: frodoConfig.frodoLogin.signUp,
+            html: frodoConfig.links[1]
         }),
         submitBtn: $('<button/>', {
-            class: defaults.frodoLogin.submit,
+            class: frodoConfig.frodoLogin.submit,
             type: 'submit',
-            html: defaults.login
+            html: frodoConfig.login
         }),
 
         //Social 
         logWith: $('<span/>', {
-            class: defaults.log,
-            html: defaults.logWith
+            class: frodoConfig.log,
+            html: frodoConfig.logWith
         }),
         socialWrapper: $('<div/>', {
-            class: defaults.social
+            class: frodoConfig.social
         })
     };
 
@@ -370,6 +449,9 @@
             frodo.focusFirst();
 
             console.log(config.version);
+            // console.log(config.lang);
+            // console.log(frodoConfig.currentLang);
+            console.log(translation[config.lang]);
         });
 
         /*
@@ -816,10 +898,14 @@
         //Shorthand for this.config
         var config = this.config,
             input = el.input,
+            // input = $('.frodo-input'),
             init = [input.email.attr('name'), input.password.attr('name')],
+            // init = [input.filter('[name="email"]'), input.filter('[name="password"]')],
             signup = [input.fullname.attr('name'), input.email.attr('name'), input.password.attr('name'), input.passwordConfirm.attr('name')],
+            // signup = [input.filter('[name="fullname"]'), input.filter('[name="email"]'), input.filter('[name="password"]'), input.filter('[name="passwordConfirm"]')],
+            // reset = [input.filter('[name="passwordReset"]')], 
             reset = [input.passwordReset.attr('name')],
-            inputs = aggregateInputs(el.input),
+            inputs = aggregateInputs(input),
             headerTxt = $('.' + config.frodoHeader.text),
             signUpTxt = $('.' + config.frodoLogin.signUp);
 
@@ -959,7 +1045,8 @@
 
     $('[data-login]').frodo({
 
-        version: 'advanced'
+        version: 'advanced',
+        lang: 'se'
 
     });
 }(jQuery));
