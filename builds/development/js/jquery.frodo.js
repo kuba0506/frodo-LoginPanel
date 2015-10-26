@@ -877,28 +877,44 @@
 
         function toggleInputs(inputs, arr) {
             inputs.map(function(value) {
-                if (arr.indexOf(value.attr('name')) !== -1)
-                    $(value).removeClass(config.hideClass).prop('disabled', false);
+                if (arr.indexOf(value) !== -1)
+                // if (arr.indexOf(value.attr('name')) !== -1)
+                    $('.frodo-input[name="' + value + '"]').removeClass(config.hideClass).prop('disabled', false);
+                // $(value).removeClass(config.hideClass).prop('disabled', false);
                 else
-                    $(value).addClass(config.hideClass).prop('disabled', true);
+                    $('.frodo-input[name="' + value + '"]').addClass(config.hideClass).prop('disabled', true);
+                // $(value).addClass(config.hideClass).prop('disabled', true);
             });
 
             return true;
         }
 
+        function objToArray(obj) {
+            var arr = [];
+
+            obj.each(function() {
+                return arr.push($(this).attr('name'));
+            });
+
+            return arr;
+        }
+
         //Shorthand for this.config
         var config = this.config,
-            input = el.input,
-            // input = $('.frodo-input'),
-            init = [input.email.attr('name'), input.password.attr('name')],
-            // init = [input.filter('[name="email"]'), input.filter('[name="password"]')],
-            signup = [input.fullname.attr('name'), input.email.attr('name'), input.password.attr('name'), input.passwordConfirm.attr('name')],
-            // signup = [input.filter('[name="fullname"]'), input.filter('[name="email"]'), input.filter('[name="password"]'), input.filter('[name="passwordConfirm"]')],
-            // reset = [input.filter('[name="passwordReset"]')], 
-            reset = [input.passwordReset.attr('name')],
-            inputs = aggregateInputs(input),
+            // input = el.input,
+            inputsObj = $('.frodo-input'),
+            // input = objToArray(inputsObj),
+            // init = [input.email.attr('name'), input.password.attr('name')],
+            init = [inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name')],
+            // signup = [input.fullname.attr('name'), input.email.attr('name'), input.password.attr('name'), input.passwordConfirm.attr('name')],
+            signup = [inputsObj.filter('[name="fullname"]').attr('name'), inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name'), inputsObj.filter('[name="passwordConfirm"]').attr('name')],
+            reset = [inputsObj.filter('[name="passwordReset"]').attr('name')],
+            // reset = [input.passwordReset.attr('name')],
+            // inputs = aggregateInputs(input),
+            inputs = objToArray(inputsObj),
             headerTxt = $('.' + config.frodoHeader.text),
             signUpTxt = $('.' + config.frodoLogin.signUp);
+
 
         //Delete alert message
         this.showAlert(null, {
