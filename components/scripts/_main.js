@@ -61,10 +61,10 @@
         method: 'get',
         submitUrl: '?',
         forgotLink: '#',
-        signUpLink: '#',
+        signUpLink: '#'
 
         //Translation
-        loginTxt: 'Log in',
+        /*loginTxt: 'Log in',
         signUpTxt: 'Sign up',
         resetTxt: 'Password Reset',
         userPlaceholder: 'Fullname',
@@ -81,7 +81,7 @@
             password: 'Password should be at least 8 characters',
             passwordNotMatch: 'Passwords don\'t match',
             fullname: 'Invalid username'
-        }
+        }*/
     };
 
     /*
@@ -131,10 +131,10 @@
         method: 'get',
         submitUrl: '?',
         forgotLink: '#',
-        signUpLink: '#',
+        signUpLink: '#'
 
         //Translation DELETE!!!!!!!
-        loginTxt: 'Log in',
+        /*loginTxt: 'Log in',
         signUpTxt: 'Sign up',
         resetTxt: 'Password Reset',
         userPlaceholder: 'Fullname',
@@ -151,7 +151,7 @@
             password: 'Password should be at least 8 characters',
             passwordNotMatch: 'Passwords don\'t match',
             fullname: 'Invalid username'
-        }
+        }*/
     };
 
     /*
@@ -474,7 +474,8 @@
             }),
             headerTxt: $('<span/>', {
                 class: frodoConfig.frodoHeader.text,
-                html: frodoConfig.loginTxt
+                html: translation[config.lang].loginTxt
+                // html: frodoConfig.loginTxt
             }),
             closeBtn: $('<button/>', {
                 class: frodoConfig.frodoHeader.closeBtn,
@@ -501,14 +502,16 @@
                     type: 'text',
                     name: 'fullname',
                     class: frodoConfig.frodoLogin.input + ' ' + frodoConfig.hideClass,
-                    placeholder: frodoConfig.userPlaceholder,
+                    placeholder: translation[config.lang].userPlaceholder,
+                    // placeholder: frodoConfig.userPlaceholder,
                     disabled: true
                 }),
                 email: $('<input/>', {
                     type: 'email',
                     name: 'email',
                     class: frodoConfig.frodoLogin.input,
-                    placeholder: frodoConfig.emailPlaceholder
+                    placeholder: translation[config.lang].emailPlaceholder
+                    // placeholder: frodoConfig.emailPlaceholder
                 }),
                 password: $('<input/>', {
                     id: 'firstPassword',
@@ -516,14 +519,16 @@
                     type: 'password',
                     name: 'password',
                     'data-if-match': '#secondPassword',
-                    placeholder: frodoConfig.passPlaceholder
+                    placeholder: translation[config.lang].passPlaceholder
+                    // placeholder: frodoConfig.passPlaceholder
                 }),
                 passwordConfirm: $('<input/>', {
                     id: 'secondPassword',
                     class: frodoConfig.frodoLogin.input + ' ' + frodoConfig.hideClass,
                     type: 'password',
                     name: 'passwordConfirm',
-                    placeholder: frodoConfig.passConfirmPlaceholder,
+                    placeholder: translation[config.lang].passConfirmPlaceholder,
+                    // placeholder: frodoConfig.passConfirmPlaceholder,
                     'data-if-match': '#firstPassword',
                     disabled: true
                 }),
@@ -531,7 +536,8 @@
                     type: 'email',
                     name: 'passwordReset',
                     class: frodoConfig.frodoLogin.input + ' ' + frodoConfig.hideClass,
-                    placeholder: frodoConfig.emailResetPlaceholder,
+                    placeholder: translation[config.lang].emailResetPlaceholder,
+                    // placeholder: frodoConfig.emailResetPlaceholder,
                     disabled: true
                 })
 
@@ -545,30 +551,32 @@
             forgotLink: $('<a/>', {
                 href: frodoConfig.forgotLink,
                 class: frodoConfig.frodoLogin.forgot,
-                html: frodoConfig.links[0]
+                html: translation[config.lang].links[0]
+                // html: frodoConfig.links[0]
             }),
             signUpLink: $('<a/>', {
                 href: frodoConfig.signUpLink,
                 class: frodoConfig.frodoLogin.signUp,
-                html: frodoConfig.links[1]
+                html: translation[config.lang].links[1]
+                // html: frodoConfig.links[1]
             }),
             submitBtn: $('<button/>', {
                 class: frodoConfig.frodoLogin.submit,
                 type: 'submit',
-                html: frodoConfig.login
+                html: translation[config.lang].login
+                // html: frodoConfig.login
             }),
 
             //Social 
             logWith: $('<span/>', {
                 class: frodoConfig.log,
-                html: frodoConfig.logWith
+                html: translation[config.lang].logWith
+                // html: frodoConfig.logWith
             }),
             socialWrapper: $('<div/>', {
                 class: frodoConfig.social
             })
         };
-
-
 
         /**
          * CREATING HTML STRUCTURE
@@ -740,8 +748,9 @@
                     var input = $(this),
                         errMsg = $('span', input.parent()),
                         type = input.attr('type'),
+                        // errors = translation[config.lang].errors;
                         errors = config.errors;
-
+                        console.log(errors);
                     if (type === 'text') {
                         input.addClass(config.errorClass.input);
                         errMsg.text(errors.fullname).addClass(config.errorClass.msg);
@@ -913,6 +922,7 @@
 
         //Shorthand for this.config
         var config = this.config,
+            text = translation[config.lang],
             // input = el.input,
             inputsObj = $('.frodo-input'),
             // input = objToArray(inputsObj),
@@ -941,32 +951,41 @@
         //Check which form is used
         if (form === 'signup') {
             //Check if is either login or reset form, switch to signup
-            if (headerTxt.text() === config.loginTxt || headerTxt.text() === config.resetTxt) {
+            if (headerTxt.text() === text.loginTxt || headerTxt.text() === text.resetTxt) {
+            // if (headerTxt.text() === config.loginTxt || headerTxt.text() === config.resetTxt) {
                 toggleInputs(inputs, signup);
-                changeTxt(headerTxt, config.signUpTxt);
-                changeTxt(signUpTxt, config.links[2]);
+                changeTxt(headerTxt, text.signUpTxt);
+                // changeTxt(headerTxt, config.signUpTxt);
+                changeTxt(signUpTxt, text.links[2]);
+                // changeTxt(signUpTxt, config.links[2]);
                 config.currentForm = config.forms[1];
                 //Switch to login
             } else {
                 toggleInputs(inputs, init);
-                changeTxt(headerTxt, config.loginTxt);
-                changeTxt(signUpTxt, config.links[1]);
+                changeTxt(headerTxt, text.loginTxt);
+                // changeTxt(headerTxt, config.loginTxt);
+                changeTxt(signUpTxt, text.links[1]);
+                // changeTxt(signUpTxt, config.links[1]);
                 config.currentForm = config.forms[0];
             }
         }
         //Form reset password
         else if (form === 'reset') {
             toggleInputs(inputs, reset);
-            changeTxt(headerTxt, config.resetTxt);
-            changeTxt(signUpTxt, config.links[1]);
+            changeTxt(headerTxt, text.resetTxt);
+            // changeTxt(headerTxt, config.resetTxt);
+            changeTxt(signUpTxt, text.links[1]);
+            // changeTxt(signUpTxt, config.links[1]);
             config.currentForm = config.forms[2];
         }
 
         //Form login, init state
         else if (form === 'init') {
             toggleInputs(inputs, init);
-            changeTxt(headerTxt, config.loginTxt);
-            changeTxt(signUpTxt, config.links[1]);
+            changeTxt(headerTxt, text.loginTxt);
+            // changeTxt(headerTxt, config.loginTxt);
+            changeTxt(signUpTxt, text.links[1]);
+            // changeTxt(signUpTxt, config.links[1]);
             config.currentForm = config.forms[0];
         }
 
@@ -1065,7 +1084,7 @@
     $('[data-login]').frodo({
 
         version: 'advanced',
-        lang: 'se'
+        lang: 'en'
 
     });
 }(jQuery));
