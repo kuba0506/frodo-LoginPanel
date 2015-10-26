@@ -9,10 +9,13 @@
 (function($) {
     "use strict";
 
+
     //Default plugin settings 
     var defaults = {
 
         lang: 'en',
+        version: 'basic',
+        provider: ['eniro', 'facebook', 'google-plus'],
         currentForm: null,
         forms: ['login', 'signup', 'reset'],
 
@@ -78,6 +81,116 @@
         }
     };
 
+    //TRANSLATIONS
+    var translation = [
+        {
+            'en': {
+                    loginTxt: 'Log in',
+                    signUpTxt: 'Sign up',
+                    resetTxt: 'Password Reset',
+                    userPlaceholder: 'Fullname',
+                    passPlaceholder: 'Password',
+                    passConfirmPlaceholder: 'Confirm password',
+                    emailPlaceholder: 'Email',
+                    emailResetPlaceholder: 'Your email address',
+                    links: ['Forgot your password ?', 'Sign up now', 'Log in now'],
+                    login: 'Submit',
+                    logWith: 'or',
+                    //Errors
+                    errors: {
+                        email: 'Invalid email address format',
+                        password: 'Password should be at least 8 characters',
+                        passwordNotMatch: 'Passwords don\'t match',
+                        fullname: 'Invalid username'
+                    }
+                
+            }
+        },
+        {'se': {}},
+        {'no': {}},
+        {'dk': {}}
+    ];
+
+    //TEMP - Array of social buttons
+    // var social = [];
+    // {% for s in socials %}
+    // social.push({
+    //  provider: {{ s.provider }},
+    //  text: {{ s.text }},
+    //  link: {{ s.link }} 
+    // });
+    // {% endfor %}
+    var social = [
+        {
+            'eniro': {
+                text: 'Eniro',
+                link: '#'
+            }
+        }, 
+        {
+            'facebook': {
+                text: 'Facebook',
+                link: '#'
+            }
+        }, 
+        {
+            'twitter': {
+                text: 'Twitter',
+                link: '#'
+            }
+        },
+        {
+            'google-plus': {
+                text: 'Google++',
+                link: '#'
+            }
+        },
+        {
+            'linkedin': {
+                text: 'LinkedIn',
+                link: '#'
+            }
+        },
+        {
+            'android': {
+                text: 'Android',
+                link: '#'
+            }
+        }, 
+        {
+            'skype': {
+                text: 'Skype',
+                link: '#'
+            }
+        }
+    ];
+
+    var social = [{
+        provider: 'facebook',
+        text: 'Facebook',
+        link: '#'
+    }, {
+        provider: 'twitter',
+        text: 'Twitter',
+        link: '#'
+    }, {
+        provider: 'google-plus',
+        text: 'Google++',
+        link: '#'
+    }, {
+        provider: 'linkedin',
+        text: 'LinkedIn',
+        link: '#'
+    }, {
+        provider: 'android',
+        text: 'Android',
+        link: '#'
+    }, {
+        provider: 'skype',
+        text: 'Skype',
+        link: '#'
+    }];
+
     //CACHED OBJECTS
     var el = {
 
@@ -87,12 +200,10 @@
         }),
         overlay: $('<div/>', {
             class: defaults.frodoOverlay
-                // class: defaults.frodoOverlay + ' ' + defaults.hideClass
         }),
         frodo: $('<div/>', {
             id: defaults.frodo,
             class: defaults.frodo
-                // class: defaults.frodo + ' ' + defaults.hideClass
         }),
         form: $('<form/>', {
             class: defaults.frodoForm,
@@ -130,7 +241,6 @@
             .append($('<span/>', {
                 class: 'frodo-err-msg'
             })),
-        // inputError: $('<span/>', { class:  'frodo-err-msg' }),
         input: {
             fullname: $('<input/>', {
                 type: 'text',
@@ -203,33 +313,6 @@
         })
     };
 
-    //TEMP - Array of social buttons
-    var social = [{
-        provider: 'facebook',
-        text: 'Facebook',
-        link: '#'
-    }, {
-        provider: 'twitter',
-        text: 'Twitter',
-        link: '#'
-    }, {
-        provider: 'google-plus',
-        text: 'Google++',
-        link: '#'
-    }, {
-        provider: 'linkedin',
-        text: 'LinkedIn',
-        link: '#'
-    }, {
-        provider: 'android',
-        text: 'Android',
-        link: '#'
-    }, {
-        provider: 'skype',
-        text: 'Skype',
-        link: '#'
-    }];
-
     /*
     -------------------C O N S T R U C T O R BEGIN-------------------------------------------------------
      */
@@ -285,6 +368,8 @@
 
             //Set focus on first not disabled input
             frodo.focusFirst();
+
+            console.log(config.version);
         });
 
         /*
@@ -416,27 +501,32 @@
             el.header.append(el.headerTxt, el.closeBtn);
             $('.' + config.frodoForm).append(el.header);
 
-            //Append login box
-            el.frodoLinksWrapper.append(el.forgotLink, el.signUpLink);
-            el.loginFooter.append(el.frodoLinksWrapper, el.submitBtn);
+            //Additional funcionality for widget advanced version
+            if (config.version === 'advanced') {
 
-            //Create array of all inputs
-            keys = Object.keys(el.input);
+                //Append login box
+                el.frodoLinksWrapper.append(el.forgotLink, el.signUpLink);
+                el.loginFooter.append(el.frodoLinksWrapper, el.submitBtn);
 
-            for (var i = 0, len = keys.length; i < len; i++) {
-                inputs.push(el.input[keys[i]]);
+                //Create array of all inputs
+                keys = Object.keys(el.input);
+
+                for (var i = 0, len = keys.length; i < len; i++) {
+                    inputs.push(el.input[keys[i]]);
+                }
+
+                //Wrap each input with wrapper
+                inputs = inputs.map(function(input) {
+                    return el.inputWrapper.clone().prepend(input);
+                });
+                //Finally append everything into box
+                el.loginBox.append(el.message, inputs, el.loginFooter);
+                $('.' + config.frodoForm).append(el.loginBox);
+
+                //Append log with text
+                $('.' + config.frodoForm).append(el.logWith);
+
             }
-
-            //Wrap each input with wrapper
-            inputs = inputs.map(function(input) {
-                return el.inputWrapper.clone().prepend(input);
-            });
-            //Finally append everything into box
-            el.loginBox.append(el.message, inputs, el.loginFooter);
-            $('.' + config.frodoForm).append(el.loginBox);
-
-            //Append log with text
-            $('.' + config.frodoForm).append(el.logWith);
 
             //Append social buttons
             el.socialWrapper.each(function() {
@@ -867,5 +957,9 @@
 (function($) {
     "use strict";
 
-    $('[data-login]').frodo();
+    $('[data-login]').frodo({
+
+        version: 'advanced'
+
+    });
 }(jQuery));
