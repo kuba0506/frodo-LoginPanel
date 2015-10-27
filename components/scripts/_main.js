@@ -297,9 +297,9 @@
 
             //Reset err message
             frodo.showAlert(null, {
-                messageBox: config.frodoLogin.message,
-                text: config.frodoLogin.message + ' > span',
-                alert: config.frodoLogin.messageAlert
+                messageBox: frodoConfig.frodoLogin.message,
+                text: frodoConfig.frodoLogin.message + ' > span',
+                alert: frodoConfig.frodoLogin.messageAlert
             });
 
             //Rest form to login
@@ -876,10 +876,10 @@
             inputs.map(function(value) {
                 if (arr.indexOf(value) !== -1)
                 // if (arr.indexOf(value.attr('name')) !== -1)
-                    $('.frodo-input[name="' + value + '"]').removeClass(config.hideClass).prop('disabled', false);
+                    $('.frodo-input[name="' + value + '"]').removeClass(frodoConfig.hideClass).prop('disabled', false);
                     // $(value).removeClass(config.hideClass).prop('disabled', false);
                 else
-                    $('.frodo-input[name="' + value + '"]').addClass(config.hideClass).prop('disabled', true);
+                    $('.frodo-input[name="' + value + '"]').addClass(frodoConfig.hideClass).prop('disabled', true);
                     // $(value).addClass(config.hideClass).prop('disabled', true);
             });
 
@@ -899,26 +899,20 @@
         //Shorthand for this.config
         var config = this.config,
             text = translation[config.lang],
-            // input = el.input,
             inputsObj = $('.frodo-input'),
-            // input = objToArray(inputsObj),
-            // init = [input.email.attr('name'), input.password.attr('name')],
             init = [inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name')],
-            // signup = [input.fullname.attr('name'), input.email.attr('name'), input.password.attr('name'), input.passwordConfirm.attr('name')],
             signup = [inputsObj.filter('[name="fullname"]').attr('name'), inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name'), inputsObj.filter('[name="passwordConfirm"]').attr('name')],
             reset = [inputsObj.filter('[name="passwordReset"]').attr('name')], 
-            // reset = [input.passwordReset.attr('name')],
-            // inputs = aggregateInputs(input),
             inputs = objToArray(inputsObj),
-            headerTxt = $('.' + config.frodoHeader.text),
-            signUpTxt = $('.' + config.frodoLogin.signUp);
+            headerTxt = $('.' + frodoConfig.frodoHeader.text),
+            signUpTxt = $('.' + frodoConfig.frodoLogin.signUp);
 
 
         //Delete alert message
         this.showAlert(null, {
-            messageBox: config.frodoLogin.message,
-            text: config.frodoLogin.message + ' > span',
-            alert: config.frodoLogin.messageAlert
+            messageBox: frodoConfig.frodoLogin.message,
+            text: frodoConfig.frodoLogin.message + ' > span',
+            alert: frodoConfig.frodoLogin.messageAlert
         });
 
         //Clear form inputs
@@ -928,41 +922,33 @@
         if (form === 'signup') {
             //Check if is either login or reset form, switch to signup
             if (headerTxt.text() === text.loginTxt || headerTxt.text() === text.resetTxt) {
-            // if (headerTxt.text() === config.loginTxt || headerTxt.text() === config.resetTxt) {
                 toggleInputs(inputs, signup);
                 changeTxt(headerTxt, text.signUpTxt);
-                // changeTxt(headerTxt, config.signUpTxt);
                 changeTxt(signUpTxt, text.links[2]);
-                // changeTxt(signUpTxt, config.links[2]);
-                config.currentForm = config.forms[1];
-                //Switch to login
+                frodoConfig.currentForm = frodoConfig.forms[1];
+
+            //Switch to login
             } else {
                 toggleInputs(inputs, init);
                 changeTxt(headerTxt, text.loginTxt);
-                // changeTxt(headerTxt, config.loginTxt);
                 changeTxt(signUpTxt, text.links[1]);
-                // changeTxt(signUpTxt, config.links[1]);
-                config.currentForm = config.forms[0];
+                frodoConfig.currentForm = frodoConfig.forms[0];
             }
         }
         //Form reset password
         else if (form === 'reset') {
             toggleInputs(inputs, reset);
             changeTxt(headerTxt, text.resetTxt);
-            // changeTxt(headerTxt, config.resetTxt);
             changeTxt(signUpTxt, text.links[1]);
-            // changeTxt(signUpTxt, config.links[1]);
-            config.currentForm = config.forms[2];
+            frodoConfig.currentForm = frodoConfig.forms[2];
         }
 
         //Form login, init state
         else if (form === 'init') {
             toggleInputs(inputs, init);
             changeTxt(headerTxt, text.loginTxt);
-            // changeTxt(headerTxt, config.loginTxt);
             changeTxt(signUpTxt, text.links[1]);
-            // changeTxt(signUpTxt, config.links[1]);
-            config.currentForm = config.forms[0];
+            frodoConfig.currentForm = frodoConfig.forms[0];
         }
 
         return true;
@@ -1022,10 +1008,7 @@
      * @return {[boolean]}
      */
     Frodo.prototype.clearInputs = function() {
-        //Shorthand for this.config
-        var config = this.config;
-
-        $('.' + config.frodoLogin.input).each(function() {
+        $('.' + frodoConfig.frodoLogin.input).each(function() {
             this.value = '';
         });
 
