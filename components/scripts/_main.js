@@ -16,73 +16,9 @@
 
         lang: 'en',
         version: 'basic',
-        provider: ['eniro', 'facebook', 'google-plus'],
-
-
-       /* currentForm: null,
-        forms: ['login', 'signup', 'reset'],*/
-
-        //DELETE!!!
-        //Classes and ids
-        // body: 'body',
-        // frodoWrapper: 'frodo-wrapper',
-        // frodo: 'frodo',
-        // frodoOverlay: 'frodo-overlay',
-        // frodoForm: 'frodo-form',
-        // frodoHeader: {
-        //     header: 'frodo-header',
-        //     text: 'frodo-header-txt',
-        //     closeBtn: 'frodo-btn-close'
-        // },
-        /*frodoLogin: {
-            box: 'frodo-login-box',
-            message: 'frodo-message',
-            messageAlert: 'frodo-message-alert',
-            messageSuccess: 'frodo-message-success',
-            input: 'frodo-input',
-            footer: 'frodo-login-footer',
-            linksWrapper: 'frodo-links',
-            forgot: 'frodo-forgot',
-            signUp: 'frodo-sign-up',
-            submit: 'frodo-btn-submit'
-        },
-        log: 'frodo-log-with',
-        social: 'frodo-social',
-        //Helpers
-        frodoVisible: 'frodo-visible',
-        hideClass: 'frodo-hide',
-        noScroll: 'frodo-no-scroll',
-        //Error class
-        errorClass: {
-            input: 'frodo-err-input',
-            msg: 'frodo-err-msg'
-        },*/
-
-        //Settings
-        method: 'get',
-        submitUrl: '?',
-        forgotLink: '#',
-        signUpLink: '#',
-
-        //Translation
-        /*loginTxt: 'Log in',
-        signUpTxt: 'Sign up',
-        resetTxt: 'Password Reset',
-        userPlaceholder: 'Fullname',
-        passPlaceholder: 'Password',
-        passConfirmPlaceholder: 'Confirm password',
-        emailPlaceholder: 'Email',
-        emailResetPlaceholder: 'Your email address',
-        links: ['Forgot your password ?', 'Sign up now', 'Log in now'],
-        login: 'Submit',
-        logWith: 'or',
-        //Errors
-        errors: {
-            email: 'Invalid email address format',
-            password: 'Password should be at least 8 characters',
-            passwordNotMatch: 'Passwords don\'t match',
-            fullname: 'Invalid username'
-        }*/
+        // provider: ['google-plus', 'facebook', 'twitter', 'linkedin']
+        provider: ['eniro', 'facebook', 'google-plus']
+        
     };
 
     /*
@@ -130,31 +66,12 @@
             msg: 'frodo-err-msg'
         },
 
-        //Settings
+        //Form settings
         method: 'get',
         submitUrl: '?',
         forgotLink: '#',
         signUpLink: '#'
 
-        //Translation DELETE!!!!!!!
-        /*loginTxt: 'Log in',
-        signUpTxt: 'Sign up',
-        resetTxt: 'Password Reset',
-        userPlaceholder: 'Fullname',
-        passPlaceholder: 'Password',
-        passConfirmPlaceholder: 'Confirm password',
-        emailPlaceholder: 'Email',
-        emailResetPlaceholder: 'Your email address',
-        links: ['Forgot your password ?', 'Sign up now', 'Log in now'],
-        login: 'Submit',
-        logWith: 'or',
-        //Errors
-        errors: {
-            email: 'Invalid email address format',
-            password: 'Password should be at least 8 characters',
-            passwordNotMatch: 'Passwords don\'t match',
-            fullname: 'Invalid username'
-        }*/
     };
 
     /*
@@ -202,63 +119,36 @@
     //  link: {{ s.link }} 
     // });
     // {% endfor %}
-    // var social = {
-    //         'eniro': {
-    //             text: 'Eniro',
-    //             link: '#'
-    //         }, 
-    //         'facebook': {
-    //             text: 'Facebook',
-    //             link: '#'
-    //         }, 
-    //         'twitter': {
-    //             text: 'Twitter',
-    //             link: '#'
-    //         },
-    //         'google-plus': {
-    //             text: 'Google++',
-    //             link: '#'
-    //         },
-    //         'linkedin': {
-    //             text: 'LinkedIn',
-    //             link: '#'
-    //         },
-    //         'android': {
-    //             text: 'Android',
-    //             link: '#'
-    //         }, 
-    //         'skype': {
-    //             text: 'Skype',
-    //             link: '#'
-    //         }
-    //     };
-
-    //DELETE !!!
-    var social = [{
-        provider: 'facebook',
-        text: 'Facebook',
-        link: '#'
-    }, {
-        provider: 'twitter',
-        text: 'Twitter',
-        link: '#'
-    }, {
-        provider: 'google-plus',
-        text: 'Google++',
-        link: '#'
-    }, {
-        provider: 'linkedin',
-        text: 'LinkedIn',
-        link: '#'
-    }, {
-        provider: 'android',
-        text: 'Android',
-        link: '#'
-    }, {
-        provider: 'skype',
-        text: 'Skype',
-        link: '#'
-    }];
+    var social = {
+            'eniro': {
+                text: 'Eniro',
+                link: '#'
+            }, 
+            'facebook': {
+                text: 'Facebook',
+                link: '#'
+            }, 
+            'twitter': {
+                text: 'Twitter',
+                link: '#'
+            },
+            'google-plus': {
+                text: 'Google++',
+                link: '#'
+            },
+            'linkedin': {
+                text: 'LinkedIn',
+                link: '#'
+            },
+            'android': {
+                text: 'Android',
+                link: '#'
+            }, 
+            'skype': {
+                text: 'Skype',
+                link: '#'
+            }
+        };
 
     /*
     -------------------C O N S T R U C T O R BEGIN-------------------------------------------------------
@@ -431,8 +321,8 @@
         var config = this.config,
             frodo = $('#' + frodoConfig.frodoWrapper),
             inputs = [],
-            keys = [],
             el = {},
+            providers = [],
             keys = null;
 
         //CACHED OBJECTS
@@ -601,14 +491,28 @@
 
             //Append social buttons
             el.socialWrapper.each(function() {
-                var btns = '';
-                //ZMIENIĆ !!!!
-                for (var i = 0, len = social.length; i < len; i++) {
-                    btns += '<div class="frodo-provider">\
-                          <a class="frodo-btn frodo-btn-' + social[i].provider + '" \
-                          href="' + social[i].link + '">\
-                          <i class="fa fa-' + social[i].provider + '"></i>' + social[i].text + '</a>\
-                        </div>';
+                var btns = '',
+                    //Convert social into array of keys
+                    provider = config.provider,
+                    providers = Object.keys(social),
+                    version = config.version;
+
+                //If 'advanced' version is selected than skip eniro button
+                if (version === 'advanced') {
+                    for (var i = 0, len = provider.length; i < len; i++) {
+                        if (provider[i] === 'eniro')
+                            provider.splice(provider[i], 1);
+                    }
+                }
+
+                for (var i = 0, len = providers.length;i < len;i++) {
+                    if (config.provider.indexOf(providers[i]) !== -1) {
+                        btns += '<div class="frodo-provider">\
+                                <a class="frodo-btn frodo-btn-' + providers[i] + '" \
+                                 href="' + social[providers[i]].link + '">\
+                                <i class="fa fa-' + providers[i] + '"></i>' + social[providers[i]].text + '</a>\
+                                </div>';
+                    }
                 }
                 $(this).append(btns);
             });
@@ -875,12 +779,9 @@
         function toggleInputs(inputs, arr) {
             inputs.map(function(value) {
                 if (arr.indexOf(value) !== -1)
-                // if (arr.indexOf(value.attr('name')) !== -1)
                     $('.frodo-input[name="' + value + '"]').removeClass(frodoConfig.hideClass).prop('disabled', false);
-                    // $(value).removeClass(config.hideClass).prop('disabled', false);
                 else
                     $('.frodo-input[name="' + value + '"]').addClass(frodoConfig.hideClass).prop('disabled', true);
-                    // $(value).addClass(config.hideClass).prop('disabled', true);
             });
 
             return true;
@@ -1041,7 +942,7 @@
 
     $('[data-login]').frodo({
 
-        version: 'advanced',
+        // version: 'advanced',
         lang: 'en'
 
     });

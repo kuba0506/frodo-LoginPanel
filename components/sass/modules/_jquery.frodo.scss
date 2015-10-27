@@ -231,6 +231,7 @@
   display: inline-block;
   width: 48.5%;
   width: 50%;
+  min-width: 180px;
   text-align: center;
   vertical-align: top;
   padding: 1%;
@@ -347,6 +348,7 @@
 .frodo-btn-drupal { background: #0073ba; }
 .frodo-btn-email-1 { background: #35c7ed; }
 .frodo-btn-email-2 { background: #35c7ed; }
+.frodo-btn-eniro { background: #F9BA25; }
 .frodo-btn-facebook { background: #4862a3; }
 .frodo-btn-flickr { background: #ff1981; }
 .frodo-btn-foursquare { background: #f04d7a; }
@@ -397,18 +399,21 @@
 
 @media only screen and (max-width: 768px) {
   .frodo {
-    width: 65%;
+    width: 50%;
     max-width: none;
+  }
+  .frodo-provider {
+    min-width: 100px; 
   }
 }
 @media only screen and (max-width: 600px) {
   .frodo {
-    width: 75%;
+    width: 60%;
   }
 }
 @media only screen and (max-width: 480px) {
   .frodo {
-    width: 90%;
+    width: 80%;
   }
   .frodo-social {
     margin-left: -2%;
@@ -423,7 +428,7 @@
 }
 @media only screen and (max-width: 360px) {
   .frodo {
-    width: 95%;
+    width: 90%;
   }
 }
 

@@ -52,7 +52,7 @@
 .frodo-social { padding: 0 20px 10px; margin-left: -1%; margin-right: -1%; text-align: center; }
 .frodo-social:after { content: ""; display: block; width: 100%; margin-bottom: -1.2em; margin-bottom: -5px; }
 
-.frodo-provider { display: inline-block; width: 48.5%; width: 50%; text-align: center; vertical-align: top; padding: 1%; }
+.frodo-provider { display: inline-block; width: 48.5%; width: 50%; min-width: 180px; text-align: center; vertical-align: top; padding: 1%; }
 .frodo-provider a { text-decoration: none; }
 
 .frodo-provider--reset { border: 0 none; height: 0 !important; margin: 0 !important; padding: 0; }
@@ -110,6 +110,8 @@
 .frodo-btn-email-1 { background: #35c7ed; }
 
 .frodo-btn-email-2 { background: #35c7ed; }
+
+.frodo-btn-eniro { background: #F9BA25; }
 
 .frodo-btn-facebook { background: #4862a3; }
 
@@ -198,13 +200,14 @@
 .frodo-btn-youtube-play { background: #d02022; }
 
 /** MEDIA QUERIES */
-@media only screen and (max-width: 768px) { .frodo { width: 65%; max-width: none; } }
-@media only screen and (max-width: 600px) { .frodo { width: 75%; } }
-@media only screen and (max-width: 480px) { .frodo { width: 90%; }
+@media only screen and (max-width: 768px) { .frodo { width: 50%; max-width: none; }
+  .frodo-provider { min-width: 100px; } }
+@media only screen and (max-width: 600px) { .frodo { width: 60%; } }
+@media only screen and (max-width: 480px) { .frodo { width: 80%; }
   .frodo-social { margin-left: -2%; margin-right: -2%; }
   .frodo-provider { padding: 2%; }
   .frodo-links a { line-height: 26px; } }
-@media only screen and (max-width: 360px) { .frodo { width: 95%; } }
+@media only screen and (max-width: 360px) { .frodo { width: 90%; } }
 .animated { -webkit-animation-duration: 1s; animation-duration: 1s; -webkit-animation-fill-mode: both; animation-fill-mode: both; }
 
 @-webkit-keyframes shake { from, to { -webkit-transform: translate3d(0, 0, 0); transform: translate3d(0, 0, 0); }
