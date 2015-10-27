@@ -22,6 +22,7 @@
         currentForm: null,
         forms: ['login', 'signup', 'reset'],
 
+        //DELETE!!!
         //Classes and ids
         body: 'body',
         frodoWrapper: 'frodo-wrapper',
@@ -109,6 +110,8 @@
             messageAlert: 'frodo-message-alert',
             messageSuccess: 'frodo-message-success',
             input: 'frodo-input',
+            inputWrapper: 'frodo-input-wrapper',
+            inputError: 'frodo-err-msg',
             footer: 'frodo-login-footer',
             linksWrapper: 'frodo-links',
             forgot: 'frodo-forgot',
@@ -279,7 +282,8 @@
         frodo.element = element;
 
         //Shorthand for config.body
-        body = config.body;
+        body = frodoConfig.body;
+        // body = config.body;
 
         /*
 -----------------------------E V E N T  H A N D L E R S BEGIN----------------------------------------------------------
@@ -321,7 +325,7 @@
             console.log(config.version);
             // console.log(config.lang);
             // console.log(frodoConfig.currentLang);
-            console.log(translation[config.lang]);
+            console.log(config.lang);
         });
 
         /*
@@ -432,7 +436,7 @@
     Frodo.prototype.init = function() {
         //Shorthand for this.config
         var config = this.config,
-            frodoWrapper = $('#' + config.frodoWrapper),
+            frodoWrapper = $('#' + frodoConfig.frodoWrapper),
             inputs = [],
             keys = [],
             el = {},
@@ -483,10 +487,10 @@
                 class: frodoConfig.frodoLogin.message
             }).append($('<span/>')),
             inputWrapper: $('<div/>', {
-                    class: 'frodo-input-wrapper'
+                    class: frodoConfig.frodoLogin.inputWrapper
                 })
                 .append($('<span/>', {
-                    class: 'frodo-err-msg'
+                    class: frodoConfig.frodoLogin.inputError
                 })),
             input: {
                 fullname: $('<input/>', {
