@@ -201,42 +201,36 @@
     //  link: {{ s.link }} 
     // });
     // {% endfor %}
-    var social = [{
-        'eniro': {
-            text: 'Eniro',
-            link: '#'
-        }
-    }, {
-        'facebook': {
-            text: 'Facebook',
-            link: '#'
-        }
-    }, {
-        'twitter': {
-            text: 'Twitter',
-            link: '#'
-        }
-    }, {
-        'google-plus': {
-            text: 'Google++',
-            link: '#'
-        }
-    }, {
-        'linkedin': {
-            text: 'LinkedIn',
-            link: '#'
-        }
-    }, {
-        'android': {
-            text: 'Android',
-            link: '#'
-        }
-    }, {
-        'skype': {
-            text: 'Skype',
-            link: '#'
-        }
-    }];
+    // var social = {
+    //         'eniro': {
+    //             text: 'Eniro',
+    //             link: '#'
+    //         }, 
+    //         'facebook': {
+    //             text: 'Facebook',
+    //             link: '#'
+    //         }, 
+    //         'twitter': {
+    //             text: 'Twitter',
+    //             link: '#'
+    //         },
+    //         'google-plus': {
+    //             text: 'Google++',
+    //             link: '#'
+    //         },
+    //         'linkedin': {
+    //             text: 'LinkedIn',
+    //             link: '#'
+    //         },
+    //         'android': {
+    //             text: 'Android',
+    //             link: '#'
+    //         }, 
+    //         'skype': {
+    //             text: 'Skype',
+    //             link: '#'
+    //         }
+    //     };
 
     //DELETE !!!
     var social = [{
@@ -282,7 +276,7 @@
         frodo.element = element;
 
         //Shorthand for config.body
-        body = frodoConfig.body;
+        frodo.body = body = frodoConfig.body;
         // body = config.body;
 
         /*
@@ -323,8 +317,6 @@
             frodo.focusFirst();
 
             console.log(config.version);
-            // console.log(config.lang);
-            // console.log(frodoConfig.currentLang);
             console.log(config.lang);
         });
 
@@ -332,13 +324,13 @@
 -----------------------------CLOSE LOGIN PANEL--------------------------------------------------------------------
  */
         //Close login panel
-        $(body).on('click', '.' + config.frodoHeader.closeBtn, function() {
+        $(body).on('click', '.' + frodoConfig.frodoHeader.closeBtn, function() {
             frodo.closePanel();
         });
 
         $(body).on('keyup', function(event) {
             //If 'Escape' key is pressed
-            if (event.keyCode === 27 && config.currentForm !== null) {
+            if (event.keyCode === 27 && frodoConfig.currentForm !== null) {
                 frodo.closePanel();
             }
         });
@@ -346,7 +338,7 @@
         /*
 -----------------------------REGISTER FORM HANDLER-----------------------------------------------------------------
  */
-        $(body).on('click', '.' + config.frodoLogin.signUp, function(event) {
+        $(body).on('click', '.' + frodoConfig.frodoLogin.signUp, function(event) {
             frodo.stopEvent(event);
             frodo.toggleForm('signup');
             frodo.clearErrors();
@@ -358,7 +350,7 @@
         /*
 -----------------------------RESET FORM HANDLER-----------------------------------------------------------------
  */
-        $(body).on('click', '.' + config.frodoLogin.forgot, function(event) {
+        $(body).on('click', '.' + frodoConfig.frodoLogin.forgot, function(event) {
             frodo.stopEvent(event);
             frodo.toggleForm('reset');
             frodo.clearErrors();
@@ -378,10 +370,10 @@
 
             //If user press 'enter'
             if (event.keyCode === 13) {
-                $('.' + config.frodoForm).trigger('submit');
+                $('.' + frodoConfig.frodoForm).trigger('submit');
             }
         });
-        $(body).on('submit', '.' + config.frodoForm, function(event) {
+        $(body).on('submit', '.' + frodoConfig.frodoForm, function(event) {
             frodo.stopEvent(event);
             frodo.validate(event);
             //Ajax submit
@@ -408,9 +400,9 @@
                 jsonpCallback: 'myCallback'
             }).then(function(response) {
                 frodo.showAlert(response, {
-                    messageBox: config.frodoLogin.message,
-                    text: config.frodoLogin.message + '> span',
-                    alert: config.frodoLogin.messageAlert
+                    messageBox: frodoConfig.frodoLogin.message,
+                    text: frodoConfig.frodoLogin.message + '> span',
+                    alert: frodoConfig.frodoLogin.messageAlert
                 });
             });
         });
@@ -470,7 +462,6 @@
             headerTxt: $('<span/>', {
                 class: frodoConfig.frodoHeader.text,
                 html: translation[config.lang].loginTxt
-                    // html: frodoConfig.loginTxt
             }),
             closeBtn: $('<button/>', {
                 class: frodoConfig.frodoHeader.closeBtn,
@@ -498,7 +489,6 @@
                     name: 'fullname',
                     class: frodoConfig.frodoLogin.input + ' ' + frodoConfig.hideClass,
                     placeholder: translation[config.lang].userPlaceholder,
-                    // placeholder: frodoConfig.userPlaceholder,
                     disabled: true
                 }),
                 email: $('<input/>', {
@@ -506,7 +496,6 @@
                     name: 'email',
                     class: frodoConfig.frodoLogin.input,
                     placeholder: translation[config.lang].emailPlaceholder
-                        // placeholder: frodoConfig.emailPlaceholder
                 }),
                 password: $('<input/>', {
                     id: 'firstPassword',
@@ -515,7 +504,6 @@
                     name: 'password',
                     'data-if-match': '#secondPassword',
                     placeholder: translation[config.lang].passPlaceholder
-                        // placeholder: frodoConfig.passPlaceholder
                 }),
                 passwordConfirm: $('<input/>', {
                     id: 'secondPassword',
@@ -523,7 +511,6 @@
                     type: 'password',
                     name: 'passwordConfirm',
                     placeholder: translation[config.lang].passConfirmPlaceholder,
-                    // placeholder: frodoConfig.passConfirmPlaceholder,
                     'data-if-match': '#firstPassword',
                     disabled: true
                 }),
@@ -532,7 +519,6 @@
                     name: 'passwordReset',
                     class: frodoConfig.frodoLogin.input + ' ' + frodoConfig.hideClass,
                     placeholder: translation[config.lang].emailResetPlaceholder,
-                    // placeholder: frodoConfig.emailResetPlaceholder,
                     disabled: true
                 })
 
@@ -547,26 +533,22 @@
                 href: frodoConfig.forgotLink,
                 class: frodoConfig.frodoLogin.forgot,
                 html: translation[config.lang].links[0]
-                    // html: frodoConfig.links[0]
             }),
             signUpLink: $('<a/>', {
                 href: frodoConfig.signUpLink,
                 class: frodoConfig.frodoLogin.signUp,
                 html: translation[config.lang].links[1]
-                    // html: frodoConfig.links[1]
             }),
             submitBtn: $('<button/>', {
                 class: frodoConfig.frodoLogin.submit,
                 type: 'submit',
                 html: translation[config.lang].login
-                    // html: frodoConfig.login
             }),
 
             //Social 
             logWith: $('<span/>', {
                 class: frodoConfig.log,
                 html: translation[config.lang].logWith
-                    // html: frodoConfig.logWith
             }),
             socialWrapper: $('<div/>', {
                 class: frodoConfig.social
@@ -581,13 +563,13 @@
         if (frodoWrapper.length === 0) {
 
             //Wrap all content with frodo wrapper, and append frodo container and overlay
-            $(config.body).wrapInner(el.wrapper).
+            $(frodoConfig.body).wrapInner(el.wrapper).
             find('#' + config.frodoWrapper).
             append(el.frodo.append(el.form), el.overlay);
 
             //Insert form header
             el.header.append(el.headerTxt, el.closeBtn);
-            $('.' + config.frodoForm).append(el.header);
+            $('.' + frodoConfig.frodoForm).append(el.header);
 
             //Additional funcionality for widget advanced version
             if (config.version === 'advanced') {
@@ -619,7 +601,7 @@
             //Append social buttons
             el.socialWrapper.each(function() {
                 var btns = '';
-
+                //ZMIENIĆ !!!!
                 for (var i = 0, len = social.length; i < len; i++) {
                     btns += '<div class="frodo-provider">\
                           <a class="frodo-btn frodo-btn-' + social[i].provider + '" \
@@ -629,10 +611,10 @@
                 }
                 $(this).append(btns);
             });
-            $('.' + config.frodoForm).append(el.socialWrapper);
+            $('.' + frodoConfig.frodoForm).append(el.socialWrapper);
 
             //Set value of current form
-            config.currentForm = config.forms[0];
+            frodoConfig.currentForm = frodoConfig.forms[0];
 
             console.log('Login panel created');
         } else {
@@ -1021,18 +1003,17 @@
      */
     Frodo.prototype.closePanel = function() {
         //Shorthand for this.config
-        var config = this.config,
-            submit = $('.' + config.frodoLogin.submit);
+        var submit = $('.' + frodoConfig.frodoLogin.submit);
 
         //Block mouse scroll when panel is open 
-        $('#' + config.frodoWrapper).removeClass('frodo-no-scroll');
+        $('#' + frodoConfig.frodoWrapper).removeClass(frodoConfig.noScroll);
 
         //Remove uneccessary classes                
         this.resetMainClasses();
-        $('#' + defaults.frodoWrapper).removeClass(defaults.noScroll);
+        $('#' + frodoConfig.frodoWrapper).removeClass(frodoConfig.noScroll);
         this.clearInputs();
         this.submitDisabled(false);
-        config.currentForm = null;
+        frodoConfig.currentForm = null;
 
         return true;
     };
