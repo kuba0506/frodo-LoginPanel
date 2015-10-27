@@ -62,7 +62,7 @@
         method: 'get',
         submitUrl: '?',
         forgotLink: '#',
-        signUpLink: '#'
+        signUpLink: '#',
 
         //Translation
         /*loginTxt: 'Log in',
@@ -632,17 +632,17 @@
 
 
     Frodo.prototype.resetMainClasses = function(state) {
-        $('.' + defaults.frodoOverlay).toggleClass(defaults.frodoVisible, state);
-        $('#' + defaults.frodo).toggleClass(defaults.frodoVisible, state);
-        $('#' + defaults.frodoWrapper).addClass(defaults.noScroll, state);
+        $('.' + frodoConfig.frodoOverlay).toggleClass(frodoConfig.frodoVisible, state);
+        $('#' + frodoConfig.frodo).toggleClass(frodoConfig.frodoVisible, state);
+        $('#' + frodoConfig.frodoWrapper).addClass(frodoConfig.noScroll, state);
 
         return true;
     };
 
     Frodo.prototype.clearErrors = function() {
-        var loginBox = $('.' + defaults.frodoLogin.box),
-            errMsg = defaults.errorClass.msg,
-            errInput = defaults.errorClass.input,
+        var loginBox = $('.' + frodoConfig.frodoLogin.box),
+            errMsg = frodoConfig.errorClass.msg,
+            errInput = frodoConfig.errorClass.input,
             input = loginBox.find('.' + errInput),
             msg = loginBox.find('.' + errMsg);
 
@@ -653,12 +653,12 @@
     };
 
     Frodo.prototype.focusFirst = function() {
-        return $('.' + this.config.frodoLogin.input).not(':disabled').first().focus();
+        return $('.' + frodoConfig.frodoLogin.input).not(':disabled').first().focus();
     };
 
     //Change submit button disabled state
     Frodo.prototype.submitDisabled = function(bool) {
-        var submitBtn = $('.' + this.config.frodoLogin.submit);
+        var submitBtn = $('.' + frodoConfig.frodoLogin.submit);
 
         return submitBtn.prop('disabled', bool);
     };
@@ -714,29 +714,27 @@
         }
 
         function anyInputEmpty() {
-            var anyEmpty = $('.' + config.frodoLogin.box).find('.' + config.frodoLogin.input).not(':disabled').filter(function() {
+            var anyEmpty = $('.' + frodoConfig.frodoLogin.box).find('.' + frodoConfig.frodoLogin.input).not(':disabled').filter(function() {
                     return !$(this).val();
                 }),
                 errMsg = anyEmpty.find('span');
-
             //if submit btn
-            if (getInputName() === config.frodoForm) {
+            if (getInputName() === frodoConfig.frodoForm) {
                 anyEmpty.each(function() {
                     var input = $(this),
                         errMsg = $('span', input.parent()),
                         type = input.attr('type'),
-                        // errors = translation[config.lang].errors;
-                        errors = config.errors;
-                    console.log(errors);
+                        errors = translation[config.lang].errors;
+
                     if (type === 'text') {
-                        input.addClass(config.errorClass.input);
-                        errMsg.text(errors.fullname).addClass(config.errorClass.msg);
+                        input.addClass(frodoConfig.errorClass.input);
+                        errMsg.text(errors.fullname).addClass(frodoConfig.errorClass.msg);
                     } else if (type === 'password') {
-                        input.addClass(config.errorClass.input);
-                        errMsg.text(errors.password).addClass(config.errorClass.msg);
+                        input.addClass(frodoConfig.errorClass.input);
+                        errMsg.text(errors.password).addClass(frodoConfig.errorClass.msg);
                     } else if (type === 'email') {
-                        input.addClass(config.errorClass.input);
-                        errMsg.text(errors.email).addClass(config.errorClass.msg);
+                        input.addClass(frodoConfig.errorClass.input);
+                        errMsg.text(errors.email).addClass(frodoConfig.errorClass.msg);
                     }
                 });
             }
@@ -745,15 +743,15 @@
         }
 
         function setErrors(bool, name) {
-            var errors = config.errors,
+            var errors = translation[config.lang].errors,
                 errName = errors[name];
 
             if (bool) {
-                input.addClass(config.errorClass.input);
-                error.text(errName).addClass(config.errorClass.msg);
+                input.addClass(frodoConfig.errorClass.input);
+                error.text(errName).addClass(frodoConfig.errorClass.msg);
             } else {
-                input.removeClass(config.errorClass.input);
-                error.text('').removeClass(config.errorClass.msg);
+                input.removeClass(frodoConfig.errorClass.input);
+                error.text('').removeClass(frodoConfig.errorClass.msg);
             }
         }
         //Check for passwords match (only in case of singup form)
@@ -762,16 +760,16 @@
             var ifMatch = password.data('if-match'),
                 currentVal = getInputValue(password),
                 matchVal = $(ifMatch).val(),
-                allErrors = $('[data-if-match]', $('.' + config.frodoForm)).siblings('span');
+                allErrors = $('[data-if-match]', $('.' + frodoConfig.frodoForm)).siblings('span');
 
             //Compare only if match password is >= 8
             if (matchVal.length >= 8) {
                 //Compare values
                 if (currentVal !== matchVal) {
-                    error.text(config.errors.passwordNotMatch).addClass(config.errorClass.msg);
+                    error.text(translation[config.lang].errors.passwordNotMatch).addClass(frodoConfig.errorClass.msg);
                     frodo.submitDisabled(true);
                 } else {
-                    allErrors.text('').removeClass(config.errorClass.msg);
+                    allErrors.text('').removeClass(frodoConfig.errorClass.msg);
                     validateInput();
                 }
             }
@@ -792,12 +790,12 @@
             input = $(event.target),
             errors = null,
             anyEmpty = null,
-            submitBtn = $('.' + config.frodoLogin.submit),
+            submitBtn = $('.' + frodoConfig.frodoLogin.submit),
             valid = false,
             error = $('span', input.parent());
 
         //If submit button was clicked
-        if (getInputName() === config.frodoForm) {
+        if (getInputName() === frodoConfig.frodoForm) {
             validateInput();
         }
 
@@ -810,7 +808,7 @@
                 setErrors(true, 'email');
             } else {
                 setErrors(false, 'email');
-                errors = $('.' + config.errorClass.input).length;
+                errors = $('.' + frodoConfig.errorClass.input).length;
                 validateInput();
             }
         }
@@ -822,15 +820,15 @@
             if (!checkPassword(input)) {
                 setErrors(true, 'password');
                 //Check for passwords match (only in case of singup form)
-                if (config.currentForm === config.forms[1]) {
+                if (frodoConfig.currentForm === frodoConfig.forms[1]) {
                     passwordsMatch(input);
                 }
             } else {
                 setErrors(false, 'password');
-                errors = $('.' + config.errorClass.input).length;
+                errors = $('.' + frodoConfig.errorClass.input).length;
                 //Check for passwords match (only in case of singup form)
                 validateInput();
-                if (config.currentForm === config.forms[1]) {
+                if (frodoConfig.currentForm === frodoConfig.forms[1]) {
                     passwordsMatch(input);
                 }
             }
@@ -842,7 +840,7 @@
                 setErrors(true, 'fullname');
             } else {
                 setErrors(false, 'password');
-                errors = $('.' + config.errorClass.input).length;
+                errors = $('.' + frodoConfig.errorClass.input).length;
                 validateInput();
             }
         }
