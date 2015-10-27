@@ -19,22 +19,22 @@
         provider: ['eniro', 'facebook', 'google-plus'],
 
 
-        currentForm: null,
-        forms: ['login', 'signup', 'reset'],
+        /* currentForm: null,
+         forms: ['login', 'signup', 'reset'],*/
 
         //DELETE!!!
         //Classes and ids
-        body: 'body',
-        frodoWrapper: 'frodo-wrapper',
-        frodo: 'frodo',
-        frodoOverlay: 'frodo-overlay',
-        frodoForm: 'frodo-form',
-        frodoHeader: {
-            header: 'frodo-header',
-            text: 'frodo-header-txt',
-            closeBtn: 'frodo-btn-close'
-        },
-        frodoLogin: {
+        // body: 'body',
+        // frodoWrapper: 'frodo-wrapper',
+        // frodo: 'frodo',
+        // frodoOverlay: 'frodo-overlay',
+        // frodoForm: 'frodo-form',
+        // frodoHeader: {
+        //     header: 'frodo-header',
+        //     text: 'frodo-header-txt',
+        //     closeBtn: 'frodo-btn-close'
+        // },
+        /*frodoLogin: {
             box: 'frodo-login-box',
             message: 'frodo-message',
             messageAlert: 'frodo-message-alert',
@@ -56,7 +56,7 @@
         errorClass: {
             input: 'frodo-err-input',
             msg: 'frodo-err-msg'
-        },
+        },*/
 
         //Settings
         method: 'get',
@@ -428,7 +428,7 @@
     Frodo.prototype.init = function() {
         //Shorthand for this.config
         var config = this.config,
-            frodoWrapper = $('#' + frodoConfig.frodoWrapper),
+            frodo = $('#' + frodoConfig.frodoWrapper),
             inputs = [],
             keys = [],
             el = {},
@@ -560,11 +560,11 @@
          */
 
         //Check if there is only one instace of plugin
-        if (frodoWrapper.length === 0) {
+        if (frodo.length === 0) {
 
             //Wrap all content with frodo wrapper, and append frodo container and overlay
             $(frodoConfig.body).wrapInner(el.wrapper).
-            find('#' + config.frodoWrapper).
+            find('#' + frodoConfig.frodoWrapper).
             append(el.frodo.append(el.form), el.overlay);
 
             //Insert form header
@@ -591,10 +591,10 @@
                 });
                 //Finally append everything into box
                 el.loginBox.append(el.message, inputs, el.loginFooter);
-                $('.' + config.frodoForm).append(el.loginBox);
+                $('.' + frodoConfig.frodoForm).append(el.loginBox);
 
                 //Append log with text
-                $('.' + config.frodoForm).append(el.logWith);
+                $('.' + frodoConfig.frodoForm).append(el.logWith);
 
             }
 
