@@ -160,7 +160,8 @@
             body;
 
         //User options
-        frodo.options = options;
+        frodo.defaults_provider = defaults.provider;
+        frodo.options_provider = options.provider;
         //Config object 
         frodo.config = config = $.extend(true, {}, defaults, options);
 
@@ -207,9 +208,6 @@
 
             //Set focus on first not disabled input
             frodo.focusFirst();
-
-            console.log(config.version);
-            console.log(config.lang);
         });
 
         /*
@@ -322,7 +320,8 @@
         var config = this.config,
             frodo = $('#' + frodoConfig.frodoWrapper),
             inputs = [],
-            options = this.options,
+            def_providers = this.defaults_provider,
+            opt_providers = this.options_provider,
             el = {},
             providers = [],
             keys = null;
@@ -494,31 +493,38 @@
             //Append social buttons
             el.socialWrapper.each(function() {
                 var btns = '',
+                    version = config.version,
                     //Set provider either from config or from option
                     // provider = options.provider || config.provider,
                     provider = config.provider,
-                    version = config.version;
+                    defaults_provider = def_providers,
+                    options_provider = opt_providers,
+                    result_provider = defaults_provider.slice();
+
+                //Aggregate providers from config and options
+                if (options_provider) {
+
+                    options_provider.forEach(function(opt_name) {
+                        result_provider.forEach(function(conf_name) {
+                            if (opt_name !== conf_name && result_provider.indexOf(opt_name) === -1) {
+                                result_provider.push(opt_name);
+                            }
+
+                        });
+                    });
+                }
+
 
                 //If 'advanced' version is selected than skip eniro button
                 if (version === 'advanced') {
-                    // provider = options.provider;
-                    for (var i = 0, len = provider.length; i < len; i++) {
-                        if (provider[i] === 'eniro')
-                            provider.splice(provider[i], 1);
-                    }
+                    result_provider.forEach(function(name, index) {
+                        if (name === 'eniro')
+                            result_provider.splice(index, 1);
+                    });
                 }
 
-                // for (var i = 0, len = allProviders.length;i < len;i++) {
-                //     if (provider.indexOf(allProviders[i]) !== -1) {
-                //         btns += '<div class="frodo-provider">\
-                //                 <a class="frodo-btn frodo-btn-' + allProviders[i] + '" \
-                //                  href="' + social[allProviders[i]].link + '">\
-                //                 <i class="fa fa-' + allProviders[i] + '"></i>' + social[allProviders[i]].text + '</a>\
-                //                 </div>';
-                //     }
-                // }
-
-                provider.forEach(function(name) {
+                //Manufacture buttons
+                result_provider.forEach(function(name) {
                     if (name in social) {
                         btns += '<div class="frodo-provider">\
                                     <a class="frodo-btn frodo-btn-' + name + '" \
@@ -527,8 +533,6 @@
                                     </div>';
                     }
                 });
-
-
 
                 $(this).append(btns);
             });
@@ -959,7 +963,8 @@
     $('[data-login]').frodo({
 
         version: 'advanced',
-        lang: 'en'
-            // provider: ['eniro', 'twitter']
+        lang: 'en',
+        provider: ['twitter', 'linkedin']
+
     });
 }(jQuery));
