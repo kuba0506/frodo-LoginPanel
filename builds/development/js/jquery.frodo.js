@@ -16,8 +16,8 @@
 
         lang: 'en',
         version: 'basic',
-        // provider: ['google-plus', 'facebook', 'twitter', 'linkedin']
         provider: ['eniro', 'facebook', 'google-plus']
+            // provider: ['google-plus', 'facebook', 'twitter', 'linkedin']
 
     };
 
@@ -159,6 +159,8 @@
             config,
             body;
 
+        //User options
+        frodo.options = options;
         //Config object 
         frodo.config = config = $.extend(true, {}, defaults, options);
 
@@ -320,6 +322,7 @@
         var config = this.config,
             frodo = $('#' + frodoConfig.frodoWrapper),
             inputs = [],
+            options = this.options,
             el = {},
             providers = [],
             keys = null;
@@ -491,28 +494,42 @@
             //Append social buttons
             el.socialWrapper.each(function() {
                 var btns = '',
-                    //Convert social into array of keys
+                    //Set provider either from config or from option
+                    // provider = options.provider || config.provider,
                     provider = config.provider,
-                    providers = Object.keys(social),
                     version = config.version;
 
                 //If 'advanced' version is selected than skip eniro button
                 if (version === 'advanced') {
+                    // provider = options.provider;
                     for (var i = 0, len = provider.length; i < len; i++) {
                         if (provider[i] === 'eniro')
                             provider.splice(provider[i], 1);
                     }
                 }
 
-                for (var i = 0, len = providers.length; i < len; i++) {
-                    if (config.provider.indexOf(providers[i]) !== -1) {
+                // for (var i = 0, len = allProviders.length;i < len;i++) {
+                //     if (provider.indexOf(allProviders[i]) !== -1) {
+                //         btns += '<div class="frodo-provider">\
+                //                 <a class="frodo-btn frodo-btn-' + allProviders[i] + '" \
+                //                  href="' + social[allProviders[i]].link + '">\
+                //                 <i class="fa fa-' + allProviders[i] + '"></i>' + social[allProviders[i]].text + '</a>\
+                //                 </div>';
+                //     }
+                // }
+
+                provider.forEach(function(name) {
+                    if (name in social) {
                         btns += '<div class="frodo-provider">\
-                                <a class="frodo-btn frodo-btn-' + providers[i] + '" \
-                                 href="' + social[providers[i]].link + '">\
-                                <i class="fa fa-' + providers[i] + '"></i>' + social[providers[i]].text + '</a>\
-                                </div>';
+                                    <a class="frodo-btn frodo-btn-' + name + '" \
+                                     href="' + social[name].link + '">\
+                                    <i class="fa fa-' + name + '"></i>' + social[name].text + '</a>\
+                                    </div>';
                     }
-                }
+                });
+
+
+
                 $(this).append(btns);
             });
             $('.' + frodoConfig.frodoForm).append(el.socialWrapper);
@@ -941,8 +958,8 @@
 
     $('[data-login]').frodo({
 
-        // version: 'advanced',
+        version: 'advanced',
         lang: 'en'
-
+            // provider: ['eniro', 'twitter']
     });
 }(jQuery));
