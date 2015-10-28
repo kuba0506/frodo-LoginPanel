@@ -158,6 +158,7 @@
         var frodo = this,
             //Shorthand for frodo.config
             config,
+            lang,
             body;
 
         //User options
@@ -168,6 +169,10 @@
 
         //Element we call a function on
         frodo.element = element;
+
+        //Set language
+
+        frodo.lang = lang = (Object.keys(translation[defaults.lang]).length !== Object.keys(translation[config.lang]).length) ? defaults.lang : config.lang;
 
         //Shorthand for config.body
         frodo.body = body = frodoConfig.body;
@@ -319,6 +324,7 @@
     Frodo.prototype.init = function() {
         //Shorthand for this.config
         var config = this.config,
+            lang = this.lang,
             frodo = $('#' + frodoConfig.frodoWrapper),
             inputs = [],
             def_providers = this.defaults_provider,
@@ -354,7 +360,7 @@
             }),
             headerTxt: $('<span/>', {
                 class: frodoConfig.frodoHeader.text,
-                html: translation[config.lang].loginTxt
+                html: translation[lang].loginTxt
             }),
             closeBtn: $('<button/>', {
                 class: frodoConfig.frodoHeader.closeBtn,
@@ -381,14 +387,14 @@
                     type: 'text',
                     name: 'fullname',
                     class: frodoConfig.frodoLogin.input + ' ' + frodoConfig.hideClass,
-                    placeholder: translation[config.lang].userPlaceholder,
+                    placeholder: translation[lang].userPlaceholder,
                     disabled: true
                 }),
                 email: $('<input/>', {
                     type: 'email',
                     name: 'email',
                     class: frodoConfig.frodoLogin.input,
-                    placeholder: translation[config.lang].emailPlaceholder
+                    placeholder: translation[lang].emailPlaceholder
                 }),
                 password: $('<input/>', {
                     id: 'firstPassword',
@@ -396,14 +402,14 @@
                     type: 'password',
                     name: 'password',
                     'data-if-match': '#secondPassword',
-                    placeholder: translation[config.lang].passPlaceholder
+                    placeholder: translation[lang].passPlaceholder
                 }),
                 passwordConfirm: $('<input/>', {
                     id: 'secondPassword',
                     class: frodoConfig.frodoLogin.input + ' ' + frodoConfig.hideClass,
                     type: 'password',
                     name: 'passwordConfirm',
-                    placeholder: translation[config.lang].passConfirmPlaceholder,
+                    placeholder: translation[lang].passConfirmPlaceholder,
                     'data-if-match': '#firstPassword',
                     disabled: true
                 }),
@@ -411,7 +417,7 @@
                     type: 'email',
                     name: 'passwordReset',
                     class: frodoConfig.frodoLogin.input + ' ' + frodoConfig.hideClass,
-                    placeholder: translation[config.lang].emailResetPlaceholder,
+                    placeholder: translation[lang].emailResetPlaceholder,
                     disabled: true
                 })
 
@@ -425,23 +431,23 @@
             forgotLink: $('<a/>', {
                 href: frodoConfig.forgotLink,
                 class: frodoConfig.frodoLogin.forgot,
-                html: translation[config.lang].links[0]
+                html: translation[lang].links[0]
             }),
             signUpLink: $('<a/>', {
                 href: frodoConfig.signUpLink,
                 class: frodoConfig.frodoLogin.signUp,
-                html: translation[config.lang].links[1]
+                html: translation[lang].links[1]
             }),
             submitBtn: $('<button/>', {
                 class: frodoConfig.frodoLogin.submit,
                 type: 'submit',
-                html: translation[config.lang].login
+                html: translation[lang].login
             }),
 
             //Social 
             logWith: $('<span/>', {
                 class: frodoConfig.log,
-                html: translation[config.lang].logWith
+                html: translation[lang].logWith
             }),
             socialWrapper: $('<div/>', {
                 class: frodoConfig.social
@@ -964,7 +970,7 @@
     $('[data-login]').frodo({
 
         version: 'advanced',
-        lang: 'en',
+        lang: 'se',
         provider: ['twitter', 'linkedin']
 
     });
