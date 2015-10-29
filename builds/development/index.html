@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="css/jquery.frodo.css">
         <!-- <link rel="stylesheet" href="css/styles.css"> -->
         <script src="js/modernizr.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"> -->
 
         <style>
             body {
@@ -37,7 +37,8 @@
         <a href="#" class="log-in" data-login>Log In</a>
         <a href="#" class="log-in2" data-login>Log In2</a>
         <div class="wrapper">
-            <input type="file" name="upload" multiple>
+            <input type="file" id="upload" multiple>
+            <div id="display" style="position: relative"></div>
             <p class="mt20">123 ipsum dolor sit amet, consectetur adipisicing elit. Provident laudantium accusantium quod nulla reiciendis magni possimus nobis recusandae ab cupiditate, error rem excepturi, itaque mollitia magnam totam veritatis iste quaerat illum. Nam dolore fugiat expedita, doloribus magni officia officiis nesciunt. Provident sit alias dolores tenetur ducimus distinctio vero veritatis hic iusto, praesentium voluptas voluptates id offsciis perferendis soluta deleniti quisquam pariatur reprehenderit? Expedita commodi eaque molestiae ullam id animi laboriosam quas totam quia! Magni, reiciendis vero consectetur saepe eaque, officia numquam quod distinctio aliquam ab adipisci, a sunt ea amet. Repudiandae facere nobis alias blanditiis aliquid ducimus perspiciatis suscipit quisquam.</p>
             <p class="mt20">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa natus sunt asperiores, beatae commodi suscipit. Quis sint, iste consectetur dolore. Amet quod vel facilis aut doloribus suscipit asperiores quibusdam fuga! Perferendis cum, nihil at quis hic possimus saepe excepturi magni corrupti quae! Adipisci eum libero quos, explicabo ab quia id perferendis praesentium. Impedit rerum, iste! Similique fuga obcaecati delectus dolorem veniam velit fugit ipsam. Dolores consequuntur, nostrum fuga rerum itaque dolor iusto quidem adipisci tenetur vitae similique nobis quisquam harum, eos eum perferendis, consequatur suscipit optio. Sunt magnam eum itaque, explicabo deleniti! Ipsa, aliquam, libero. Eos aut facere incidunt atque ipsa ex qui maiores quasi consequatur nulla doloribus enim, nam dicta ab nihil, necessitatibus magni, officiis, deserunt beatae repudiandae neque aspernatur odio voluptatem modi! Labore beatae cum suscipit quia eaque nihil voluptate inventore amet cumque ullam doloremque ex omnis, delectus ducimus voluptas, dicta explicabo recusandae accusantium similique laborum sed atque tempore est mollitia! Labore dolorem distinctio laboriosam quidem, voluptas accusamus! Accusantium facere itaque, provident, debitis voluptate repellendus quasi, necessitatibus delectus modi sit iste. Libero neque fugiat rerum nulla rem cupiditate perferendis deserunt ducimus. Aliquam dicta optio repudiandae facilis, dolorem eligendi quidem at quisquam, cum sapiente nihil deserunt tempora, voluptas odio numquam magni ea voluptatem? Tempora temporibus aliquam hic autem, non quia blanditiis harum quam tempore sunt pariatur numquam ducimus qui molestiae unde repellat laborum doloremque voluptates at sequi fuga voluptatem, iusto beatae. Illum assumenda, officiis distinctio, facere sapiente eligendi deleniti ipsam dicta. Unde esse ipsam, eum reprehenderit cum sunt neque voluptate, maiores distinctio, quasi facilis impedit error possimus veniam ipsa repellat vero ullam nam eveniet dolor corporis ducimus, quibusdam. Saepe amet voluptatem eaque voluptates voluptatibus eligendi nihil, ut consectetur est et labore, tempore quod temporibus nesciunt molestias nisi hic fugiat. Eligendi autem fugiat incidunt alias.</p>
             <p class="mt20">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus ratione, praesentium, ea a modi totam voluptatum reiciendis, eaque nihil aperiam error esse. Iste placeat nam obcaecati dolores laborum saepe facere, officia, mollitia, quas dicta sunt at qui ipsa quae aspernatur magni velit explicabo. Commodi hic porro fugiat, eius explicabo inventore sapiente omnis ipsa sint debitis non autem voluptatem nam officiis sequi magni ab iusto, vel nemo accusamus repellendus et ipsam impedit alias! Voluptatum vel cum sapiente quis beatae voluptate tempora tenetur quae, minus eius, atque excepturi explicabo. Asperiores, optio deleniti harum cum eos excepturi commodi! Reiciendis labore assumenda, eum optio illo minus dolorem, porro esse voluptatum doloremque placeat quis recusandae necessitatibus eius itaque adipisci harum quibusdam dolor. Dolorem vel nulla, laudantium sequi. Sed possimus molestias commodi eaque vel nam aliquid maxime, provident facere officia labore impedit blanditiis voluptatibus accusamus amet asperiores animi nesciunt minima est. Aliquam libero non sapiente soluta, molestias natus vitae voluptatum amet. Facilis quasi, est doloremque mollitia explicabo aperiam. Iure cumque aliquam praesentium incidunt ab, laboriosam vitae possimus commodi sed quasi hic doloremque quaerat fugit aut, labore excepturi deleniti necessitatibus! Libero facilis, quidem necessitatibus? Esse, mollitia temporibus quidem unde perspiciatis, aliquam numquam odit laboriosam? Error doloremque aut deleniti vero, voluptates libero qui necessitatibus, odit a mollitia architecto ex nesciunt numquam totam. Aperiam dolore architecto sequi, pariatur quas animi sint recusandae dicta! Ex veniam aliquam error accusantium, et maxime laborum debitis iure iusto praesentium repellendus necessitatibus corporis quibusdam voluptatibus laboriosam cupiditate doloremque a excepturi, architecto saepe fugiat quaerat asperiores ea nisi sed. Magni eligendi aliquam nulla quia officia aperiam itaque consectetur perferendis ipsum alias repellendus autem porro soluta possimus laborum a nostrum cumque, inventore rerum ea architecto iure ratione dolores. Iste culpa asperiores quam cum, tempore incidunt, facere sapiente ducimus, vel, beatae explicabo. Nemo alias veritatis, quidem ab.</p>
@@ -54,19 +55,128 @@
     <script src="js/jquery.frodo.js"></script>
 
     <script>
-    //     function fileInfo(files) {
-    //         var files = files;
+    if(navigator.onLine) {
+        console.log("online");
+    } else {
+        console.log("offline");
+    }
 
-    //         for (var i = 0,len = files.length; i < len; i++) {
-    //             console.log(files[i].name, files[i].size, files[i].type, files[i].lastModifiedDate);
-    //         }
-    //     }
-    // var file = document.querySelector('input[type ="file"]');
+    window.addEventListener('online', function (e) {
+        console.log("online");
+    });
+    window.addEventListener('offline', function (e) {
+        console.log("offline");
+    });
 
-    // file.addEventListener('change', function () {
-    //     fileInfo(this.files);
-    //     console.log(this.files)
-    // });
+    /**
+     * Files API + File Reader + LocalStorage
+     */
+        var image = localStorage.getItem('image'),
+            display = document.getElementById('display'),
+            upload = document.querySelector('#upload'),
+            img,
+            closeBtn;
+
+        if (image) {
+            img = new Image();
+            img.src = JSON.parse(image);
+            img.style.maxWidth = "100%";
+
+            createCloseBtn();
+            display.appendChild(img);
+            display.appendChild(closeBtn);
+            
+        }
+        function createCloseBtn () {
+            closeBtn = document.createElement('span');
+            closeBtn.style.position = 'absolute';
+            closeBtn.style.right = '10px';
+            closeBtn.style.top = '10px';
+            closeBtn.style.width = '30px';
+            closeBtn.style.height = '30px';
+            closeBtn.style.lineHeight = '30px';
+            closeBtn.style.fontSize = '22px';
+            closeBtn.style.textAlign = 'center';
+            closeBtn.style.cursor = 'pointer';
+            closeBtn.style.fontWeight = '800';
+            closeBtn.style.color = '#fff';
+            closeBtn.style.border = '1px solid #fff';
+            closeBtn.style.borderRadius = '4px';
+            closeBtn.style.backgroundColor = '#000';
+            closeBtn.style.transition = 'all 0.3s linear';
+            closeBtn.style.opacity = '0.5';
+            closeBtn.innerHTML = 'X';
+
+            closeBtn.addEventListener('mouseenter', function () {
+                this.style.opacity = 1;
+            });
+            closeBtn.addEventListener('mouseleave', function () {
+                this.style.opacity = 0.5;
+            });
+            closeBtn.addEventListener('click', function() {
+                localStorage.removeItem('image');
+                display.innerHTML = '';
+            });
+        }
+
+        function fileInfo(files) {
+            var files = files;
+
+            // console.log(files);
+
+            Array.prototype.forEach.call(files, function(file, i) {
+                if (file.type.indexOf('image') ===  -1) 
+                    throw 'You are allowed to upload only png files!';
+                console.log('File name:', file.name);
+                console.log('File size: ', file.size);
+                console.log('File type: ', file.type);
+                console.log('File lastModifiedDate: ', file.lastModifiedDate);
+            })
+        }
+    
+
+    // if (closeBtn) {
+        
+    // }
+
+    upload.addEventListener('change', function () {
+        var file;
+
+        console.log('change');
+        
+        createCloseBtn();
+
+        console.log(closeBtn);
+
+        display.innerHTML = '';
+
+        for (var i = 0, len = this.files.length; i < len; i++) {
+            file = this.files[i];
+
+            if (file.type.indexOf('image') !== -1) {
+
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    var img = new Image();
+                    img.src = e.target.result;
+                    img.style.maxWidth = '100%';
+                    console.log('Img src: ', e);
+
+                    display.appendChild(img);
+                    display.appendChild(closeBtn);
+
+                    localStorage.setItem('image',JSON.stringify(img.src));
+                };
+
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        fileInfo(this.files);
+        
+        // console.log(this.files)
+    });
 
     // var string = ['This is a blob text'];
     // var blob = new Blob(string, {type: 'text/plain'});

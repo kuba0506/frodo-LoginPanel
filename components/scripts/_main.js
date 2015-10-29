@@ -172,7 +172,7 @@
 
         //Set language
 
-        frodo.lang = lang = (Object.keys(translation[defaults.lang]).length !== Object.keys(translation[config.lang]).length) ? defaults.lang : config.lang;
+        frodo.lang = (Object.keys(translation[defaults.lang]).length !== Object.keys(translation[config.lang]).length) ? defaults.lang : config.lang;
 
         //Shorthand for config.body
         frodo.body = body = frodoConfig.body;
@@ -656,7 +656,7 @@
                     var input = $(this),
                         errMsg = $('span', input.parent()),
                         type = input.attr('type'),
-                        errors = translation[config.lang].errors;
+                        errors = translation[lang].errors;
 
                     if (type === 'text') {
                         input.addClass(frodoConfig.errorClass.input);
@@ -675,7 +675,7 @@
         }
 
         function setErrors(bool, name) {
-            var errors = translation[config.lang].errors,
+            var errors = translation[lang].errors,
                 errName = errors[name];
 
             if (bool) {
@@ -698,7 +698,7 @@
             if (matchVal.length >= 8) {
                 //Compare values
                 if (currentVal !== matchVal) {
-                    error.text(translation[config.lang].errors.passwordNotMatch).addClass(frodoConfig.errorClass.msg);
+                    error.text(translation[lang].errors.passwordNotMatch).addClass(frodoConfig.errorClass.msg);
                     frodo.submitDisabled(true);
                 } else {
                     allErrors.text('').removeClass(frodoConfig.errorClass.msg);
@@ -719,6 +719,7 @@
 
         var frodo = this,
             config = this.config,
+            lang = this.lang,
             input = $(event.target),
             errors = null,
             anyEmpty = null,
@@ -826,7 +827,7 @@
 
         //Shorthand for this.config
         var config = this.config,
-            text = translation[config.lang],
+            text = translation[this.lang],
             inputsObj = $('.frodo-input'),
             init = [inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name')],
             signup = [inputsObj.filter('[name="fullname"]').attr('name'), inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name'), inputsObj.filter('[name="passwordConfirm"]').attr('name')],
@@ -970,7 +971,7 @@
     $('[data-login]').frodo({
 
         version: 'advanced',
-        lang: 'se',
+        lang: 'en',
         provider: ['twitter', 'linkedin']
 
     });
