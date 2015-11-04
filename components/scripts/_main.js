@@ -1,9 +1,11 @@
 /**
- * Frodo.js v.1.1 - Multiprovider login panel
+ * Frodo.js v.1.3 - Multiprovider login panel
  * Copyright (c) 2015, Jakub Jurczyñski
  *
- * Just add data-login attribute to any html element
+ * To initialise plugin just add data-login attribute to any html element
  * $([data-login]).frodo();
+ * To fire at page load use:
+ * $([data-login]).frodo().trigger('click');
  */
 ;
 (function($) {
@@ -16,7 +18,8 @@
 
         lang: 'en',
         version: 'basic',
-        provider: ['eniro', 'facebook', 'google-plus']
+        provider: ['eniro', 'facebook', 'google-plus'],
+        device: 'desktop'
         // provider: ['google-plus', 'facebook', 'twitter', 'linkedin']
         
     };
@@ -45,6 +48,8 @@
             message: 'frodo-message',
             messageAlert: 'frodo-message-alert',
             messageSuccess: 'frodo-message-success',
+            frodoProvider: 'frodo-provider',
+            frodoProviderMobile: 'frodo-provider-mobile',
             input: 'frodo-input',
             inputWrapper: 'frodo-input-wrapper',
             inputError: 'frodo-err-msg',
@@ -171,8 +176,11 @@
         frodo.element = element;
 
         //Set language
+        var defaultLang = Object.keys(translation[defaults.lang]),
+            configLang = (typeof translation[config.lang] !== 'undefined') ? Object.keys(translation[config.lang]) : void 0;
 
-        frodo.lang = (Object.keys(translation[defaults.lang]).length !== Object.keys(translation[config.lang]).length) ? defaults.lang : config.lang;
+        frodo.lang = ((typeof configLang === 'undefined') || (defaultLang.length !== configLang.length)) ? defaults.lang : config.lang;
+
 
         //Shorthand for config.body
         frodo.body = body = frodoConfig.body;
@@ -214,22 +222,24 @@
 
             //Set focus on first not disabled input
             frodo.focusFirst();
+            console.log($('input:focus').length);
         });
 
         /*
 -----------------------------CLOSE LOGIN PANEL--------------------------------------------------------------------
- */
-        //Close login panel
-        $(body).on('click', '.' + frodoConfig.frodoHeader.closeBtn, function() {
-            frodo.closePanel();
-        });
-
-        $(body).on('keyup', function(event) {
-            //If 'Escape' key is pressed
-            if (event.keyCode === 27 && frodoConfig.currentForm !== null) {
+ */     if (config.device === 'desktop') {
+            //Close login panel
+            $(body).on('click', '.' + frodoConfig.frodoHeader.closeBtn, function() {
                 frodo.closePanel();
-            }
-        });
+            });
+
+            $(body).on('keyup', function(event) {
+                //If 'Escape' key is pressed
+                if (event.keyCode === 27 && frodoConfig.currentForm !== null) {
+                    frodo.closePanel();
+                }
+            });
+        }
 
         /*
 -----------------------------REGISTER FORM HANDLER-----------------------------------------------------------------
@@ -260,14 +270,14 @@
 -----------------------------FORM VALIDATION HANDLER --------------------------------------------------------
  */
         $(body).on('input', 'input', function(event) {
+            //If user press 'enter'
+            if (event.which == 13 || event.keyCode == 13) {
+                $('.' + frodoConfig.frodoForm).trigger('submit');
+            }
             frodo.submitDisabled(true);
             frodo.validate(event);
             frodo.stopEvent(event);
 
-            //If user press 'enter'
-            if (event.keyCode === 13) {
-                $('.' + frodoConfig.frodoForm).trigger('submit');
-            }
         });
         $(body).on('submit', '.' + frodoConfig.frodoForm, function(event) {
             frodo.stopEvent(event);
@@ -340,7 +350,7 @@
                 id: frodoConfig.frodoWrapper
             }),
             overlay: $('<div/>', {
-                class: frodoConfig.frodoOverlay
+                class: (config.device === 'desktop') ? frodoConfig.frodoOverlay : ''
             }),
             frodo: $('<div/>', {
                 id: frodoConfig.frodo,
@@ -467,7 +477,12 @@
             append(el.frodo.append(el.form), el.overlay);
 
             //Insert form header
-            el.header.append(el.headerTxt, el.closeBtn);
+            if (config.device === 'desktop') {
+                el.header.append(el.headerTxt, el.closeBtn);
+            } else {
+                el.header.append(el.headerTxt);                
+            }
+
             $('.' + frodoConfig.frodoForm).append(el.header);
 
             //Additional funcionality for widget advanced version
@@ -504,6 +519,7 @@
                     //Set provider either from config or from option
                     // provider = options.provider || config.provider,
                     provider = config.provider,
+                    providerClass = (config.device === 'desktop') ? frodoConfig.frodoLogin.frodoProvider : frodoConfig.frodoLogin.frodoProvider + ' ' + frodoConfig.frodoLogin.frodoProviderMobile, 
                     defaults_provider = def_providers,
                     options_provider = opt_providers,
                     result_provider = defaults_provider.slice();
@@ -533,7 +549,7 @@
                 //Manufacture buttons
                 result_provider.forEach(function(name) {
                     if (name in social) {
-                        btns += '<div class="frodo-provider">\
+                        btns += '<div class="' + providerClass +'" ">\
                                     <a class="frodo-btn frodo-btn-' + name + '" \
                                      href="' + social[name].link + '">\
                                     <i class="fa fa-' + name + '"></i>' + social[name].text + '</a>\
@@ -585,7 +601,7 @@
     };
 
     Frodo.prototype.focusFirst = function() {
-        return $('.' + frodoConfig.frodoLogin.input).not(':disabled').first().focus();
+        return $('.' + frodoConfig.frodoLogin.input).first().focus();
     };
 
     //Change submit button disabled state
@@ -970,9 +986,10 @@
 
     $('[data-login]').frodo({
 
-        version: 'advanced',
-        lang: 'en',
-        provider: ['twitter', 'linkedin']
+        // device: 'mobile'
+        version: 'advanced'
+        // lang: 'en',
+        // provider: ['twitter', 'linkedin']
 
     });
 }(jQuery));

@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="css/jquery.frodo.css">
         <!-- <link rel="stylesheet" href="css/styles.css"> -->
         <script src="js/modernizr.min.js"></script>
-        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"> -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
 
         <style>
             body {
@@ -31,13 +31,14 @@
               margin-top: 20px;
             }
         </style>
+       
     </head>
-<body>
-
+<body data-login>
+        <!-- <a href="#" data-login></a> -->
         <a href="#" class="log-in" data-login>Log In</a>
         <a href="#" class="log-in2" data-login>Log In2</a>
         <div class="wrapper">
-            <input type="file" id="upload" multiple>
+            <input type="file" id="upload" multiple style="display:inline-block;margin-bottom:20px">
             <div id="display" style="position: relative"></div>
             <p class="mt20">123 ipsum dolor sit amet, consectetur adipisicing elit. Provident laudantium accusantium quod nulla reiciendis magni possimus nobis recusandae ab cupiditate, error rem excepturi, itaque mollitia magnam totam veritatis iste quaerat illum. Nam dolore fugiat expedita, doloribus magni officia officiis nesciunt. Provident sit alias dolores tenetur ducimus distinctio vero veritatis hic iusto, praesentium voluptas voluptates id offsciis perferendis soluta deleniti quisquam pariatur reprehenderit? Expedita commodi eaque molestiae ullam id animi laboriosam quas totam quia! Magni, reiciendis vero consectetur saepe eaque, officia numquam quod distinctio aliquam ab adipisci, a sunt ea amet. Repudiandae facere nobis alias blanditiis aliquid ducimus perspiciatis suscipit quisquam.</p>
             <p class="mt20">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa natus sunt asperiores, beatae commodi suscipit. Quis sint, iste consectetur dolore. Amet quod vel facilis aut doloribus suscipit asperiores quibusdam fuga! Perferendis cum, nihil at quis hic possimus saepe excepturi magni corrupti quae! Adipisci eum libero quos, explicabo ab quia id perferendis praesentium. Impedit rerum, iste! Similique fuga obcaecati delectus dolorem veniam velit fugit ipsam. Dolores consequuntur, nostrum fuga rerum itaque dolor iusto quidem adipisci tenetur vitae similique nobis quisquam harum, eos eum perferendis, consequatur suscipit optio. Sunt magnam eum itaque, explicabo deleniti! Ipsa, aliquam, libero. Eos aut facere incidunt atque ipsa ex qui maiores quasi consequatur nulla doloribus enim, nam dicta ab nihil, necessitatibus magni, officiis, deserunt beatae repudiandae neque aspernatur odio voluptatem modi! Labore beatae cum suscipit quia eaque nihil voluptate inventore amet cumque ullam doloremque ex omnis, delectus ducimus voluptas, dicta explicabo recusandae accusantium similique laborum sed atque tempore est mollitia! Labore dolorem distinctio laboriosam quidem, voluptas accusamus! Accusantium facere itaque, provident, debitis voluptate repellendus quasi, necessitatibus delectus modi sit iste. Libero neque fugiat rerum nulla rem cupiditate perferendis deserunt ducimus. Aliquam dicta optio repudiandae facilis, dolorem eligendi quidem at quisquam, cum sapiente nihil deserunt tempora, voluptas odio numquam magni ea voluptatem? Tempora temporibus aliquam hic autem, non quia blanditiis harum quam tempore sunt pariatur numquam ducimus qui molestiae unde repellat laborum doloremque voluptates at sequi fuga voluptatem, iusto beatae. Illum assumenda, officiis distinctio, facere sapiente eligendi deleniti ipsam dicta. Unde esse ipsam, eum reprehenderit cum sunt neque voluptate, maiores distinctio, quasi facilis impedit error possimus veniam ipsa repellat vero ullam nam eveniet dolor corporis ducimus, quibusdam. Saepe amet voluptatem eaque voluptates voluptatibus eligendi nihil, ut consectetur est et labore, tempore quod temporibus nesciunt molestias nisi hic fugiat. Eligendi autem fugiat incidunt alias.</p>
@@ -48,146 +49,147 @@
             <p class="mt20">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi quos at qui reprehenderit nam numquam eius enim id minima deleniti? Sequi, ducimus deleniti! Laborum perferendis quasi dolorum eligendi, fuga dolorem. Debitis hic eligendi temporibus explicabo est aliquid dolorem dolor, perferendis sit cum eaque illo quam quisquam ut quod, quo fugit praesentium beatae! Amet et ducimus similique ex explicabo, architecto facere quidem sunt nobis aliquam pariatur numquam tenetur illo, mollitia repellendus assumenda cumque distinctio qui iste dolore reprehenderit. Voluptatem suscipit unde eius eaque cum dolore, ducimus nam dignissimos asperiores reiciendis assumenda reprehenderit eos distinctio nesciunt molestiae natus facere doloremque esse accusantium!</p>   
         </div>
 
-
+     <script src="js/jquery-1.11.2.min.js"></script>
+    <script src="js/jquery.frodo.js"></script>
     
 
-    <script src="js/jquery-1.11.2.min.js"></script>
-    <script src="js/jquery.frodo.js"></script>
+    
 
     <script>
-    if(navigator.onLine) {
-        console.log("online");
-    } else {
-        console.log("offline");
-    }
-
-    window.addEventListener('online', function (e) {
-        console.log("online");
-    });
-    window.addEventListener('offline', function (e) {
-        console.log("offline");
-    });
-
-    /**
-     * Files API + File Reader + LocalStorage
-     */
-        var image = localStorage.getItem('image'),
-            display = document.getElementById('display'),
-            upload = document.querySelector('#upload'),
-            img,
-            closeBtn;
-
-        if (image) {
-            img = new Image();
-            img.src = JSON.parse(image);
-            img.style.maxWidth = "100%";
-
-            createCloseBtn();
-            display.appendChild(img);
-            display.appendChild(closeBtn);
-            
-        }
-        function createCloseBtn () {
-            closeBtn = document.createElement('span');
-            closeBtn.style.position = 'absolute';
-            closeBtn.style.right = '10px';
-            closeBtn.style.top = '10px';
-            closeBtn.style.width = '30px';
-            closeBtn.style.height = '30px';
-            closeBtn.style.lineHeight = '30px';
-            closeBtn.style.fontSize = '22px';
-            closeBtn.style.textAlign = 'center';
-            closeBtn.style.cursor = 'pointer';
-            closeBtn.style.fontWeight = '800';
-            closeBtn.style.color = '#fff';
-            closeBtn.style.border = '1px solid #fff';
-            closeBtn.style.borderRadius = '4px';
-            closeBtn.style.backgroundColor = '#000';
-            closeBtn.style.transition = 'all 0.3s linear';
-            closeBtn.style.opacity = '0.5';
-            closeBtn.innerHTML = 'X';
-
-            closeBtn.addEventListener('mouseenter', function () {
-                this.style.opacity = 1;
-            });
-            closeBtn.addEventListener('mouseleave', function () {
-                this.style.opacity = 0.5;
-            });
-            closeBtn.addEventListener('click', function() {
-                localStorage.removeItem('image');
-                display.innerHTML = '';
-            });
-        }
-
-        function fileInfo(files) {
-            var files = files;
-
-            // console.log(files);
-
-            Array.prototype.forEach.call(files, function(file, i) {
-                if (file.type.indexOf('image') ===  -1) 
-                    throw 'You are allowed to upload only png files!';
-                console.log('File name:', file.name);
-                console.log('File size: ', file.size);
-                console.log('File type: ', file.type);
-                console.log('File lastModifiedDate: ', file.lastModifiedDate);
-            })
-        }
-    
-
-    // if (closeBtn) {
-        
+    // if(navigator.onLine) {
+    //     console.log("online");
+    // } else {
+    //     console.log("offline");
     // }
 
-    upload.addEventListener('change', function () {
-        var file;
+    // window.addEventListener('online', function (e) {
+    //     console.log("online");
+    // });
+    // window.addEventListener('offline', function (e) {
+    //     console.log("offline");
+    // });
 
-        console.log('change');
+    // /**
+    //  * Files API + File Reader + LocalStorage
+    //  */
+    //     var image = localStorage.getItem('image'),
+    //         display = document.getElementById('display'),
+    //         upload = document.querySelector('#upload'),
+    //         img,
+    //         closeBtn;
+
+    //     if (image) {
+    //         img = new Image();
+    //         img.src = JSON.parse(image);
+    //         img.style.maxWidth = "100%";
+
+    //         createCloseBtn();
+    //         display.appendChild(img);
+    //         display.appendChild(closeBtn);
+            
+    //     }
+    //     function createCloseBtn () {
+    //         closeBtn = document.createElement('span');
+    //         closeBtn.style.position = 'absolute';
+    //         closeBtn.style.right = '10px';
+    //         closeBtn.style.top = '10px';
+    //         closeBtn.style.width = '30px';
+    //         closeBtn.style.height = '30px';
+    //         closeBtn.style.lineHeight = '30px';
+    //         closeBtn.style.fontSize = '22px';
+    //         closeBtn.style.textAlign = 'center';
+    //         closeBtn.style.cursor = 'pointer';
+    //         closeBtn.style.fontWeight = '800';
+    //         closeBtn.style.color = '#fff';
+    //         closeBtn.style.border = '1px solid #fff';
+    //         closeBtn.style.borderRadius = '4px';
+    //         closeBtn.style.backgroundColor = '#000';
+    //         closeBtn.style.transition = 'all 0.3s linear';
+    //         closeBtn.style.opacity = '0.5';
+    //         closeBtn.innerHTML = 'X';
+
+    //         closeBtn.addEventListener('mouseenter', function () {
+    //             this.style.opacity = 1;
+    //         });
+    //         closeBtn.addEventListener('mouseleave', function () {
+    //             this.style.opacity = 0.5;
+    //         });
+    //         closeBtn.addEventListener('click', function() {
+    //             localStorage.removeItem('image');
+    //             display.innerHTML = '';
+    //             upload.value = '';
+    //         });
+    //     }
+
+    //     function fileInfo(files) {
+    //         var files = files;
+
+    //         // console.log(files);
+
+    //         Array.prototype.forEach.call(files, function(file, i) {
+    //             if (file.type.indexOf('image') ===  -1) 
+    //                 throw 'You are allowed to upload only png files!';
+    //             console.log('File name:', file.name);
+    //             console.log('File size: ', file.size);
+    //             console.log('File type: ', file.type);
+    //             console.log('File lastModifiedDate: ', file.lastModifiedDate);
+    //         })
+    //     }
+    
+
+    // // if (closeBtn) {
         
-        createCloseBtn();
+    // // }
 
-        console.log(closeBtn);
+    // upload.addEventListener('change', function () {
+    //     var file;
 
-        display.innerHTML = '';
-
-        for (var i = 0, len = this.files.length; i < len; i++) {
-            file = this.files[i];
-
-            if (file.type.indexOf('image') !== -1) {
-
-                var reader = new FileReader();
-
-                reader.onload = function(e) {
-                    var img = new Image();
-                    img.src = e.target.result;
-                    img.style.maxWidth = '100%';
-                    console.log('Img src: ', e);
-
-                    display.appendChild(img);
-                    display.appendChild(closeBtn);
-
-                    localStorage.setItem('image',JSON.stringify(img.src));
-                };
-
-                reader.readAsDataURL(file);
-            }
-        }
+    //     console.log('change');
         
-        fileInfo(this.files);
+    //     createCloseBtn();
+
+    //     console.log(closeBtn);
+
+    //     display.innerHTML = '';
+
+    //     for (var i = 0, len = this.files.length; i < len; i++) {
+    //         file = this.files[i];
+
+    //         if (file.type.indexOf('image') !== -1) {
+
+    //             var reader = new FileReader();
+
+    //             reader.onload = function(e) {
+    //                 var img = new Image();
+    //                 img.src = e.target.result;
+    //                 img.style.maxWidth = '100%';
+    //                 console.log('Img src: ', e);
+
+    //                 display.appendChild(img);
+    //                 display.appendChild(closeBtn);
+
+    //                 localStorage.setItem('image',JSON.stringify(img.src));
+    //             };
+
+    //             reader.readAsDataURL(file);
+    //         }
+    //     }
         
-        // console.log(this.files)
-    });
+    //     fileInfo(this.files);
+        
+    //     // console.log(this.files)
+    // });
 
-    // var string = ['This is a blob text'];
-    // var blob = new Blob(string, {type: 'text/plain'});
+    // // var string = ['This is a blob text'];
+    // // var blob = new Blob(string, {type: 'text/plain'});
 
-    // console.log(blob);
+    // // console.log(blob);
 
-    // var worker = new Worker('js/test.js');
+    // // var worker = new Worker('js/test.js');
 
-    // worker.onmessage = function (e) {
-    //     console.log('URL content: ', e.data);
-    // };
+    // // worker.onmessage = function (e) {
+    // //     console.log('URL content: ', e.data);
+    // // };
     </script>
 </body>
 </html>
