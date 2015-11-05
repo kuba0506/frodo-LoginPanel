@@ -33,7 +33,7 @@
         </style>
        
     </head>
-<body data-login>
+<body>
         <!-- <a href="#" data-login></a> -->
         <a href="#" class="log-in" data-login>Log In</a>
         <a href="#" class="log-in2" data-login>Log In2</a>
@@ -56,6 +56,11 @@
     
 
     <script>
+    $(document).ready(function () {
+        $('[data-login]').frodo({
+            version: 'advanced'
+        });
+    });
     // if(navigator.onLine) {
     //     console.log("online");
     // } else {

@@ -1,5 +1,5 @@
 /**
- * Frodo.js v.1.3 - Multiprovider login panel
+ * Frodo.js v.1.4 - Multiprovider login panel
  * Copyright (c) 2015, Jakub Jurczyñski
  *
  * To initialise plugin just add data-login attribute to any html element
@@ -18,10 +18,13 @@
 
         lang: 'en',
         version: 'basic',
-        provider: ['eniro', 'facebook', 'google-plus'],
-        device: 'desktop'
-        // provider: ['google-plus', 'facebook', 'twitter', 'linkedin']
-        
+        provider: ['eniro', 'facebook', 'google'],
+        device: 'desktop',
+        clientId: '',
+        redirectUri: '/',
+        scope: ''
+            // provider: ['google-plus', 'facebook', 'twitter', 'linkedin']
+
     };
 
     /*
@@ -82,48 +85,38 @@
     /*
     TRANSLATIONS
      */
-    var translation = 
-        {
-            'en': {
-                    loginTxt: 'Log in',
-                    signUpTxt: 'Sign up',
-                    resetTxt: 'Password Reset',
-                    userPlaceholder: 'Fullname',
-                    passPlaceholder: 'Password',
-                    passConfirmPlaceholder: 'Confirm password',
-                    emailPlaceholder: 'Email',
-                    emailResetPlaceholder: 'Your email address',
-                    links: ['Forgot your password ?', 'Sign up now', 'Log in now'],
-                    login: 'Submit',
-                    logWith: 'or',
-                    //Errors
-                    errors: {
-                        email: 'Invalid email address format',
-                        password: 'Password should be at least 8 characters',
-                        passwordNotMatch: 'Passwords don\'t match',
-                        fullname: 'Invalid username'
-                    }
-                
-            },
-            'se': {
-                    loginTxt: 'Sweden'
-            },
-            'no': {},
-            'dk': {}
-        };
+    var translation = {
+        'en': {
+            loginTxt: 'Log in',
+            signUpTxt: 'Sign up',
+            resetTxt: 'Password Reset',
+            userPlaceholder: 'Fullname',
+            passPlaceholder: 'Password',
+            passConfirmPlaceholder: 'Confirm password',
+            emailPlaceholder: 'Email',
+            emailResetPlaceholder: 'Your email address',
+            links: ['Forgot your password ?', 'Sign up now', 'Log in now'],
+            login: 'Submit',
+            logWith: 'or',
+            //Errors
+            errors: {
+                email: 'Invalid email address format',
+                password: 'Password should be at least 8 characters',
+                passwordNotMatch: 'Passwords don\'t match',
+                fullname: 'Invalid username'
+            }
 
-    /*
+        },
+        'se': {
+            loginTxt: 'Sweden'
+        },
+        'no': {},
+        'dk': {}
+    };
+
+      /*
     SOCIAL BUTTONS 
      */
-    //TEMP - Array of social buttons
-    // var social = [];
-    // {% for s in socials %}
-    // social.push({
-    //  provider: {{ s.provider }},
-    //  text: {{ s.text }},
-    //  link: {{ s.link }} 
-    // });
-    // {% endfor %}
     var social = {
             'eniro': {
                 text: 'Eniro',
@@ -137,7 +130,7 @@
                 text: 'Twitter',
                 link: '#'
             },
-            'google-plus': {
+            'google': {
                 text: 'Google++',
                 link: '#'
             },
@@ -227,7 +220,8 @@
 
         /*
 -----------------------------CLOSE LOGIN PANEL--------------------------------------------------------------------
- */     if (config.device === 'desktop') {
+ */
+        if (config.device === 'desktop') {
             //Close login panel
             $(body).on('click', '.' + frodoConfig.frodoHeader.closeBtn, function() {
                 frodo.closePanel();
@@ -480,7 +474,7 @@
             if (config.device === 'desktop') {
                 el.header.append(el.headerTxt, el.closeBtn);
             } else {
-                el.header.append(el.headerTxt);                
+                el.header.append(el.headerTxt);
             }
 
             $('.' + frodoConfig.frodoForm).append(el.header);
@@ -519,7 +513,7 @@
                     //Set provider either from config or from option
                     // provider = options.provider || config.provider,
                     provider = config.provider,
-                    providerClass = (config.device === 'desktop') ? frodoConfig.frodoLogin.frodoProvider : frodoConfig.frodoLogin.frodoProvider + ' ' + frodoConfig.frodoLogin.frodoProviderMobile, 
+                    providerClass = (config.device === 'desktop') ? frodoConfig.frodoLogin.frodoProvider : frodoConfig.frodoLogin.frodoProvider + ' ' + frodoConfig.frodoLogin.frodoProviderMobile,
                     defaults_provider = def_providers,
                     options_provider = opt_providers,
                     result_provider = defaults_provider.slice();
@@ -527,8 +521,8 @@
                 //Aggregate providers from config and options
                 if (options_provider) {
 
-                    options_provider.forEach(function (opt_name) {
-                        result_provider.forEach(function (conf_name) {
+                    options_provider.forEach(function(opt_name) {
+                        result_provider.forEach(function(conf_name) {
                             if (opt_name !== conf_name && result_provider.indexOf(opt_name) === -1) {
                                 result_provider.push(opt_name);
                             }
@@ -546,12 +540,23 @@
                     });
                 }
 
+        //         configLang = (typeof translation[config.lang] !== 'undefined') ? Object.keys(translation[config.lang]) : void 0;
+
+        // frodo.lang = ((typeof configLang === 'undefined') || (defaultLang.length !== configLang.length)) ? defaults.lang : config.lang;
                 //Manufacture buttons
                 result_provider.forEach(function(name) {
+
+                    var link = social[name].link;
+                    
+                    link = link.replace('{client_id}', config.clientId);
+                    link = link.replace('{scope}', config.scope);
+                    link = link.replace('{redirect_uri}', config.redirectUri);
+                    console.log('link: ', link);
+// {client_id}&scope={scope}&redirect_uri={redirect_uri}
                     if (name in social) {
-                        btns += '<div class="' + providerClass +'" ">\
+                        btns += '<div class="' + providerClass + '" ">\
                                     <a class="frodo-btn frodo-btn-' + name + '" \
-                                     href="' + social[name].link + '">\
+                                     href="' + link + '">\
                                     <i class="fa fa-' + name + '"></i>' + social[name].text + '</a>\
                                     </div>';
                     }
@@ -831,7 +836,7 @@
             return true;
         }
 
-        function objToArray (obj) {
+        function objToArray(obj) {
             var arr = [];
 
             obj.each(function() {
@@ -847,7 +852,7 @@
             inputsObj = $('.frodo-input'),
             init = [inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name')],
             signup = [inputsObj.filter('[name="fullname"]').attr('name'), inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name'), inputsObj.filter('[name="passwordConfirm"]').attr('name')],
-            reset = [inputsObj.filter('[name="passwordReset"]').attr('name')], 
+            reset = [inputsObj.filter('[name="passwordReset"]').attr('name')],
             inputs = objToArray(inputsObj),
             headerTxt = $('.' + frodoConfig.frodoHeader.text),
             signUpTxt = $('.' + frodoConfig.frodoLogin.signUp);
@@ -872,7 +877,7 @@
                 changeTxt(signUpTxt, text.links[2]);
                 frodoConfig.currentForm = frodoConfig.forms[1];
 
-            //Switch to login
+                //Switch to login
             } else {
                 toggleInputs(inputs, init);
                 changeTxt(headerTxt, text.loginTxt);
@@ -979,17 +984,4 @@
 
 })(jQuery);
 
-//Initialization of a plugin
-;
-(function($) {
-    "use strict";
 
-    $('[data-login]').frodo({
-
-        // device: 'mobile'
-        version: 'advanced'
-        // lang: 'en',
-        // provider: ['twitter', 'linkedin']
-
-    });
-}(jQuery));

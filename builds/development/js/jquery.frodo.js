@@ -1,5 +1,5 @@
 /**
- * Frodo.js v.1.3 - Multiprovider login panel
+ * Frodo.js v.1.4 - Multiprovider login panel
  * Copyright (c) 2015, Jakub Jurczyñski
  *
  * To initialise plugin just add data-login attribute to any html element
@@ -18,8 +18,11 @@
 
         lang: 'en',
         version: 'basic',
-        provider: ['eniro', 'facebook', 'google-plus'],
-        device: 'desktop'
+        provider: ['eniro', 'facebook', 'google'],
+        device: 'desktop',
+        clientId: '',
+        redirectUri: '/',
+        scope: ''
             // provider: ['google-plus', 'facebook', 'twitter', 'linkedin']
 
     };
@@ -114,15 +117,6 @@
     /*
     SOCIAL BUTTONS 
      */
-    //TEMP - Array of social buttons
-    // var social = [];
-    // {% for s in socials %}
-    // social.push({
-    //  provider: {{ s.provider }},
-    //  text: {{ s.text }},
-    //  link: {{ s.link }} 
-    // });
-    // {% endfor %}
     var social = {
         'eniro': {
             text: 'Eniro',
@@ -136,7 +130,7 @@
             text: 'Twitter',
             link: '#'
         },
-        'google-plus': {
+        'google': {
             text: 'Google++',
             link: '#'
         },
@@ -546,12 +540,23 @@
                     });
                 }
 
+                //         configLang = (typeof translation[config.lang] !== 'undefined') ? Object.keys(translation[config.lang]) : void 0;
+
+                // frodo.lang = ((typeof configLang === 'undefined') || (defaultLang.length !== configLang.length)) ? defaults.lang : config.lang;
                 //Manufacture buttons
                 result_provider.forEach(function(name) {
+
+                    var link = social[name].link;
+
+                    link = link.replace('{client_id}', config.clientId);
+                    link = link.replace('{scope}', config.scope);
+                    link = link.replace('{redirect_uri}', config.redirectUri);
+                    console.log('link: ', link);
+                    // {client_id}&scope={scope}&redirect_uri={redirect_uri}
                     if (name in social) {
                         btns += '<div class="' + providerClass + '" ">\
                                     <a class="frodo-btn frodo-btn-' + name + '" \
-                                     href="' + social[name].link + '">\
+                                     href="' + link + '">\
                                     <i class="fa fa-' + name + '"></i>' + social[name].text + '</a>\
                                     </div>';
                     }
@@ -978,18 +983,3 @@
     };
 
 })(jQuery);
-
-//Initialization of a plugin
-;
-(function($) {
-    "use strict";
-
-    $('[data-login]').frodo({
-
-        // device: 'mobile'
-        version: 'advanced'
-            // lang: 'en',
-            // provider: ['twitter', 'linkedin']
-
-    });
-}(jQuery));
