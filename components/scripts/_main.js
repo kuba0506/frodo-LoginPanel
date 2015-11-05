@@ -18,12 +18,11 @@
 
         lang: 'en',
         version: 'basic',
-        provider: ['eniro', 'facebook', 'google'],
+        provider: ['linkedin', 'facebook', 'google'],
         device: 'desktop',
         clientId: '',
         redirectUri: '/',
         scope: ''
-            // provider: ['google-plus', 'facebook', 'twitter', 'linkedin']
 
     };
 
@@ -108,11 +107,89 @@
 
         },
         'se': {
-            loginTxt: 'Sweden'
+            loginTxt: 'Logga in',
+            signUpTxt: 'Skapa nytt konto',
+            resetTxt: 'E-postadress Återställning',
+            userPlaceholder: 'För och efternamn',
+            passPlaceholder: 'Lösenord',
+            passConfirmPlaceholder: 'Bekräfta lösenord',
+            emailPlaceholder: 'E-postadress',
+            emailResetPlaceholder: 'Din E-postadress',
+            links: ['Glömt lösenord?', 'Skapa nytt konto', 'Logga in'],
+            login: 'Skicka',
+            logWith: 'eller',
+            //Errors
+            errors: {
+                email: 'Ogiltig E-mailadress',
+                password: 'Lösenord skall innehålla minst åtta tecken',
+                passwordNotMatch: 'De använda lösernorden stämmer inte med varandra',
+                fullname: 'Ogiltigt användarnamn'
+            }
         },
-        'no': {},
-        'dk': {}
+        'dk': {
+            loginTxt: 'Log ind',
+            signUpTxt: 'Opret ny konto',
+            resetTxt: 'Nulstil adgangskode',
+            userPlaceholder: 'For-og efternavn',
+            passPlaceholder: 'Adgangskode',
+            passConfirmPlaceholder: 'Bekræft adgangskode',
+            emailPlaceholder: 'Mailadresse',
+            emailResetPlaceholder: 'Din mailadresse',
+            links: ['Glemt adgangskode?', 'Opret ny konto', 'Log ind'],
+            login: 'Send',
+            logWith: 'eller',
+            //Errors
+            errors: {
+                email: 'Ugyldig mailadresse',
+                password: 'Adgangskode skal indeholde mindst otte tegn',
+                passwordNotMatch: 'De indtastede adgangskoder er ikke ens',
+                fullname: 'Ugyldigt brugernavn'
+            }
+        },
+        'no': {
+            loginTxt: 'Logg inn',
+            signUpTxt: 'Opprett ny konto',
+            resetTxt: 'Nullstill passord',
+            userPlaceholder: 'For- og etternavn',
+            passPlaceholder: 'Passord',
+            passConfirmPlaceholder: 'Bekreft passord',
+            emailPlaceholder: 'E-postadresse',
+            emailResetPlaceholder: 'Din e-postadresse',
+            links: ['Glemt passordet ditt ?', 'Opprett ny konto', 'Logg inn'],
+            login: 'Send',
+            logWith: 'eller',
+            //Errors
+            errors: {
+                email: 'Ugyldig e-postadresse',
+                password: 'Passordet må være på minst åtte tegn',
+                passwordNotMatch: 'Passordet matcher ikke inntastet passord',
+                fullname: 'Ugyldig brukernavn'
+            }
+        },
+        'ar': {
+            loginTxt: 'تسجيل دخول',
+            signUpTxt: 'تسجيل',
+            resetTxt: 'إعادة تعيين كلمة المرور',
+            userPlaceholder: 'الاسم الكامل',
+            passPlaceholder: 'كلمة المرور',
+            passConfirmPlaceholder: 'تأكيد كلمة المرور',
+            emailPlaceholder: 'بريد إلكتروني',
+            emailResetPlaceholder: 'عنوان بريدك الإلكتروني',
+            links: ['هل نسيت كلمة المرور؟', 'التسجيل الآن', 'تسجيل الدخول الآن'],
+            login: 'اعتماد',
+            logWith: 'أو',
+            //Errors
+            errors: {
+                email: ' تنسيق عنوان البريد الإلكتروني غير صحيح',
+                password: 'يجب أن تتكون كلمة المرور من 8 حروف على الأقل',
+                passwordNotMatch: 'كلمة المرور غير متطابقة',
+                fullname: 'اسم المستخدم غير صحيح'
+            }
+        }
     };
+
+
+
 
       /*
     SOCIAL BUTTONS 
@@ -131,7 +208,7 @@
                 link: '#'
             },
             'google': {
-                text: 'Google++',
+                text: 'Google',
                 link: '#'
             },
             'linkedin': {
@@ -215,7 +292,6 @@
 
             //Set focus on first not disabled input
             frodo.focusFirst();
-            console.log($('input:focus').length);
         });
 
         /*
@@ -290,8 +366,6 @@
                 index;
 
             index = frodo.getRandomInt(0, address.length - 1);
-
-            console.log(address[index]);
 
             $.ajax({
                 type: 'GET',
@@ -531,7 +605,6 @@
                     });
                 }
 
-
                 //If 'advanced' version is selected than skip eniro button
                 if (version === 'advanced') {
                     result_provider.forEach(function(name, index) {
@@ -539,11 +612,7 @@
                             result_provider.splice(index, 1);
                     });
                 }
-
-        //         configLang = (typeof translation[config.lang] !== 'undefined') ? Object.keys(translation[config.lang]) : void 0;
-
-        // frodo.lang = ((typeof configLang === 'undefined') || (defaultLang.length !== configLang.length)) ? defaults.lang : config.lang;
-                //Manufacture buttons
+                //Create buttons
                 result_provider.forEach(function(name) {
 
                     var link = social[name].link;
@@ -551,8 +620,6 @@
                     link = link.replace('{client_id}', config.clientId);
                     link = link.replace('{scope}', config.scope);
                     link = link.replace('{redirect_uri}', config.redirectUri);
-                    console.log('link: ', link);
-// {client_id}&scope={scope}&redirect_uri={redirect_uri}
                     if (name in social) {
                         btns += '<div class="' + providerClass + '" ">\
                                     <a class="frodo-btn frodo-btn-' + name + '" \
