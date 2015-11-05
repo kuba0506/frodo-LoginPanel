@@ -12,10 +12,9 @@
     "use strict";
 
     /*
-    DEFAULT PLUGIN SETTINGS 
+    DEFAULT PLUGIN SETTINGS
      */
     var defaults = {
-
         lang: 'en',
         version: 'basic',
         provider: ['linkedin', 'facebook', 'google'],
@@ -23,11 +22,10 @@
         clientId: '',
         redirectUri: '/',
         scope: ''
-
     };
 
     /*
-    MAIN CONFIG    
+    MAIN CONFIG
      */
     var frodoConfig = {
         //State values
@@ -188,11 +186,8 @@
         }
     };
 
-
-
-
     /*
-    SOCIAL BUTTONS 
+    SOCIAL BUTTONS
      */
     var social = {
         'eniro': {
@@ -239,7 +234,7 @@
         //User options
         frodo.defaults_provider = defaults.provider;
         frodo.options_provider = options.provider;
-        //Config object 
+        //Config object
         frodo.config = config = $.extend(true, {}, defaults, options);
 
         //Element we call a function on
@@ -522,7 +517,7 @@
                 html: translation[lang].login
             }),
 
-            //Social 
+            //Social
             logWith: $('<span/>', {
                 class: frodoConfig.log,
                 html: translation[lang].logWith
@@ -621,11 +616,11 @@
                     link = link.replace('{scope}', config.scope);
                     link = link.replace('{redirect_uri}', config.redirectUri);
                     if (name in social) {
-                        btns += '<div class="' + providerClass + '" ">\
-                                    <a class="frodo-btn frodo-btn-' + name + '" \
-                                     href="' + link + '">\
-                                    <i class="fa fa-' + name + '"></i>' + social[name].text + '</a>\
-                                    </div>';
+                        btns += '<div class="' + providerClass + '" ">' +
+                            '<a class="frodo-btn frodo-btn-' + name + '"' +
+                            'href="' + link + '">' +
+                            '<i class="fa fa-' + name + '"></i>' + social[name].text + '</a>' +
+                            '</div>';
                     }
                 });
 
@@ -795,7 +790,7 @@
             }
 
         }
-        //Check if there is no empty inputs or error messages 
+        //Check if there is no empty inputs or error messages
         function validateInput() {
 
             if (errors < 1 && anyInputEmpty() === 0) {
@@ -870,7 +865,7 @@
     /**
      * [toggleForm switch forms]
      * @param  {[string]} form [form name]
-     * @return {[boolean]} 
+     * @return {[boolean]}
      * */
     Frodo.prototype.toggleForm = function(form) {
 
@@ -973,10 +968,10 @@
 
     /**
      * [showAlert show message above the form]
-     * @param  {[object]} data 
-     * @param  {[object]} box  
-     * @param  {[object]} text 
-     * @return {[boolean]}     
+     * @param  {[object]} data
+     * @param  {[object]} box
+     * @param  {[object]} text
+     * @return {[boolean]}
      */
     Frodo.prototype.showAlert = function(data, options) {
         if (data === undefined) {
@@ -1001,16 +996,16 @@
 
     /**
      * [closePanel close login panel]
-     * @return {[boolean]} 
+     * @return {[boolean]}
      */
     Frodo.prototype.closePanel = function() {
         //Shorthand for this.config
         var submit = $('.' + frodoConfig.frodoLogin.submit);
 
-        //Block mouse scroll when panel is open 
+        //Block mouse scroll when panel is open
         $('#' + frodoConfig.frodoWrapper).removeClass(frodoConfig.noScroll);
 
-        //Remove uneccessary classes                
+        //Remove uneccessary classes
         this.resetMainClasses();
         $('#' + frodoConfig.frodoWrapper).removeClass(frodoConfig.noScroll);
         this.clearInputs();
