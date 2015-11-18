@@ -3,7 +3,8 @@
  */
 var gulp = require('gulp'),
 	gutil = require('gulp-util'), //dodatkowe narzędzia jak log
-	compass = require('gulp-compass'),
+	// compass = require('gulp-compass'),
+	sass = require('gulp-sass'),
 	autoprefixer = require('gulp-autoprefixer'),
 	changed = require('gulp-changed'),
 	include  = require('gulp-include'),
@@ -34,7 +35,12 @@ var jsSources = [
 
 	imgSources = 'components/images/**/*',
 
-	imgDestination = 'builds/development/images';
+	imgDestination = 'builds/development/images',
+
+	sassOptions = {
+  		errLogToConsole: true,
+	    outputStyle: 'compact'
+	};
 
 //Proste logowanie
 gulp.task('log', function () {
@@ -55,7 +61,7 @@ gulp.task('js',function () {
 	// .pipe(minify())
 	// .pipe(beautify({indentSize: 12}))
 	// .pipe(connect.reload())
-	// .pipe(watch())
+	// .pipe(watch())gulp
 });
 
 //Sass do CSS
@@ -63,12 +69,13 @@ gulp.task('sass', function () {
 	gulp.src(sassSources)
 	.pipe(plumber())
 	// .pipe(watch(sassSources))
-	.pipe(compass({
-		css: 'builds/development/css/',
-		sass: 'components/sass/',
-		image: 'builds/development/images',
-		style: 'compact',
-	}))
+	// .pipe(compass({
+	// 	css: 'builds/development/css/',
+	// 	sass: 'components/sass/',
+	// 	image: 'builds/development/images',
+	// 	style: 'compact',
+	// }))
+	.pipe(sass(sassOptions))
 	.on('error', gutil.log)
 	.pipe(autoprefixer(' > 2%'))
 	.pipe(rename('jquery.frodo.css'))
