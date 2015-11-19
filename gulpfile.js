@@ -24,18 +24,18 @@ var gulp = require('gulp'),
  * Sources
  */
 var jsSources = [
-	'components/scripts/_main.js'
+	'src/js/_main.js'
 	],
 
-	sassSources = 'components/sass/styles.scss',
+	sassSources = 'src/sass/styles.scss',
 
 	cssSources = 'builds/development/css',
 
 	htmlSources = 'builds/development/*.html',
 
-	imgSources = 'components/images/**/*',
+	imgSources = 'src/images/**/*',
 
-	imgDestination = 'builds/development/images',
+	imageOutput = 'builds/development/images',
 
 	sassOptions = {
   		errLogToConsole: true,
@@ -71,7 +71,7 @@ gulp.task('sass', function () {
 	// .pipe(watch(sassSources))
 	// .pipe(compass({
 	// 	css: 'builds/development/css/',
-	// 	sass: 'components/sass/',
+	// 	sass: 'src/sass/',
 	// 	image: 'builds/development/images',
 	// 	style: 'compact',
 	// }))
@@ -103,7 +103,7 @@ gulp.task('connect', function () {
 		browser: ["google-chrome", "firefox"]
 	});
 
-	// gulp.watch('components/sass/**/*.scss', ['sass']);
+	// gulp.watch('src/sass/**/*.scss', ['sass']);
 	gulp.watch('builds/development/css/**/*').on('change', reload);
 	gulp.watch('builds/development/js/**/*').on('change', reload);
 	gulp.watch('builds/development/*.html').on('change', reload);
@@ -132,9 +132,9 @@ gulp.task('img', function () {
 	gulp.src(imgSources)
 	.pipe(plumber())
 	// .pipe(watch(imgSources))
-	.pipe(changed(imgDestination))
+	.pipe(changed(imageOutput))
 	.pipe(imagemin())
-	.pipe(gulp.dest(imgDestination));
+	.pipe(gulp.dest(imageOutput));
 });
 
 
@@ -170,8 +170,8 @@ gulp.task('build', ['build:copy', 'build:remove']);
  */
 gulp.task('watch', function () {
 	gulp.watch(htmlSources, ['html']);
-	gulp.watch('components/sass/**/*.scss', ['sass']);
-	gulp.watch('components/scripts/*.js', ['js']);
+	gulp.watch('src/sass/**/*.scss', ['sass']);
+	gulp.watch('src/scripts/*.js', ['js']);
 	gulp.watch('imgSources', ['img']);
 });
 
