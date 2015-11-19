@@ -21,6 +21,7 @@
     "gulp-include": "^2.0.2",
     "gulp-inject": "~3.0.0",
     "gulp-jsbeautifier": "~1.0.1",
+    "gulp-jshint": "^1.12.0",
     "gulp-plumber": "^1.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-rimraf": "~0.2.0",

@@ -14,7 +14,7 @@
     /*
     DEFAULT PLUGIN SETTINGS
      */
-    var defaults = {
+    var defaults: Defaults = {
         lang: 'en',
         version: 'basic',
         provider: ['linkedin', 'facebook', 'google'],
@@ -27,7 +27,7 @@
     /*
     MAIN CONFIG
      */
-    var frodoConfig = {
+    var frodoConfig: FrodoConfig = {
         //State values
         currentForm: null,
         forms: ['login', 'signup', 'reset'],
@@ -82,7 +82,7 @@
     /*
     TRANSLATIONS
      */
-    var translation = {
+    var translation: Translation = {
         'en': {
             loginTxt: 'Log in',
             signUpTxt: 'Sign up',
@@ -189,7 +189,7 @@
     /*
     SOCIAL BUTTONS
      */
-    var social = {
+    var social : Social = {
             'eniro': {
                 text: 'Eniro',
                 link: '#'
@@ -258,7 +258,7 @@
         /*
 -----------------------------OPEN LOGIN PANEL--------------------------------------------------------------------
  */
-        frodo.element.on('click', function(event) {
+        frodo.element.on('click', function(event) : void {
 
             //Prevent default behaviour
             frodo.stopEvent(event);
@@ -294,11 +294,11 @@
  */
         if (config.device === 'desktop') {
             //Close login panel
-            $(body).on('click', '.' + frodoConfig.frodoHeader.closeBtn, function() {
+            $(body).on('click', '.' + frodoConfig.frodoHeader.closeBtn, function() : void {
                 frodo.closePanel();
             });
 
-            $(body).on('keyup', function(event) {
+            $(body).on('keyup', function(event) : void {
                 //If 'Escape' key is pressed
                 if (event.keyCode === 27 && frodoConfig.currentForm !== null) {
                     frodo.closePanel();
@@ -309,7 +309,7 @@
         /*
 -----------------------------REGISTER FORM HANDLER-----------------------------------------------------------------
  */
-        $(body).on('click', '.' + frodoConfig.frodoLogin.signUp, function(event) {
+        $(body).on('click', '.' + frodoConfig.frodoLogin.signUp, function(event) : void {
             frodo.stopEvent(event);
             frodo.toggleForm('signup');
             frodo.clearErrors();
@@ -321,7 +321,7 @@
         /*
 -----------------------------RESET FORM HANDLER-----------------------------------------------------------------
  */
-        $(body).on('click', '.' + frodoConfig.frodoLogin.forgot, function(event) {
+        $(body).on('click', '.' + frodoConfig.frodoLogin.forgot, function(event) : void {
             frodo.stopEvent(event);
             frodo.toggleForm('reset');
             frodo.clearErrors();
@@ -334,7 +334,7 @@
         /*
 -----------------------------FORM VALIDATION HANDLER --------------------------------------------------------
  */
-        $(body).on('input', 'input', function(event) {
+        $(body).on('input', 'input', function(event) : void {
             //If user press 'enter'
             if (event.which === 13 || event.keyCode === 13) {
                 $('.' + frodoConfig.frodoForm).trigger('submit');
@@ -344,7 +344,7 @@
             frodo.stopEvent(event);
 
         });
-        $(body).on('submit', '.' + frodoConfig.frodoForm, function(event) {
+        $(body).on('submit', '.' + frodoConfig.frodoForm, function(event) : void {
             frodo.stopEvent(event);
             frodo.validate(event);
             //Ajax submit
@@ -354,7 +354,7 @@
 -----------------------------AJAX FORM VALIDATION-----------------------------------------------------------------
  */
         // TEMP - Ajax - jsonp
-        $(body).on('click', '.frodo-btn', function() {
+        $(body).on('click', '.frodo-btn', function() : void {
             var url = 'http://jurczynski.czest.pl/registerFailed.json?callback=myCallback',
                 url2 = 'http://jurczynski.czest.pl/registerSuccess.json?callback=myCallback',
                 address = [url, url2],
@@ -394,7 +394,7 @@
     -------------------M E T H O D S  BEGIN --------------------------------------------------
      */
 
-    Frodo.prototype.init = function() {
+    Frodo.prototype.init = function()  {
         //Shorthand for this.config
         var config = this.config,
             lang = this.lang,

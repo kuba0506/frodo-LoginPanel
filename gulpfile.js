@@ -14,6 +14,7 @@ var gulp = require('gulp'),
 	plumber  = require('gulp-plumber'), 
 	rename  = require('gulp-rename'), 
 	prettify = require('gulp-jsbeautifier'),
+	jshint = require('gulp-jshint'),
 	minify = require('gulp-uglify'),
 	del = require('del'),
 	debug = require('gulp-debug'),
@@ -29,7 +30,6 @@ var gulp = require('gulp'),
 
 //Initialize gulp config 
 var config = new Config();
-
 
 /**
  * Typescript
@@ -74,21 +74,28 @@ gulp.task('clean-ts', function (cb) {
   del(typeScriptGenFiles, cb);
 });
 
-// gulp.task('ts', ['ts-lint', 'compile-ts']);
 /**
  * END TypeScript
  */
 
-
 //Łączenie JS
 gulp.task('js',function () {
 	gulp.src(config.jsSources)
+	.pipe(jshint())
+	.pipe(jshint.reporter('default'))
 	.pipe(plumber())
 	.pipe(include())
 		.on('error', gutil.log)
 	.pipe(rename('jquery.frodo.js'))
 	.pipe(prettify({config: '.jsbeautifyrc', mode: 'VERIFY_AND_WRITE'}))
 	.pipe(gulp.dest('builds/development/js'))
+});
+
+//JS linting
+gulp.task('lint', function () {
+	gulp.src(config.jsSources)
+			.pipe(jshint())
+			.pipe(jshint.reporter('default'));
 });
 
 //Sass do CSS
@@ -180,6 +187,7 @@ gulp.task('build', ['build:copy', 'build:remove']);
 gulp.task('watch', function () {
 	gulp.watch(config.htmlSources, ['html']);
 	gulp.watch([config.allTypeScript], ['ts-lint', 'compile-ts']);
+	gulp.watch('src/js/*.js', ['lint']);
 	gulp.watch('src/js/*.js', ['js']);
 	gulp.watch('src/sass/**/*.scss', ['sass']);
 	gulp.watch(config.imgSources, ['img']);
