@@ -3,7 +3,6 @@
  */
 var gulp = require('gulp'),
 	gutil = require('gulp-util'), //dodatkowe narzędzia jak log
-	// compass = require('gulp-compass'),
 	sass = require('gulp-sass'),
 	autoprefixer = require('gulp-autoprefixer'),
 	changed = require('gulp-changed'),
@@ -15,10 +14,41 @@ var gulp = require('gulp'),
 	plumber  = require('gulp-plumber'), 
 	rename  = require('gulp-rename'), 
 	prettify = require('gulp-jsbeautifier'),
-	minify = require('gulp-uglify');
+	minify = require('gulp-uglify'),
+	del = require('del'),
+	debug = require('gulp-debug'),
+	inject = require('gulp-inject'),
+	tsc = require('gulp-typescript'),
+	tslint = require('gulp-tslint'),
+	sourcemaps = require('gulp-sourcemaps'),
+	debug = require('gulp-debug'),
+	Config = require('./gulpfile.config'),
+	tsProject = tsc.createProject('tsconfig.json');
 	// beautify = require('gulp-beautify'),
-	// sass  = require('gulp-sass'), 
 	// watch = require('gulp-watch');
+
+var GulpConfig = (function () {
+    function gulpConfig() {
+        //Got tired of scrolling through all the comments so removed them
+        //Don't hurt me AC :-)
+        this.source = './src/';
+        //TypeScript
+        this.sourceApp = this.source + 'ts/';
+
+        this.tsOutputPath = this.source + '/js';
+        this.allJavaScript = [this.source + '/js/**/*.js'];
+        this.allTypeScript = this.sourceApp + '/**/*.ts';
+
+
+        this.typings = './tools/typings/';
+        this.libraryTypeScriptDefinitions = './tools/typings/**/*.ts';
+    }
+    return gulpConfig;
+})();
+
+
+
+var config = new Config();
 
 /**
  * Sources
@@ -47,6 +77,55 @@ gulp.task('log', function () {
 	gutil.log('Błąd!!');
 });
 
+/**
+ * Typescript
+ */
+
+/**
+ * Lint all custom TypeScript files.
+ */
+gulp.task('ts-lint', function () {
+    return gulp.src(config.allTypeScript).pipe(tslint()).pipe(tslint.report('prose'));
+});
+
+/**
+ * Compile TypeScript and include references to library and app .d.ts files.
+ */
+gulp.task('compile-ts', function () {
+    var sourceTsFiles = [config.allTypeScript,                //path to typescript files
+                         config.libraryTypeScriptDefinitions]; //reference to library .d.ts files
+                        
+
+    var tsResult = gulp.src(sourceTsFiles)
+                       .pipe(sourcemaps.init())
+                       .pipe(tsc(tsProject));
+
+        tsResult.dts.pipe(gulp.dest(config.tsOutputPath));
+        return tsResult.js
+                        .pipe(sourcemaps.write('.'))
+                        .pipe(gulp.dest(config.tsOutputPath));
+});
+
+/**
+ * Remove all generated JavaScript files from TypeScript compilation.
+ */
+gulp.task('clean-ts', function (cb) {
+  var typeScriptGenFiles = [
+                              config.tsOutputPath +'/**/*.js',    // path to all JS files auto gen'd by editor
+                              config.tsOutputPath +'/**/*.js.map', // path to all sourcemap files auto gen'd by editor
+                              '!' + config.tsOutputPath + '/lib'
+                           ];
+
+  // delete the files
+  del(typeScriptGenFiles, cb);
+});
+
+gulp.task('ts', ['ts-lint', 'compile-ts']);
+/**
+ * END TypeScript
+ */
+
+
 //Łączenie JS
 gulp.task('js',function () {
 	gulp.src(jsSources)
@@ -68,30 +147,13 @@ gulp.task('js',function () {
 gulp.task('sass', function () {
 	gulp.src(sassSources)
 	.pipe(plumber())
-	// .pipe(watch(sassSources))
-	// .pipe(compass({
-	// 	css: 'builds/development/css/',
-	// 	sass: 'src/sass/',
-	// 	image: 'builds/development/images',
-	// 	style: 'compact',
-	// }))
 	.pipe(sass(sassOptions))
 	.on('error', gutil.log)
 	.pipe(autoprefixer(' > 2%'))
 	.pipe(rename('jquery.frodo.css'))
-	// .pipe(sass(
-	// 	{ outputStyle: 'compact' }))
 	.pipe(gulp.dest(cssSources))
-	// .pipe(connect.reload())
 });
 
-//Serwer - LiveReload
-// gulp.task('connect', function () {
-// 	connect.server({
-// 		root: 'builds/development/',
-// 		livereload: true
-// 	});
-// });
 //Serwer - BrowserSync
 gulp.task('connect', function () {
 	browserSync.init({
@@ -170,8 +232,9 @@ gulp.task('build', ['build:copy', 'build:remove']);
  */
 gulp.task('watch', function () {
 	gulp.watch(htmlSources, ['html']);
-	gulp.watch('src/sass/**/*.scss', ['sass']);
+	gulp.watch([config.allTypeScript], ['ts-lint', 'compile-ts']);
 	gulp.watch('src/scripts/*.js', ['js']);
+	gulp.watch('src/sass/**/*.scss', ['sass']);
 	gulp.watch('imgSources', ['img']);
 });
 

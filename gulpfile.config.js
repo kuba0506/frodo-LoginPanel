@@ -13,28 +13,6 @@ var GulpConfig = (function () {
         this.allTypeScript = this.sourceApp + '/**/*.ts';
 
 
-        /**
-         * Sources
-         */
-        var jsSources = [
-            'src/js/_main.js'
-            ],
-
-            sassSources = 'src/sass/styles.scss',
-
-            cssSources = 'builds/development/css',
-
-            htmlSources = 'builds/development/*.html',
-
-            imgSources = 'src/images/**/*',
-
-            imgDestination = 'builds/development/images',
-
-            sassOptions = {
-                errLogToConsole: true,
-                outputStyle: 'compact'
-            };
-
         this.typings = './tools/typings/';
         this.libraryTypeScriptDefinitions = './tools/typings/**/*.ts';
     }
