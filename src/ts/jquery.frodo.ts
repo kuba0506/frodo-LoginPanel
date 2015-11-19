@@ -9,7 +9,7 @@
  */
 ;
 (function($) {
-    "use strict";
+    'use strict';
 
     /*
     DEFAULT PLUGIN SETTINGS
@@ -336,7 +336,7 @@
  */
         $(body).on('input', 'input', function(event) {
             //If user press 'enter'
-            if (event.which == 13 || event.keyCode == 13) {
+            if (event.which === 13 || event.keyCode === 13) {
                 $('.' + frodoConfig.frodoForm).trigger('submit');
             }
             frodo.submitDisabled(true);
@@ -402,7 +402,7 @@
             inputs = [],
             def_providers = this.defaults_provider,
             opt_providers = this.options_provider,
-            el = {},
+            el,
             providers = [],
             keys = null;
 
@@ -582,7 +582,9 @@
                     //Set provider either from config or from option
                     // provider = options.provider || config.provider,
                     provider = config.provider,
-                    providerClass = (config.device === 'desktop') ? frodoConfig.frodoLogin.frodoProvider : frodoConfig.frodoLogin.frodoProvider + ' ' + frodoConfig.frodoLogin.frodoProviderMobile,
+                    providerClass = (config.device === 'desktop') ?
+                        frodoConfig.frodoLogin.frodoProvider :
+                        frodoConfig.frodoLogin.frodoProvider + ' ' + frodoConfig.frodoLogin.frodoProviderMobile,
                     defaults_provider = def_providers,
                     options_provider = opt_providers,
                     result_provider = defaults_provider.slice();
@@ -603,8 +605,9 @@
                 //If 'advanced' version is selected than skip eniro button
                 if (version === 'advanced') {
                     result_provider.forEach(function(name, index) {
-                        if (name === 'eniro')
+                        if (name === 'eniro') {
                             result_provider.splice(index, 1);
+                        }
                     });
                 }
                 //Create buttons
@@ -639,7 +642,7 @@
     };
 
     Frodo.prototype.stopEvent = function(e) {
-        var e = e || window.event;
+        e = e || window.event;
 
         e.preventDefault();
         e.stopPropagation();
@@ -679,6 +682,15 @@
     };
 
     Frodo.prototype.validate = function(event) {
+        var frodo = this,
+            config = this.config,
+            lang = this.lang,
+            input = $(event.target),
+            errors = null,
+            anyEmpty = null,
+            submitBtn = $('.' + frodoConfig.frodoLogin.submit),
+            valid = false,
+            error = $('span', input.parent());
 
         /**
          * HELPERS
@@ -722,10 +734,12 @@
         function checkPassword(password) {
             var val = getInputLength(password);
 
-            if (val < 8 || inputIsEmpty(password))
+            if (val < 8 || inputIsEmpty(password)) {
                 return false;
-            else
+            } else {
                 return true;
+            }
+
         }
 
         function anyInputEmpty() {
@@ -798,17 +812,8 @@
             } else {
                 return frodo.submitDisabled(true);
             }
-        }
 
-        var frodo = this,
-            config = this.config,
-            lang = this.lang,
-            input = $(event.target),
-            errors = null,
-            anyEmpty = null,
-            submitBtn = $('.' + frodoConfig.frodoLogin.submit),
-            valid = false,
-            error = $('span', input.parent());
+        }
 
         //If submit button was clicked
         if (getInputName() === frodoConfig.frodoForm) {
@@ -889,10 +894,11 @@
 
         function toggleInputs(inputs, arr) {
             inputs.map(function(value) {
-                if (arr.indexOf(value) !== -1)
+                if (arr.indexOf(value) !== -1) {
                     $('.frodo-input[name="' + value + '"]').removeClass(frodoConfig.hideClass).prop('disabled', false);
-                else
+                } else {
                     $('.frodo-input[name="' + value + '"]').addClass(frodoConfig.hideClass).prop('disabled', true);
+                }
             });
 
             return true;
@@ -913,7 +919,10 @@
             text = translation[this.lang],
             inputsObj = $('.frodo-input'),
             init = [inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name')],
-            signup = [inputsObj.filter('[name="fullname"]').attr('name'), inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name'), inputsObj.filter('[name="passwordConfirm"]').attr('name')],
+            signup = [inputsObj.filter('[name="fullname"]').attr('name'),
+                      inputsObj.filter('[name="email"]').attr('name'),
+                      inputsObj.filter('[name="password"]').attr('name'),
+                      inputsObj.filter('[name="passwordConfirm"]').attr('name')],
             reset = [inputsObj.filter('[name="passwordReset"]').attr('name')],
             inputs = objToArray(inputsObj),
             headerTxt = $('.' + frodoConfig.frodoHeader.text),
@@ -938,25 +947,21 @@
                 changeTxt(headerTxt, text.signUpTxt);
                 changeTxt(signUpTxt, text.links[2]);
                 frodoConfig.currentForm = frodoConfig.forms[1];
-
-                //Switch to login
             } else {
+                //Switch to login
                 toggleInputs(inputs, init);
                 changeTxt(headerTxt, text.loginTxt);
                 changeTxt(signUpTxt, text.links[1]);
                 frodoConfig.currentForm = frodoConfig.forms[0];
             }
-        }
-        //Form reset password
-        else if (form === 'reset') {
+        } else if (form === 'reset') {
+            //Form reset password
             toggleInputs(inputs, reset);
             changeTxt(headerTxt, text.resetTxt);
             changeTxt(signUpTxt, text.links[1]);
             frodoConfig.currentForm = frodoConfig.forms[2];
-        }
-
-        //Form login, init state
-        else if (form === 'init') {
+        } else if (form === 'init') {
+            //Form login, init state
             toggleInputs(inputs, init);
             changeTxt(headerTxt, text.loginTxt);
             changeTxt(signUpTxt, text.links[1]);

@@ -27,55 +27,9 @@ var gulp = require('gulp'),
 	// beautify = require('gulp-beautify'),
 	// watch = require('gulp-watch');
 
-var GulpConfig = (function () {
-    function gulpConfig() {
-        //Got tired of scrolling through all the comments so removed them
-        //Don't hurt me AC :-)
-        this.source = './src/';
-        //TypeScript
-        this.sourceApp = this.source + 'ts/';
-
-        this.tsOutputPath = this.source + '/js';
-        this.allJavaScript = [this.source + '/js/**/*.js'];
-        this.allTypeScript = this.sourceApp + '/**/*.ts';
-
-
-        this.typings = './tools/typings/';
-        this.libraryTypeScriptDefinitions = './tools/typings/**/*.ts';
-    }
-    return gulpConfig;
-})();
-
-
-
+//Initialize gulp config 
 var config = new Config();
 
-/**
- * Sources
- */
-var jsSources = [
-	'src/js/_main.js'
-	],
-
-	sassSources = 'src/sass/styles.scss',
-
-	cssSources = 'builds/development/css',
-
-	htmlSources = 'builds/development/*.html',
-
-	imgSources = 'src/images/**/*',
-
-	imageOutput = 'builds/development/images',
-
-	sassOptions = {
-  		errLogToConsole: true,
-	    outputStyle: 'compact'
-	};
-
-//Proste logowanie
-gulp.task('log', function () {
-	gutil.log('Błąd!!');
-});
 
 /**
  * Typescript
@@ -120,7 +74,7 @@ gulp.task('clean-ts', function (cb) {
   del(typeScriptGenFiles, cb);
 });
 
-gulp.task('ts', ['ts-lint', 'compile-ts']);
+// gulp.task('ts', ['ts-lint', 'compile-ts']);
 /**
  * END TypeScript
  */
@@ -128,30 +82,24 @@ gulp.task('ts', ['ts-lint', 'compile-ts']);
 
 //Łączenie JS
 gulp.task('js',function () {
-	gulp.src(jsSources)
+	gulp.src(config.jsSources)
 	.pipe(plumber())
 	.pipe(include())
 		.on('error', gutil.log)
 	.pipe(rename('jquery.frodo.js'))
 	.pipe(prettify({config: '.jsbeautifyrc', mode: 'VERIFY_AND_WRITE'}))
 	.pipe(gulp.dest('builds/development/js'))
-	// .pipe(watch(jsSources))
-	// .pipe(browserify())
-	// .pipe(minify())
-	// .pipe(beautify({indentSize: 12}))
-	// .pipe(connect.reload())
-	// .pipe(watch())gulp
 });
 
 //Sass do CSS
 gulp.task('sass', function () {
-	gulp.src(sassSources)
+	gulp.src(config.sassSources)
 	.pipe(plumber())
-	.pipe(sass(sassOptions))
+	.pipe(sass(config.sassOptions))
 	.on('error', gutil.log)
 	.pipe(autoprefixer(' > 2%'))
 	.pipe(rename('jquery.frodo.css'))
-	.pipe(gulp.dest(cssSources))
+	.pipe(gulp.dest(config.cssSources))
 });
 
 //Serwer - BrowserSync
@@ -159,10 +107,10 @@ gulp.task('connect', function () {
 	browserSync.init({
 		server: {
 			baseDir: 'builds/development/'
-		},
-		logLevel: "debug",
-		logConnections: true,
-		browser: ["google-chrome", "firefox"]
+		}
+		// logLevel: "debug",
+		// logConnections: true
+		// browser: ["google-chrome", "firefox"]
 	});
 
 	// gulp.watch('src/sass/**/*.scss', ['sass']);
@@ -173,7 +121,7 @@ gulp.task('connect', function () {
 
 //Html
 gulp.task('html', function () {
-	gulp.src(htmlSources)
+	gulp.src(config.htmlSources)
 	// .pipe(prettify({
 	//         braceStyle: "collapse",
 	//         indentChar: " ",
@@ -191,12 +139,11 @@ gulp.task('html', function () {
 
 //Zdjęcia
 gulp.task('img', function () {
-	gulp.src(imgSources)
+	gulp.src(config.imgSources)
 	.pipe(plumber())
-	// .pipe(watch(imgSources))
-	.pipe(changed(imageOutput))
+	.pipe(changed(config.imageOutput))
 	.pipe(imagemin())
-	.pipe(gulp.dest(imageOutput));
+	.pipe(gulp.dest(config.imageOutput));
 });
 
 
@@ -231,14 +178,16 @@ gulp.task('build', ['build:copy', 'build:remove']);
  * Watch task
  */
 gulp.task('watch', function () {
-	gulp.watch(htmlSources, ['html']);
+	gulp.watch(config.htmlSources, ['html']);
 	gulp.watch([config.allTypeScript], ['ts-lint', 'compile-ts']);
-	gulp.watch('src/scripts/*.js', ['js']);
+	gulp.watch('src/js/*.js', ['js']);
 	gulp.watch('src/sass/**/*.scss', ['sass']);
-	gulp.watch('imgSources', ['img']);
+	gulp.watch(config.imgSources, ['img']);
 });
 
 /**
  * Default task
  */
 gulp.task('default', ['html', 'js', 'sass', 'img', 'connect', 'watch']);
+gulp.task('ts', ['html', 'ts-lint', 'compile-ts','js', 'sass', 'img', 'connect', 'watch']);
+// gulp.task('ts', ['ts-lint', 'compile-ts']);
