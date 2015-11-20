@@ -8,14 +8,15 @@ var gulp = require('gulp'),
 	changed = require('gulp-changed'),
 	include  = require('gulp-include'),
 	imagemin  = require('gulp-imagemin'),
-	connect  = require('gulp-connect'), //tworzy serwer
+	//Browser Sync
 	browserSync  = require('browser-sync').create(), //tworzy serwer
 	reload = browserSync.reload,
+	//Fix broken pipe
 	plumber  = require('gulp-plumber'), 
 	rename  = require('gulp-rename'), 
 	prettify = require('gulp-jsbeautifier'),
 	jshint = require('gulp-jshint'),
-	minify = require('gulp-uglify'),
+	// minify = require('gulp-uglify'),
 	del = require('del'),
 	debug = require('gulp-debug'),
 	inject = require('gulp-inject'),
@@ -25,14 +26,13 @@ var gulp = require('gulp'),
 	debug = require('gulp-debug'),
 	Config = require('./gulpfile.config'),
 	tsProject = tsc.createProject('tsconfig.json');
-	// beautify = require('gulp-beautify'),
-	// watch = require('gulp-watch');
+
 
 //Initialize gulp config 
 var config = new Config();
 
 /**
- * Typescript
+ * Typescript START
  */
 
 /**
@@ -51,12 +51,12 @@ gulp.task('compile-ts', function () {
                         
 
     var tsResult = gulp.src(sourceTsFiles)
-                       .pipe(sourcemaps.init())
+                       // .pipe(sourcemaps.init())
                        .pipe(tsc(tsProject));
 
         tsResult.dts.pipe(gulp.dest(config.tsOutputPath));
         return tsResult.js
-                        .pipe(sourcemaps.write('.'))
+                        // .pipe(sourcemaps.write('.'))
                         .pipe(gulp.dest(config.tsOutputPath));
 });
 
@@ -75,20 +75,24 @@ gulp.task('clean-ts', function (cb) {
 });
 
 /**
- * END TypeScript
+ * TypeScript END
  */
 
 //Łączenie JS
 gulp.task('js',function () {
 	gulp.src(config.jsSources)
+	.pipe(plumber())
+	.pipe(sourcemaps.init())
 	.pipe(jshint())
 	.pipe(jshint.reporter('default'))
-	.pipe(plumber())
 	.pipe(include())
 		.on('error', gutil.log)
-	.pipe(rename('jquery.frodo.js'))
+	.pipe(rename(config.jsFileName))
 	.pipe(prettify({config: '.jsbeautifyrc', mode: 'VERIFY_AND_WRITE'}))
-	.pipe(gulp.dest('builds/development/js'))
+	.pipe(config.prodMinify)
+	.pipe(rename(config.jsFileName))
+	.pipe(sourcemaps.write('.'))
+	.pipe(gulp.dest(config.jsOutput))
 });
 
 //JS linting
@@ -100,20 +104,22 @@ gulp.task('lint', function () {
 
 //Sass do CSS
 gulp.task('sass', function () {
-	gulp.src(config.sassSources)
+	gulp.src(config.sassSources + '*.scss')
 	.pipe(plumber())
+	.pipe(sourcemaps.init())
 	.pipe(sass(config.sassOptions))
 	.on('error', gutil.log)
 	.pipe(autoprefixer(' > 2%'))
-	.pipe(rename('jquery.frodo.css'))
-	.pipe(gulp.dest(config.cssSources))
+	.pipe(rename(config.cssFileName))
+	.pipe(sourcemaps.write('.'))
+	.pipe(gulp.dest(config.cssOutput))
 });
 
 //Serwer - BrowserSync
 gulp.task('connect', function () {
 	browserSync.init({
 		server: {
-			baseDir: 'builds/development/'
+			baseDir: config.devSource
 		}
 		// logLevel: "debug",
 		// logConnections: true
@@ -121,14 +127,14 @@ gulp.task('connect', function () {
 	});
 
 	// gulp.watch('src/sass/**/*.scss', ['sass']);
-	gulp.watch('builds/development/css/**/*').on('change', reload);
-	gulp.watch('builds/development/js/**/*').on('change', reload);
-	gulp.watch('builds/development/*.html').on('change', reload);
+	gulp.watch(config.devSource + '/css/**/*').on('change', reload);
+	gulp.watch(config.devSource + '/js/**/*').on('change', reload);
+	gulp.watch(config.devSource + '/*.html').on('change', reload);
 });
 
 //Html
 gulp.task('html', function () {
-	gulp.src(config.htmlSources)
+	gulp.src(config.devHtml)
 	// .pipe(prettify({
 	//         braceStyle: "collapse",
 	//         indentChar: " ",
@@ -139,8 +145,8 @@ gulp.task('html', function () {
 	//         unformatted: ["a", "sub", "sup", "b", "i", "u"],
 	//         wrapLineLength: 0
 	// 	}))
-	// .pipe(gulp.dest(htmlSources))
-	// .pipe(watch(htmlSources))
+	// .pipe(gulp.dest(devHtml))
+	// .pipe(watch(devHtml))
 	// .pipe(connect.reload());
 });
 
@@ -148,16 +154,16 @@ gulp.task('html', function () {
 gulp.task('img', function () {
 	gulp.src(config.imgSources)
 	.pipe(plumber())
-	.pipe(changed(config.imageOutput))
+	.pipe(changed(config.imgOutput))
 	.pipe(imagemin())
-	.pipe(gulp.dest(config.imageOutput));
+	.pipe(gulp.dest(config.imgOutput));
 });
 
 
 // ////////////////////////////////////////////////
 // Build Task
 // // /////////////////////////////////////////////
-//usuwa wszystko za katalogu build
+//usuwa wszystko z katalogu build
 gulp.task('build:cleanfolder', function(callback) {
 	del([
 		'build/**'
@@ -185,11 +191,10 @@ gulp.task('build', ['build:copy', 'build:remove']);
  * Watch task
  */
 gulp.task('watch', function () {
-	gulp.watch(config.htmlSources, ['html']);
+	gulp.watch(config.devHtml, ['html']);
 	gulp.watch([config.allTypeScript], ['ts-lint', 'compile-ts']);
-	gulp.watch('src/js/*.js', ['lint']);
-	gulp.watch('src/js/*.js', ['js']);
-	gulp.watch('src/sass/**/*.scss', ['sass']);
+	gulp.watch(config.jsSources, ['js']);
+	gulp.watch(config.sassSources + '**/*.scss', ['sass']);
 	gulp.watch(config.imgSources, ['img']);
 });
 
@@ -198,4 +203,3 @@ gulp.task('watch', function () {
  */
 gulp.task('default', ['html', 'js', 'sass', 'img', 'connect', 'watch']);
 gulp.task('ts', ['html', 'ts-lint', 'compile-ts','js', 'sass', 'img', 'connect', 'watch']);
-// gulp.task('ts', ['ts-lint', 'compile-ts']);
