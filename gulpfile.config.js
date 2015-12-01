@@ -10,17 +10,20 @@ var GulpConfig = (function () {
         //Got tired of scrolling through all the comments so removed them
         //Don't hurt me AC :-)
         this.source = './src/';
+        // this.source = './src/';
         //TypeScript
-        this.sourceApp = this.source + 'ts/';
+        this.sourceApp = this.source + 'ts';
 
-        this.tsOutputPath = this.source + '/js';
-        this.jsSources = [this.source + '/js/*.js'];
+        this.tsOutputPath = this.source + 'js/';
+        this.jsSources = [this.source + 'js/*.js'];
         // this.allJavaScript = [this.source + '/js/**/*.js'];
         this.allTypeScript = this.sourceApp + '/**/*.ts';
 
         //Development and production
         this.devSource = './builds/development/';
+        // this.devSource = './builds/development/';
         this.prodSource = './builds/production/';
+        // this.prodSource = './builds/production/';
 
         // JS
         this.devJS = this.devSource + 'js/';

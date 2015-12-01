@@ -13,17 +13,17 @@ var gulp = require('gulp'),
 	reload = browserSync.reload,
 	//Fix broken pipe
 	plumber  = require('gulp-plumber'), 
+	//Debug
+	debug = require('gulp-debug'),
 	rename  = require('gulp-rename'), 
 	prettify = require('gulp-jsbeautifier'),
 	jshint = require('gulp-jshint'),
 	// minify = require('gulp-uglify'),
 	del = require('del'),
-	debug = require('gulp-debug'),
 	inject = require('gulp-inject'),
 	tsc = require('gulp-typescript'),
 	tslint = require('gulp-tslint'),
 	sourcemaps = require('gulp-sourcemaps'),
-	debug = require('gulp-debug'),
 	Config = require('./gulpfile.config'),
 	tsProject = tsc.createProject('tsconfig.json');
 
@@ -82,6 +82,7 @@ gulp.task('clean-ts', function (cb) {
 gulp.task('js',function () {
 	gulp.src(config.jsSources)
 	.pipe(plumber())
+	.pipe(debug())
 	.pipe(sourcemaps.init())
 	.pipe(jshint())
 	.pipe(jshint.reporter('default'))
@@ -89,7 +90,7 @@ gulp.task('js',function () {
 		.on('error', gutil.log)
 	.pipe(rename(config.jsFileName))
 	.pipe(prettify({config: '.jsbeautifyrc', mode: 'VERIFY_AND_WRITE'}))
-	.pipe(config.prodMinify)
+	// .pipe(config.prodMinify)
 	.pipe(rename(config.jsFileName))
 	.pipe(sourcemaps.write('.'))
 	.pipe(gulp.dest(config.jsOutput))
@@ -106,6 +107,7 @@ gulp.task('lint', function () {
 gulp.task('sass', function () {
 	gulp.src(config.sassSources + '*.scss')
 	.pipe(plumber())
+	.pipe(debug())
 	.pipe(sourcemaps.init())
 	.pipe(sass(config.sassOptions))
 	.on('error', gutil.log)
@@ -154,6 +156,7 @@ gulp.task('html', function () {
 gulp.task('img', function () {
 	gulp.src(config.imgSources)
 	.pipe(plumber())
+	.pipe(debug())
 	.pipe(changed(config.imgOutput))
 	.pipe(imagemin())
 	.pipe(gulp.dest(config.imgOutput));

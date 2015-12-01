@@ -10,7 +10,6 @@
 ;
 (function ($) {
     'use strict';
-    var xxx = 'qweqwe';
     /*
     DEFAULT PLUGIN SETTINGS
      */
@@ -478,10 +477,6 @@
             $(frodoConfig.body).wrapInner(el.wrapper).
                 find('#' + frodoConfig.frodoWrapper).
                 append(el.frodo.append(el.form), el.overlay);
-
-           // $(frodoConfig.body).wrapInner(el.wrapper).
-           //      find('#' + frodoConfig.frodoWrapper).
-           //      append(el.frodo.append(el.form), el.overlay);
             //Insert form header
             if (config.device === 'desktop') {
                 el.header.append(el.headerTxt, el.closeBtn);
