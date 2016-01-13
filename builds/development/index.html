@@ -35,8 +35,8 @@
     </head>
 <body>
         <!-- <a href="#" data-login></a> -->
-        <a href="#" class="log-in" data-login>Log In</a>
-        <a href="#" class="log-in2" data-login>Log In2</a>
+        <a href="#" class="log-in" data-login-basic>Log In</a>
+        <a href="#" class="log-in2" data-login-advanced>Log In2</a>
         <div class="wrapper">
             <input type="file" id="upload" multiple style="display:inline-block;margin-bottom:20px">
             <div id="display" style="position: relative"></div>
@@ -54,7 +54,10 @@
 
     <script>
     $(document).ready(function () {
-        $('[data-login]').frodo({
+        $('[data-login-basic]').frodo({
+            version: 'basic'
+        });
+        $('[data-login-advanced]').frodo({
             version: 'advanced'
         });
     });

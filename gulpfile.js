@@ -12,10 +12,10 @@ var gulp = require('gulp'),
 	browserSync  = require('browser-sync').create(), //tworzy serwer
 	reload = browserSync.reload,
 	//Fix broken pipe
-	plumber  = require('gulp-plumber'), 
+	plumber  = require('gulp-plumber'),
 	//Debug
 	debug = require('gulp-debug'),
-	rename  = require('gulp-rename'), 
+	rename  = require('gulp-rename'),
 	prettify = require('gulp-jsbeautifier'),
 	jshint = require('gulp-jshint'),
 	// minify = require('gulp-uglify'),
@@ -28,7 +28,7 @@ var gulp = require('gulp'),
 	tsProject = tsc.createProject('tsconfig.json');
 
 
-//Initialize gulp config 
+//Initialize gulp config
 var config = new Config();
 
 /**
@@ -48,7 +48,7 @@ gulp.task('ts-lint', function () {
 gulp.task('compile-ts', function () {
     var sourceTsFiles = [config.allTypeScript,                //path to typescript files
                          config.libraryTypeScriptDefinitions]; //reference to library .d.ts files
-                        
+
 
     var tsResult = gulp.src(sourceTsFiles)
                        // .pipe(sourcemaps.init())
@@ -111,7 +111,7 @@ gulp.task('sass', function () {
 	.pipe(sourcemaps.init())
 	.pipe(sass(config.sassOptions))
 	.on('error', gutil.log)
-	.pipe(autoprefixer(' > 2%'))
+	.pipe(autoprefixer({browsers: ['> 2%']}))
 	.pipe(rename(config.cssFileName))
 	.pipe(sourcemaps.write('.'))
 	.pipe(gulp.dest(config.cssOutput))
