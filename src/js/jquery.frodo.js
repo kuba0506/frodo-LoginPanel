@@ -12,193 +12,201 @@
     "use strict";
 
     /*
-     DEFAULT PLUGIN SETTINGS
+    PRIVATE SETTINGS
      */
-    var defaults = {
-        lang: 'en',
-        version: 'basic',
-        provider: ['eniro', 'facebook', 'google'],
-        device: 'desktop',
-        clientId: '',
-        redirectUri: '/',
-        scope: ''
-    };
-
-    /*
-     MAIN CONFIG
-     */
-    var frodoConfig = {
-        //State values
-        currentForm: null,
-        forms: ['login', 'signup', 'reset'],
-
-        //Classes and ids
-        body: 'body',
-        frodoWrapper: 'frodo-wrapper',
-        frodo: 'frodo',
-        frodoOverlay: 'frodo-overlay',
-        frodoForm: 'frodo-form',
-        frodoHeader: {
-            header: 'frodo-header',
-            text: 'frodo-header-txt',
-            closeBtn: 'frodo-btn-close'
-        },
-        frodoLogin: {
-            box: 'frodo-login-box',
-            message: 'frodo-message',
-            messageAlert: 'frodo-message-alert',
-            messageSuccess: 'frodo-message-success',
-            frodoProvider: 'frodo-provider',
-            frodoProviderMobile: 'frodo-provider-mobile',
-            input: 'frodo-input',
-            inputWrapper: 'frodo-input-wrapper',
-            inputError: 'frodo-err-msg',
-            footer: 'frodo-login-footer',
-            linksWrapper: 'frodo-links',
-            forgot: 'frodo-forgot',
-            signUp: 'frodo-sign-up',
-            submit: 'frodo-btn-submit'
-        },
-        log: 'frodo-log-with',
-        social: 'frodo-social',
-        //Helpers
-        frodoVisible: 'frodo-visible',
-        hideClass: 'frodo-hide',
-        noScroll: 'frodo-no-scroll',
-        //Error class
-        errorClass: {
-            input: 'frodo-err-input',
-            msg: 'frodo-err-msg'
+    var Private = {
+        /*
+         DEFAULT PLUGIN SETTINGS
+         */
+        defaults : {
+            lang: 'en',
+            version: 'basic',
+            provider: ['eniro', 'facebook', 'google'],
+            device: 'desktop',
+            clientId: '',
+            redirectUri: '/',
+            scope: ''
         },
 
-        //Form settings
-        method: 'get',
-        submitUrl: '?',
-        forgotLink: '#',
-        signUpLink: '#'
+        /*
+         MAIN CONFIG
+         */
+        frodoConfig : {
+            //State values
+            currentForm: null,
+            forms: ['login', 'signup', 'reset'],
 
-    };
+            //Classes and ids
+            body: 'body',
+            frodoWrapper: 'frodo-wrapper',
+            frodo: 'frodo',
+            frodoOverlay: 'frodo-overlay',
+            frodoForm: 'frodo-form',
+            frodoHeader: {
+                header: 'frodo-header',
+                text: 'frodo-header-txt',
+                closeBtn: 'frodo-btn-close'
+            },
+            frodoLogin: {
+                box: 'frodo-login-box',
+                message: 'frodo-message',
+                messageAlert: 'frodo-message-alert',
+                messageSuccess: 'frodo-message-success',
+                frodoProvider: 'frodo-provider',
+                frodoProviderMobile: 'frodo-provider-mobile',
+                input: 'frodo-input',
+                inputWrapper: 'frodo-input-wrapper',
+                inputError: 'frodo-err-msg',
+                footer: 'frodo-login-footer',
+                linksWrapper: 'frodo-links',
+                forgot: 'frodo-forgot',
+                signUp: 'frodo-sign-up',
+                submit: 'frodo-btn-submit'
+            },
+            log: 'frodo-log-with',
+            social: 'frodo-social',
+            //Helpers
+            frodoVisible: 'frodo-visible',
+            hideClass: 'frodo-hide',
+            noScroll: 'frodo-no-scroll',
+            //Error class
+            errorClass: {
+                input: 'frodo-err-input',
+                msg: 'frodo-err-msg'
+            },
 
-    /*
-    TRANSLATIONS
-     */
-    var translation = {
-        'en': {
-            loginTxt: 'Log in',
-            signUpTxt: 'Sign up',
-            resetTxt: 'Password Reset',
-            userPlaceholder: 'Fullname',
-            passPlaceholder: 'Password',
-            passConfirmPlaceholder: 'Confirm password',
-            emailPlaceholder: 'Email',
-            emailResetPlaceholder: 'Your email address',
-            links: ['Forgot your password ?', 'Sign up now', 'Log in now'],
-            login: 'Submit',
-            logWith: 'or',
-            //Errors
-            errors: {
-                email: 'Invalid email address format',
-                password: 'Password should be at least 8 characters',
-                passwordNotMatch: 'Passwords don\'t match',
-                fullname: 'Invalid username'
-            }
+            //Form settings
+            method: 'get',
+            submitUrl: '?',
+            forgotLink: '#',
+            signUpLink: '#'
+        },
 
-        },
-        'se': {
-            loginTxt: 'Logga in',
-            signUpTxt: 'Skapa nytt konto',
-            resetTxt: 'E-postadress Återställning',
-            userPlaceholder: 'För och efternamn',
-            passPlaceholder: 'Lösenord',
-            passConfirmPlaceholder: 'Bekräfta lösenord',
-            emailPlaceholder: 'E-postadress',
-            emailResetPlaceholder: 'Din E-postadress',
-            links: ['Glömt lösenord?', 'Skapa nytt konto', 'Logga in'],
-            login: 'Skicka',
-            logWith: 'eller',
-            //Errors
-            errors: {
-                email: 'Ogiltig E-mailadress',
-                password: 'Lösenord skall innehålla minst åtta tecken',
-                passwordNotMatch: 'De använda lösernorden stämmer inte med varandra',
-                fullname: 'Ogiltigt användarnamn'
-            }
-        },
-        'dk': {
-            loginTxt: 'Log ind',
-            signUpTxt: 'Opret ny konto',
-            resetTxt: 'Nulstil adgangskode',
-            userPlaceholder: 'For-og efternavn',
-            passPlaceholder: 'Adgangskode',
-            passConfirmPlaceholder: 'Bekræft adgangskode',
-            emailPlaceholder: 'Mailadresse',
-            emailResetPlaceholder: 'Din mailadresse',
-            links: ['Glemt adgangskode?', 'Opret ny konto', 'Log ind'],
-            login: 'Send',
-            logWith: 'eller',
-            //Errors
-            errors: {
-                email: 'Ugyldig mailadresse',
-                password: 'Adgangskode skal indeholde mindst otte tegn',
-                passwordNotMatch: 'De indtastede adgangskoder er ikke ens',
-                fullname: 'Ugyldigt brugernavn'
-            }
-        },
-        'no': {
-            loginTxt: 'Logg inn',
-            signUpTxt: 'Opprett ny konto',
-            resetTxt: 'Nullstill passord',
-            userPlaceholder: 'For- og etternavn',
-            passPlaceholder: 'Passord',
-            passConfirmPlaceholder: 'Bekreft passord',
-            emailPlaceholder: 'E-postadresse',
-            emailResetPlaceholder: 'Din e-postadresse',
-            links: ['Glemt passordet ditt ?', 'Opprett ny konto', 'Logg inn'],
-            login: 'Send',
-            logWith: 'eller',
-            //Errors
-            errors: {
-                email: 'Ugyldig e-postadresse',
-                password: 'Passordet må være på minst åtte tegn',
-                passwordNotMatch: 'Passordet matcher ikke inntastet passord',
-                fullname: 'Ugyldig brukernavn'
-            }
-        },
-        'ar': {
-            loginTxt: 'تسجيل دخول',
-            signUpTxt: 'تسجيل',
-            resetTxt: 'إعادة تعيين كلمة المرور',
-            userPlaceholder: 'الاسم الكامل',
-            passPlaceholder: 'كلمة المرور',
-            passConfirmPlaceholder: 'تأكيد كلمة المرور',
-            emailPlaceholder: 'بريد إلكتروني',
-            emailResetPlaceholder: 'عنوان بريدك الإلكتروني',
-            links: ['هل نسيت كلمة المرور؟', 'التسجيل الآن', 'تسجيل الدخول الآن'],
-            login: 'اعتماد',
-            logWith: 'أو',
-            //Errors
-            errors: {
-                email: ' تنسيق عنوان البريد الإلكتروني غير صحيح',
-                password: 'يجب أن تتكون كلمة المرور من 8 حروف على الأقل',
-                passwordNotMatch: 'كلمة المرور غير متطابقة',
-                fullname: 'اسم المستخدم غير صحيح'
+        /*
+        TRANSLATIONS
+         */
+        translation : {
+            'en': {
+                loginTxt: 'Log in',
+                signUpTxt: 'Sign up',
+                resetTxt: 'Password Reset',
+                userPlaceholder: 'Fullname',
+                passPlaceholder: 'Password',
+                passConfirmPlaceholder: 'Confirm password',
+                emailPlaceholder: 'Email',
+                emailResetPlaceholder: 'Your email address',
+                links: ['Forgot your password ?', 'Sign up now', 'Log in now'],
+                login: 'Submit',
+                logWith: 'or',
+                //Errors
+                errors: {
+                    email: 'Invalid email address format',
+                    password: 'Password should be at least 8 characters',
+                    passwordNotMatch: 'Passwords don\'t match',
+                    fullname: 'Invalid username'
+                }
+
+            },
+            'se': {
+                loginTxt: 'Logga in',
+                signUpTxt: 'Skapa nytt konto',
+                resetTxt: 'E-postadress Återställning',
+                userPlaceholder: 'För och efternamn',
+                passPlaceholder: 'Lösenord',
+                passConfirmPlaceholder: 'Bekräfta lösenord',
+                emailPlaceholder: 'E-postadress',
+                emailResetPlaceholder: 'Din E-postadress',
+                links: ['Glömt lösenord?', 'Skapa nytt konto', 'Logga in'],
+                login: 'Skicka',
+                logWith: 'eller',
+                //Errors
+                errors: {
+                    email: 'Ogiltig E-mailadress',
+                    password: 'Lösenord skall innehålla minst åtta tecken',
+                    passwordNotMatch: 'De använda lösernorden stämmer inte med varandra',
+                    fullname: 'Ogiltigt användarnamn'
+                }
+            },
+            'dk': {
+                loginTxt: 'Log ind',
+                signUpTxt: 'Opret ny konto',
+                resetTxt: 'Nulstil adgangskode',
+                userPlaceholder: 'For-og efternavn',
+                passPlaceholder: 'Adgangskode',
+                passConfirmPlaceholder: 'Bekræft adgangskode',
+                emailPlaceholder: 'Mailadresse',
+                emailResetPlaceholder: 'Din mailadresse',
+                links: ['Glemt adgangskode?', 'Opret ny konto', 'Log ind'],
+                login: 'Send',
+                logWith: 'eller',
+                //Errors
+                errors: {
+                    email: 'Ugyldig mailadresse',
+                    password: 'Adgangskode skal indeholde mindst otte tegn',
+                    passwordNotMatch: 'De indtastede adgangskoder er ikke ens',
+                    fullname: 'Ugyldigt brugernavn'
+                }
+            },
+            'no': {
+                loginTxt: 'Logg inn',
+                signUpTxt: 'Opprett ny konto',
+                resetTxt: 'Nullstill passord',
+                userPlaceholder: 'For- og etternavn',
+                passPlaceholder: 'Passord',
+                passConfirmPlaceholder: 'Bekreft passord',
+                emailPlaceholder: 'E-postadresse',
+                emailResetPlaceholder: 'Din e-postadresse',
+                links: ['Glemt passordet ditt ?', 'Opprett ny konto', 'Logg inn'],
+                login: 'Send',
+                logWith: 'eller',
+                //Errors
+                errors: {
+                    email: 'Ugyldig e-postadresse',
+                    password: 'Passordet må være på minst åtte tegn',
+                    passwordNotMatch: 'Passordet matcher ikke inntastet passord',
+                    fullname: 'Ugyldig brukernavn'
+                }
+            },
+            'ar': {
+                loginTxt: 'تسجيل دخول',
+                signUpTxt: 'تسجيل',
+                resetTxt: 'إعادة تعيين كلمة المرور',
+                userPlaceholder: 'الاسم الكامل',
+                passPlaceholder: 'كلمة المرور',
+                passConfirmPlaceholder: 'تأكيد كلمة المرور',
+                emailPlaceholder: 'بريد إلكتروني',
+                emailResetPlaceholder: 'عنوان بريدك الإلكتروني',
+                links: ['هل نسيت كلمة المرور؟', 'التسجيل الآن', 'تسجيل الدخول الآن'],
+                login: 'اعتماد',
+                logWith: 'أو',
+                //Errors
+                errors: {
+                    email: ' تنسيق عنوان البريد الإلكتروني غير صحيح',
+                    password: 'يجب أن تتكون كلمة المرور من 8 حروف على الأقل',
+                    passwordNotMatch: 'كلمة المرور غير متطابقة',
+                    fullname: 'اسم المستخدم غير صحيح'
+                }
             }
         }
+        //END PRIVATE
     };
+
+
+
 
     /*
     SOCIAL BUTTONS
     */
-    var social = {};
-        social['eniro'] = {
+    var socialBtn = {};
+        socialBtn['eniro'] = {
         text: 'Eniro',
         link: 'https://accounts.eniro.com.test.eniro.net/frodo/oauth/eniro/authorize?response_type=code&client_id={client_id}&scope={scope}&redirect_uri={redirect_uri}'
         };
-    social['facebook'] = {
+    socialBtn['facebook'] = {
         text: 'Facebook',
         link: 'https://accounts.eniro.com.test.eniro.net/frodo/oauth/facebook/authorize?response_type=code&client_id={client_id}&scope={scope}&redirect_uri={redirect_uri}'
         };
-    social['google'] = {
+    socialBtn['google'] = {
         text: 'Google',
         link: 'https://accounts.eniro.com.test.eniro.net/frodo/oauth/google/authorize?response_type=code&client_id={client_id}&scope={scope}&redirect_uri={redirect_uri}'
         };
@@ -219,24 +227,24 @@
             body;
 
         //User options
-        frodo.defaults_provider = defaults.provider;
+        frodo.defaults_provider = Private.defaults.provider;
         frodo.options_provider = options.provider;
 
         //Config object
-        frodo.config = config = $.extend(true, {}, defaults, options);
+        frodo.config = config = $.extend(true, {}, Private.defaults, options);
 
         //Element we call a function on
         frodo.element = element;
 
         //Set language
-        var defaultLang = Object.keys(translation[defaults.lang]),
-            configLang = (typeof translation[config.lang] !== 'undefined') ? Object.keys(translation[config.lang]) : void 0;
+        var defaultLang = Object.keys(Private.translation[Private.defaults.lang]),
+            configLang = (typeof Private.translation[config.lang] !== 'undefined') ? Object.keys(Private.translation[config.lang]) : void 0;
 
-        frodo.lang = ((typeof configLang === 'undefined') || (defaultLang.length !== configLang.length)) ? defaults.lang : config.lang;
+        frodo.lang = ((typeof configLang === 'undefined') || (defaultLang.length !== configLang.length)) ? Private.defaults.lang : config.lang;
 
 
         //Shorthand for config.body
-        frodo.body = body = frodoConfig.body;
+        frodo.body = body = Private.frodoConfig.body;
         // body = config.body;
 
         /*
@@ -256,9 +264,9 @@
 
             //Reset err message
             frodo.showAlert(null, {
-                messageBox: frodoConfig.frodoLogin.message,
-                text: frodoConfig.frodoLogin.message + ' > span',
-                alert: frodoConfig.frodoLogin.messageAlert
+                messageBox: Private.frodoConfig.frodoLogin.message,
+                text: Private.frodoConfig.frodoLogin.message + ' > span',
+                alert: Private.frodoConfig.frodoLogin.messageAlert
             });
 
             //Rest form to login
@@ -282,13 +290,13 @@
  */
         if (config.device === 'desktop') {
             //Close login panel
-            $(body).on('click', '.' + frodoConfig.frodoHeader.closeBtn, function() {
+            $(body).on('click', '.' + Private.frodoConfig.frodoHeader.closeBtn, function() {
                 frodo.closePanel();
             });
 
             $(body).on('keyup', function(event) {
                 //If 'Escape' key is pressed
-                if (event.keyCode === 27 && frodoConfig.currentForm !== null) {
+                if (event.keyCode === 27 && Private.frodoConfig.currentForm !== null) {
                     frodo.closePanel();
                 }
             });
@@ -297,7 +305,7 @@
         /*
 -----------------------------REGISTER FORM HANDLER-----------------------------------------------------------------
  */
-        $(body).on('click', '.' + frodoConfig.frodoLogin.signUp, function(event) {
+        $(body).on('click', '.' + Private.frodoConfig.frodoLogin.signUp, function(event) {
             frodo.stopEvent(event);
             frodo.toggleForm('signup');
             frodo.clearErrors();
@@ -309,7 +317,7 @@
         /*
 -----------------------------RESET FORM HANDLER-----------------------------------------------------------------
  */
-        $(body).on('click', '.' + frodoConfig.frodoLogin.forgot, function(event) {
+        $(body).on('click', '.' + Private.frodoConfig.frodoLogin.forgot, function(event) {
             frodo.stopEvent(event);
             frodo.toggleForm('reset');
             frodo.clearErrors();
@@ -325,14 +333,14 @@
         $(body).on('input', 'input', function(event) {
             //If user press 'enter'
             if (event.which == 13 || event.keyCode == 13) {
-                $('.' + frodoConfig.frodoForm).trigger('submit');
+                $('.' + Private.frodoConfig.frodoForm).trigger('submit');
             }
             frodo.submitDisabled(true);
             frodo.validate(event);
             frodo.stopEvent(event);
 
         });
-        $(body).on('submit', '.' + frodoConfig.frodoForm, function(event) {
+        $(body).on('submit', '.' + Private.frodoConfig.frodoForm, function(event) {
             frodo.stopEvent(event);
             frodo.validate(event);
             //Ajax submit
@@ -357,9 +365,9 @@
                 jsonpCallback: 'myCallback'
             }).then(function(response) {
                 frodo.showAlert(response, {
-                    messageBox: frodoConfig.frodoLogin.message,
-                    text: frodoConfig.frodoLogin.message + '> span',
-                    alert: frodoConfig.frodoLogin.messageAlert
+                    messageBox: Private.frodoConfig.frodoLogin.message,
+                    text: Private.frodoConfig.frodoLogin.message + '> span',
+                    alert: Private.frodoConfig.frodoLogin.messageAlert
                 });
             });
         });
@@ -386,7 +394,7 @@
         //Shorthand for this.config
         var config = this.config,
             lang = this.lang,
-            frodo = $('#' + frodoConfig.frodoWrapper),
+            frodo = $('#' + Private.frodoConfig.frodoWrapper),
             inputs = [],
             def_providers = this.defaults_provider,
             opt_providers = this.options_provider,
@@ -398,120 +406,120 @@
         el = {
             //Main elemenets
             wrapper: $('<div/>', {
-                id: frodoConfig.frodoWrapper
+                id: Private.frodoConfig.frodoWrapper
             }),
             overlay: $('<div/>', {
-                class: (config.device === 'desktop') ? frodoConfig.frodoOverlay : ''
+                class: (config.device === 'desktop') ? Private.frodoConfig.frodoOverlay : ''
             }),
             frodo: $('<div/>', {
-                id: frodoConfig.frodo,
-                class: frodoConfig.frodo
+                id: Private.frodoConfig.frodo,
+                class: Private.frodoConfig.frodo
             }),
             form: $('<form/>', {
-                class: frodoConfig.frodoForm,
-                action: frodoConfig.submitUrl,
-                method: frodoConfig.method,
-                name: frodoConfig.frodoForm,
+                class: Private.frodoConfig.frodoForm,
+                action: Private.frodoConfig.submitUrl,
+                method: Private.frodoConfig.method,
+                name: Private.frodoConfig.frodoForm,
                 novalidate: true
             }),
 
             //Header
             header: $('<h3/>', {
-                class: frodoConfig.frodoHeader.header
+                class: Private.frodoConfig.frodoHeader.header
             }),
             headerTxt: $('<span/>', {
-                class: frodoConfig.frodoHeader.text,
-                html: translation[lang].loginTxt
+                class: Private.frodoConfig.frodoHeader.text,
+                html: Private.translation[lang].loginTxt
             }),
             closeBtn: $('<button/>', {
-                class: frodoConfig.frodoHeader.closeBtn,
+                class: Private.frodoConfig.frodoHeader.closeBtn,
                 type: 'button',
                 html: 'x'
             }),
 
             //Login form
             loginBox: $('<div/>', {
-                class: frodoConfig.frodoLogin.box
+                class: Private.frodoConfig.frodoLogin.box
             }),
             message: $('<div/>', {
-                id: frodoConfig.frodoLogin.message,
-                class: frodoConfig.frodoLogin.message
+                id: Private.frodoConfig.frodoLogin.message,
+                class: Private.frodoConfig.frodoLogin.message
             }).append($('<span/>')),
             inputWrapper: $('<div/>', {
-                    class: frodoConfig.frodoLogin.inputWrapper
+                    class: Private.frodoConfig.frodoLogin.inputWrapper
                 })
                 .append($('<span/>', {
-                    class: frodoConfig.frodoLogin.inputError
+                    class: Private.frodoConfig.frodoLogin.inputError
                 })),
             input: {
                 fullname: $('<input/>', {
                     type: 'text',
                     name: 'fullname',
-                    class: frodoConfig.frodoLogin.input + ' ' + frodoConfig.hideClass,
-                    placeholder: translation[lang].userPlaceholder,
+                    class: Private.frodoConfig.frodoLogin.input + ' ' + Private.frodoConfig.hideClass,
+                    placeholder: Private.translation[lang].userPlaceholder,
                     disabled: true
                 }),
                 email: $('<input/>', {
                     type: 'email',
                     name: 'email',
-                    class: frodoConfig.frodoLogin.input,
-                    placeholder: translation[lang].emailPlaceholder
+                    class: Private.frodoConfig.frodoLogin.input,
+                    placeholder: Private.translation[lang].emailPlaceholder
                 }),
                 password: $('<input/>', {
                     id: 'firstPassword',
-                    class: frodoConfig.frodoLogin.input,
+                    class: Private.frodoConfig.frodoLogin.input,
                     type: 'password',
                     name: 'password',
                     'data-if-match': '#secondPassword',
-                    placeholder: translation[lang].passPlaceholder
+                    placeholder: Private.translation[lang].passPlaceholder
                 }),
                 passwordConfirm: $('<input/>', {
                     id: 'secondPassword',
-                    class: frodoConfig.frodoLogin.input + ' ' + frodoConfig.hideClass,
+                    class: Private.frodoConfig.frodoLogin.input + ' ' + Private.frodoConfig.hideClass,
                     type: 'password',
                     name: 'passwordConfirm',
-                    placeholder: translation[lang].passConfirmPlaceholder,
+                    placeholder: Private.translation[lang].passConfirmPlaceholder,
                     'data-if-match': '#firstPassword',
                     disabled: true
                 }),
                 passwordReset: $('<input/>', {
                     type: 'email',
                     name: 'passwordReset',
-                    class: frodoConfig.frodoLogin.input + ' ' + frodoConfig.hideClass,
-                    placeholder: translation[lang].emailResetPlaceholder,
+                    class: Private.frodoConfig.frodoLogin.input + ' ' + Private.frodoConfig.hideClass,
+                    placeholder: Private.translation[lang].emailResetPlaceholder,
                     disabled: true
                 })
 
             },
             loginFooter: $('<div/>', {
-                class: frodoConfig.frodoLogin.footer
+                class: Private.frodoConfig.frodoLogin.footer
             }),
             frodoLinksWrapper: $('<div/>', {
-                class: frodoConfig.frodoLogin.linksWrapper
+                class: Private.frodoConfig.frodoLogin.linksWrapper
             }),
             forgotLink: $('<a/>', {
-                href: frodoConfig.forgotLink,
-                class: frodoConfig.frodoLogin.forgot,
-                html: translation[lang].links[0]
+                href: Private.frodoConfig.forgotLink,
+                class: Private.frodoConfig.frodoLogin.forgot,
+                html: Private.translation[lang].links[0]
             }),
             signUpLink: $('<a/>', {
-                href: frodoConfig.signUpLink,
-                class: frodoConfig.frodoLogin.signUp,
-                html: translation[lang].links[1]
+                href: Private.frodoConfig.signUpLink,
+                class: Private.frodoConfig.frodoLogin.signUp,
+                html: Private.translation[lang].links[1]
             }),
             submitBtn: $('<button/>', {
-                class: frodoConfig.frodoLogin.submit,
+                class: Private.frodoConfig.frodoLogin.submit,
                 type: 'submit',
-                html: translation[lang].login
+                html: Private.translation[lang].login
             }),
 
             //Social
             logWith: $('<span/>', {
-                class: frodoConfig.log,
-                html: translation[lang].logWith
+                class: Private.frodoConfig.log,
+                html: Private.translation[lang].logWith
             }),
             socialWrapper: $('<div/>', {
-                class: frodoConfig.social
+                class: Private.frodoConfig.social
             })
         };
 
@@ -523,8 +531,8 @@
         if (frodo.length === 0) {
 
             //Wrap all content with frodo wrapper, and append frodo container and overlay
-            $(frodoConfig.body).wrapInner(el.wrapper).
-            find('#' + frodoConfig.frodoWrapper).
+            $(Private.frodoConfig.body).wrapInner(el.wrapper).
+            find('#' + Private.frodoConfig.frodoWrapper).
             append(el.frodo.append(el.form), el.overlay);
 
             //Insert form header
@@ -534,7 +542,7 @@
                 el.header.append(el.headerTxt);
             }
 
-            $('.' + frodoConfig.frodoForm).append(el.header);
+            $('.' + Private.frodoConfig.frodoForm).append(el.header);
 
             //Additional funcionality for widget advanced version
             if (config.version === 'advanced') {
@@ -556,10 +564,10 @@
                 });
                 //Finally append everything into box
                 el.loginBox.append(el.message, inputs, el.loginFooter);
-                $('.' + frodoConfig.frodoForm).append(el.loginBox);
+                $('.' + Private.frodoConfig.frodoForm).append(el.loginBox);
 
                 //Append log with text
-                $('.' + frodoConfig.frodoForm).append(el.logWith);
+                $('.' + Private.frodoConfig.frodoForm).append(el.logWith);
 
             }
 
@@ -570,7 +578,7 @@
                     //Set provider either from config or from option
                     // provider = options.provider || config.provider,
                     provider = config.provider,
-                    providerClass = (config.device === 'desktop') ? frodoConfig.frodoLogin.frodoProvider : frodoConfig.frodoLogin.frodoProvider + ' ' + frodoConfig.frodoLogin.frodoProviderMobile,
+                    providerClass = (config.device === 'desktop') ? Private.frodoConfig.frodoLogin.frodoProvider : Private.frodoConfig.frodoLogin.frodoProvider + ' ' + Private.frodoConfig.frodoLogin.frodoProviderMobile,
                     defaults_provider = def_providers,
                     options_provider = opt_providers,
                     result_provider = defaults_provider.slice();
@@ -601,8 +609,8 @@
                     // console.log(social);
                 //Create buttons
                 result_provider.forEach(function(name) {
-                    if (name in social) {
-                    var link = social[name].link;
+                    if (name in socialBtn) {
+                    var link = socialBtn[name].link;
 
 
                     link = link.replace('{client_id}', config.clientId);
@@ -612,17 +620,17 @@
                     btns += '<div class="' + providerClass + '" ">\
                                     <a class="frodo-btn frodo-btn-' + name + '" \
                                      href="' + link + '">\
-                                    <i class="fa faa-' + name + '"></i>' + social[name].text + '</a>\
+                                    <i class="fa faa-' + name + '"></i>' + socialBtn[name].text + '</a>\
                                     </div>';
                     }
                 });
 
                 $(this).append(btns);
             });
-            $('.' + frodoConfig.frodoForm).append(el.socialWrapper);
+            $('.' + Private.frodoConfig.frodoForm).append(el.socialWrapper);
 
             //Set value of current form
-            frodoConfig.currentForm = frodoConfig.forms[0];
+            Private.frodoConfig.currentForm = Private.frodoConfig.forms[0];
 
             console.log('Login panel created');
         } else {
@@ -640,17 +648,17 @@
 
 
     Frodo.prototype.resetMainClasses = function(state) {
-        $('.' + frodoConfig.frodoOverlay).toggleClass(frodoConfig.frodoVisible, state);
-        $('#' + frodoConfig.frodo).toggleClass(frodoConfig.frodoVisible, state);
-        $('#' + frodoConfig.frodoWrapper).addClass(frodoConfig.noScroll, state);
+        $('.' + Private.frodoConfig.frodoOverlay).toggleClass(Private.frodoConfig.frodoVisible, state);
+        $('#' + Private.frodoConfig.frodo).toggleClass(Private.frodoConfig.frodoVisible, state);
+        $('#' + Private.frodoConfig.frodoWrapper).addClass(Private.frodoConfig.noScroll, state);
 
         return true;
     };
 
     Frodo.prototype.clearErrors = function() {
-        var loginBox = $('.' + frodoConfig.frodoLogin.box),
-            errMsg = frodoConfig.errorClass.msg,
-            errInput = frodoConfig.errorClass.input,
+        var loginBox = $('.' + Private.frodoConfig.frodoLogin.box),
+            errMsg = Private.frodoConfig.errorClass.msg,
+            errInput = Private.frodoConfig.errorClass.input,
             input = loginBox.find('.' + errInput),
             msg = loginBox.find('.' + errMsg);
 
@@ -661,12 +669,12 @@
     };
 
     Frodo.prototype.focusFirst = function() {
-        return $('.' + frodoConfig.frodoLogin.input).first().focus();
+        return $('.' + Private.frodoConfig.frodoLogin.input).first().focus();
     };
 
     //Change submit button disabled state
     Frodo.prototype.submitDisabled = function(bool) {
-        var submitBtn = $('.' + frodoConfig.frodoLogin.submit);
+        var submitBtn = $('.' + Private.frodoConfig.frodoLogin.submit);
 
         return submitBtn.prop('disabled', bool);
     };
@@ -722,27 +730,27 @@
         }
 
         function anyInputEmpty() {
-            var anyEmpty = $('.' + frodoConfig.frodoLogin.box).find('.' + frodoConfig.frodoLogin.input).not(':disabled').filter(function() {
+            var anyEmpty = $('.' + Private.frodoConfig.frodoLogin.box).find('.' + Private.frodoConfig.frodoLogin.input).not(':disabled').filter(function() {
                     return !$(this).val();
                 }),
                 errMsg = anyEmpty.find('span');
             //if submit btn
-            if (getInputName() === frodoConfig.frodoForm) {
+            if (getInputName() === Private.frodoConfig.frodoForm) {
                 anyEmpty.each(function() {
                     var input = $(this),
                         errMsg = $('span', input.parent()),
                         type = input.attr('type'),
-                        errors = translation[lang].errors;
+                        errors = Private.translation[lang].errors;
 
                     if (type === 'text') {
-                        input.addClass(frodoConfig.errorClass.input);
-                        errMsg.text(errors.fullname).addClass(frodoConfig.errorClass.msg);
+                        input.addClass(Private.frodoConfig.errorClass.input);
+                        errMsg.text(errors.fullname).addClass(Private.frodoConfig.errorClass.msg);
                     } else if (type === 'password') {
-                        input.addClass(frodoConfig.errorClass.input);
-                        errMsg.text(errors.password).addClass(frodoConfig.errorClass.msg);
+                        input.addClass(Private.frodoConfig.errorClass.input);
+                        errMsg.text(errors.password).addClass(Private.frodoConfig.errorClass.msg);
                     } else if (type === 'email') {
-                        input.addClass(frodoConfig.errorClass.input);
-                        errMsg.text(errors.email).addClass(frodoConfig.errorClass.msg);
+                        input.addClass(Private.frodoConfig.errorClass.input);
+                        errMsg.text(errors.email).addClass(Private.frodoConfig.errorClass.msg);
                     }
                 });
             }
@@ -751,15 +759,15 @@
         }
 
         function setErrors(bool, name) {
-            var errors = translation[lang].errors,
+            var errors = Private.translation[lang].errors,
                 errName = errors[name];
 
             if (bool) {
-                input.addClass(frodoConfig.errorClass.input);
-                error.text(errName).addClass(frodoConfig.errorClass.msg);
+                input.addClass(Private.frodoConfig.errorClass.input);
+                error.text(errName).addClass(Private.frodoConfig.errorClass.msg);
             } else {
-                input.removeClass(frodoConfig.errorClass.input);
-                error.text('').removeClass(frodoConfig.errorClass.msg);
+                input.removeClass(Private.frodoConfig.errorClass.input);
+                error.text('').removeClass(Private.frodoConfig.errorClass.msg);
             }
         }
         //Check for passwords match (only in case of singup form)
@@ -768,16 +776,16 @@
             var ifMatch = password.data('if-match'),
                 currentVal = getInputValue(password),
                 matchVal = $(ifMatch).val(),
-                allErrors = $('[data-if-match]', $('.' + frodoConfig.frodoForm)).siblings('span');
+                allErrors = $('[data-if-match]', $('.' + Private.frodoConfig.frodoForm)).siblings('span');
 
             //Compare only if match password is >= 8
             if (matchVal.length >= 8) {
                 //Compare values
                 if (currentVal !== matchVal) {
-                    error.text(translation[lang].errors.passwordNotMatch).addClass(frodoConfig.errorClass.msg);
+                    error.text(Private.translation[lang].errors.passwordNotMatch).addClass(Private.frodoConfig.errorClass.msg);
                     frodo.submitDisabled(true);
                 } else {
-                    allErrors.text('').removeClass(frodoConfig.errorClass.msg);
+                    allErrors.text('').removeClass(Private.frodoConfig.errorClass.msg);
                     validateInput();
                 }
             }
@@ -798,12 +806,12 @@
             input = $(event.target),
             errors = null,
             anyEmpty = null,
-            submitBtn = $('.' + frodoConfig.frodoLogin.submit),
+            submitBtn = $('.' + Private.frodoConfig.frodoLogin.submit),
             valid = false,
             error = $('span', input.parent());
 
         //If submit button was clicked
-        if (getInputName() === frodoConfig.frodoForm) {
+        if (getInputName() === Private.frodoConfig.frodoForm) {
             validateInput();
         }
 
@@ -816,7 +824,7 @@
                 setErrors(true, 'email');
             } else {
                 setErrors(false, 'email');
-                errors = $('.' + frodoConfig.errorClass.input).length;
+                errors = $('.' + Private.frodoConfig.errorClass.input).length;
                 validateInput();
             }
         }
@@ -828,15 +836,15 @@
             if (!checkPassword(input)) {
                 setErrors(true, 'password');
                 //Check for passwords match (only in case of singup form)
-                if (frodoConfig.currentForm === frodoConfig.forms[1]) {
+                if (Private.frodoConfig.currentForm === Private.frodoConfig.forms[1]) {
                     passwordsMatch(input);
                 }
             } else {
                 setErrors(false, 'password');
-                errors = $('.' + frodoConfig.errorClass.input).length;
+                errors = $('.' + Private.frodoConfig.errorClass.input).length;
                 //Check for passwords match (only in case of singup form)
                 validateInput();
-                if (frodoConfig.currentForm === frodoConfig.forms[1]) {
+                if (Private.frodoConfig.currentForm === Private.frodoConfig.forms[1]) {
                     passwordsMatch(input);
                 }
             }
@@ -848,7 +856,7 @@
                 setErrors(true, 'fullname');
             } else {
                 setErrors(false, 'password');
-                errors = $('.' + frodoConfig.errorClass.input).length;
+                errors = $('.' + Private.frodoConfig.errorClass.input).length;
                 validateInput();
             }
         }
@@ -882,9 +890,9 @@
         function toggleInputs(inputs, arr) {
             inputs.map(function(value) {
                 if (arr.indexOf(value) !== -1)
-                    $('.frodo-input[name="' + value + '"]').removeClass(frodoConfig.hideClass).prop('disabled', false);
+                    $('.frodo-input[name="' + value + '"]').removeClass(Private.frodoConfig.hideClass).prop('disabled', false);
                 else
-                    $('.frodo-input[name="' + value + '"]').addClass(frodoConfig.hideClass).prop('disabled', true);
+                    $('.frodo-input[name="' + value + '"]').addClass(Private.frodoConfig.hideClass).prop('disabled', true);
             });
 
             return true;
@@ -902,21 +910,21 @@
 
         //Shorthand for this.config
         var config = this.config,
-            text = translation[this.lang],
+            text = Private.translation[this.lang],
             inputsObj = $('.frodo-input'),
             init = [inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name')],
             signup = [inputsObj.filter('[name="fullname"]').attr('name'), inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name'), inputsObj.filter('[name="passwordConfirm"]').attr('name')],
             reset = [inputsObj.filter('[name="passwordReset"]').attr('name')],
             inputs = objToArray(inputsObj),
-            headerTxt = $('.' + frodoConfig.frodoHeader.text),
-            signUpTxt = $('.' + frodoConfig.frodoLogin.signUp);
+            headerTxt = $('.' + Private.frodoConfig.frodoHeader.text),
+            signUpTxt = $('.' + Private.frodoConfig.frodoLogin.signUp);
 
 
         //Delete alert message
         this.showAlert(null, {
-            messageBox: frodoConfig.frodoLogin.message,
-            text: frodoConfig.frodoLogin.message + ' > span',
-            alert: frodoConfig.frodoLogin.messageAlert
+            messageBox: Private.frodoConfig.frodoLogin.message,
+            text: Private.frodoConfig.frodoLogin.message + ' > span',
+            alert: Private.frodoConfig.frodoLogin.messageAlert
         });
 
         //Clear form inputs
@@ -929,14 +937,14 @@
                 toggleInputs(inputs, signup);
                 changeTxt(headerTxt, text.signUpTxt);
                 changeTxt(signUpTxt, text.links[2]);
-                frodoConfig.currentForm = frodoConfig.forms[1];
+                Private.frodoConfig.currentForm = Private.frodoConfig.forms[1];
 
                 //Switch to login
             } else {
                 toggleInputs(inputs, init);
                 changeTxt(headerTxt, text.loginTxt);
                 changeTxt(signUpTxt, text.links[1]);
-                frodoConfig.currentForm = frodoConfig.forms[0];
+                Private.frodoConfig.currentForm = Private.frodoConfig.forms[0];
             }
         }
         //Form reset password
@@ -944,7 +952,7 @@
             toggleInputs(inputs, reset);
             changeTxt(headerTxt, text.resetTxt);
             changeTxt(signUpTxt, text.links[1]);
-            frodoConfig.currentForm = frodoConfig.forms[2];
+            Private.frodoConfig.currentForm = Private.frodoConfig.forms[2];
         }
 
         //Form login, init state
@@ -952,7 +960,7 @@
             toggleInputs(inputs, init);
             changeTxt(headerTxt, text.loginTxt);
             changeTxt(signUpTxt, text.links[1]);
-            frodoConfig.currentForm = frodoConfig.forms[0];
+            Private.frodoConfig.currentForm = Private.frodoConfig.forms[0];
         }
 
         return true;
@@ -991,18 +999,10 @@
      * @return {[boolean]}
      */
     Frodo.prototype.closePanel = function() {
-        //Shorthand for this.config
-        var submit = $('.' + frodoConfig.frodoLogin.submit);
-
-        //Block mouse scroll when panel is open
-        $('#' + frodoConfig.frodoWrapper).removeClass(frodoConfig.noScroll);
-
-        //Remove uneccessary classes
-        this.resetMainClasses();
-        $('#' + frodoConfig.frodoWrapper).removeClass(frodoConfig.noScroll);
+        this.resetMainClasses(false);
         this.clearInputs();
         this.submitDisabled(false);
-        frodoConfig.currentForm = null;
+        Private.frodoConfig.currentForm = null;
 
         return true;
     };
@@ -1012,7 +1012,7 @@
      * @return {[boolean]}
      */
     Frodo.prototype.clearInputs = function() {
-        $('.' + frodoConfig.frodoLogin.input).each(function() {
+        $('.' + Private.frodoConfig.frodoLogin.input).each(function() {
             this.value = '';
         });
 
