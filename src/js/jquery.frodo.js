@@ -187,33 +187,26 @@
                     fullname: 'اسم المستخدم غير صحيح'
                 }
             }
+        },
+        /*
+        SOCIAL BUTTONS
+        */
+        socialBtn : {
+            'eniro': {
+                text: 'Eniro',
+                link: 'https://accounts.eniro.com.test.eniro.net/frodo/oauth/eniro/authorize?response_type=code&client_id={client_id}&scope={scope}&redirect_uri={redirect_uri}'
+            },
+            'facebook': {
+                text: 'Facebook',
+                link: 'https://accounts.eniro.com.test.eniro.net/frodo/oauth/facebook/authorize?response_type=code&client_id={client_id}&scope={scope}&redirect_uri={redirect_uri}'
+            },
+            'google' : {
+               text: 'Google',
+                link: 'https://accounts.eniro.com.test.eniro.net/frodo/oauth/google/authorize?response_type=code&client_id={client_id}&scope={scope}&redirect_uri={redirect_uri}'
+            }
         }
         //END PRIVATE
     };
-
-
-
-
-    /*
-    SOCIAL BUTTONS
-    */
-    var socialBtn = {};
-        socialBtn['eniro'] = {
-        text: 'Eniro',
-        link: 'https://accounts.eniro.com.test.eniro.net/frodo/oauth/eniro/authorize?response_type=code&client_id={client_id}&scope={scope}&redirect_uri={redirect_uri}'
-        };
-    socialBtn['facebook'] = {
-        text: 'Facebook',
-        link: 'https://accounts.eniro.com.test.eniro.net/frodo/oauth/facebook/authorize?response_type=code&client_id={client_id}&scope={scope}&redirect_uri={redirect_uri}'
-        };
-    socialBtn['google'] = {
-        text: 'Google',
-        link: 'https://accounts.eniro.com.test.eniro.net/frodo/oauth/google/authorize?response_type=code&client_id={client_id}&scope={scope}&redirect_uri={redirect_uri}'
-        };
-    // social['linkedin'] = {
-    //     text: 'Linkedin',
-    //     link: 'https://accounts.eniro.com.test.eniro.net/frodo/oauth/google/authorize?response_type=code&client_id={client_id}&scope={scope}&redirect_uri={redirect_uri}'
-    //     };
 
     /*
     -------------------C O N S T R U C T O R BEGIN-------------------------------------------------------
@@ -609,8 +602,8 @@
                     // console.log(social);
                 //Create buttons
                 result_provider.forEach(function(name) {
-                    if (name in socialBtn) {
-                    var link = socialBtn[name].link;
+                    if (name in Private.socialBtn) {
+                    var link = Private.socialBtn[name].link;
 
 
                     link = link.replace('{client_id}', config.clientId);
@@ -620,7 +613,7 @@
                     btns += '<div class="' + providerClass + '" ">\
                                     <a class="frodo-btn frodo-btn-' + name + '" \
                                      href="' + link + '">\
-                                    <i class="fa faa-' + name + '"></i>' + socialBtn[name].text + '</a>\
+                                    <i class="fa faa-' + name + '"></i>' + Private.socialBtn[name].text + '</a>\
                                     </div>';
                     }
                 });
