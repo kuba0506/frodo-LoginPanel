@@ -48,9 +48,22 @@ var GulpConfig = (function () {
         this.prodCssName = 'jquery.frodo.min.css';
         this.cssFileName = prod ?  this.prodCssName : this.devCssName;
 
-        // HTML
-        this.devHtml = this.devSource + '*.html';
+        // HTML  
+        this.htmlSources = this.source + '*.html';
+        this.htmlOptions = {
+            collapseWhitespace: true,
+            removeComments: true,
+            collapseInlineTagWhitespace: true,
+            useShortDoctype: true,
+            removeScriptTypeAttributes: true,
+            removeStyleLinkTypeAttributes: true,
+            minifyJS: true,
+            minifyCSS: true
+        };
+        this.devHtml = this.devSource;
+        // this.devHtml = this.devSource + '*.html';
         this.prodHtml = this.prodSource + '*.html';
+        this.htmlOutput = prod ? this.prodHtml : this.devHtml;
 
         // IMAGES
         this.imgSources = this.source + 'images/**/*';
