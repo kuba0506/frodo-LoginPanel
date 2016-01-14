@@ -11,7 +11,6 @@
 (function($) {
     "use strict";
 
-    console.log('test12322');
     /*
     PRIVATE SETTINGS
      */
@@ -20,7 +19,7 @@
          DEFAULT PLUGIN SETTINGS
          */
         defaults : {
-            lang: 'ar',
+            lang: 'en',
             version: 'basic',
             provider: ['eniro', 'facebook', 'google'],
             device: 'desktop',
@@ -380,9 +379,22 @@
     -------------------C O N S T R U C T O R  END----------------------------------------------------
      */
 
+
     /*
     -------------------M E T H O D S  BEGIN --------------------------------------------------
      */
+
+    Frodo.prototype = {
+        init: function  () {
+
+        },
+        build: function () {
+
+        },
+        destroy: function () {
+
+        }
+    };
 
     Frodo.prototype.init = function() {
         //Shorthand for this.config

@@ -87,7 +87,7 @@ gulp.task('clean-ts', function (cb) {
 
 //Łączenie JS
 gulp.task('js',function () {
-	gulp.src(config.jsSources)
+	gulp.src(config.jsSources +  'js/*.js')
 	.pipe(plumber())
 	.pipe(debug())
 	.pipe(sourcemaps.init())
@@ -97,7 +97,7 @@ gulp.task('js',function () {
 		.on('error', gutil.log)
 	.pipe(rename(config.jsFileName))
 	.pipe(prettify({config: '.jsbeautifyrc', mode: 'VERIFY_AND_WRITE'}))
-	.pipe(config.prodMinify)
+	//.pipe(config.prodMinify)
 	.pipe(rename(config.jsFileName))
 	.pipe(sourcemaps.write('.'))
 	.pipe(gulp.dest(config.jsOutput))
@@ -105,7 +105,7 @@ gulp.task('js',function () {
 
 //JS linting
 gulp.task('lint', function () {
-	gulp.src(config.jsSources)
+	gulp.src(config.jsSources +  'js/*.js')
 			.pipe(jshint())
 			.pipe(jshint.reporter('default'));
 });
@@ -139,7 +139,7 @@ gulp.task('connect', function () {
 	// gulp.watch('src/sass/**/*.scss', ['sass']);
 	gulp.watch(config.htmlSources).on('change', reload);
 	gulp.watch(config.sassSources + '**/*').on('change', reload);
-	gulp.watch(config.jsSources + '/js/**/*').on('change', reload);
+	gulp.watch(config.jsSources +  'js/*.js').on('change', reload);
 	// gulp.watch(config.devSource + '/*.html').on('change', reload);
 });
 
@@ -218,7 +218,7 @@ gulp.task('build', ['build:copy', 'build:remove']);
 gulp.task('watch', function () {
 	gulp.watch(config.htmlSources, ['html']);
 	gulp.watch([config.allTypeScript], ['ts-lint', 'compile-ts']);
-	gulp.watch(config.jsSources, ['js']);
+	gulp.watch(config.jsSources +  'js/*.js', ['js']);
 	gulp.watch(config.sassSources + '**/*.scss', ['sass']);
 	gulp.watch(config.imgSources, ['img']);
 });
