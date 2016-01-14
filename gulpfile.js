@@ -2,34 +2,38 @@
  * REQUIRED PLUGINS
  */
 var gulp = require('gulp'),
-	gutil = require('gulp-util'), //dodatkowe narzędzia jak log
-	sass = require('gulp-sass'),
-	autoprefixer = require('gulp-autoprefixer'),
-	changed = require('gulp-changed'),
-	include  = require('gulp-include'),
-	imagemin  = require('gulp-imagemin'),
-	//HTML
-	htmlmin = require('gulp-htmlmin'),
-	includeSources = require('gulp-include-source'),
-	//Browser Sync
-	browserSync  = require('browser-sync').create(), //tworzy serwer
-	reload = browserSync.reload,
-	//Fix broken pipe
-	plumber  = require('gulp-plumber'),
-	//Debug
-	debug = require('gulp-debug'),
-	rename  = require('gulp-rename'),
-	prettify = require('gulp-jsbeautifier'),
-	jshint = require('gulp-jshint'),
-	// minify = require('gulp-uglify'),
-	del = require('del'),
-	inject = require('gulp-inject'),
-	tsc = require('gulp-typescript'),
-	tslint = require('gulp-tslint'),
+    //CSS
+    sass = require('gulp-sass'),
+    autoprefixer = require('gulp-autoprefixer'),
+
+    //HTML
+    htmlmin = require('gulp-htmlmin'),
+    inject = require('gulp-inject'),
+    //JS
+    include  = require('gulp-include'),
+    prettify = require('gulp-jsbeautifier'),
+    jshint = require('gulp-jshint'),
+    tsc = require('gulp-typescript'),
+    tslint = require('gulp-tslint'),
+    //IMG
+    imagemin  = require('gulp-imagemin'),
+    //UTILS
+    gutil = require('gulp-util'), //dodatkowe narzędzia jak log
+    changed = require('gulp-changed'),
+    //Browser Sync
+    browserSync  = require('browser-sync').create(), //tworzy serwer
+    reload = browserSync.reload,
+    //Fix broken pipe
+    plumber  = require('gulp-plumber'),
+    //Debug
+    debug = require('gulp-debug'),
+    //Minify
+    minify = require('gulp-uglify'),
+    rename  = require('gulp-rename'),
+    del = require('del'),
 	sourcemaps = require('gulp-sourcemaps'),
 	Config = require('./gulpfile.config'),
 	tsProject = tsc.createProject('tsconfig.json');
-
 
 //Initialize gulp config
 var config = new Config();
@@ -125,7 +129,7 @@ gulp.task('connect', function () {
 	browserSync.init({
 		server: {
 			// baseDir: config.devSource
-			baseDir: config.source
+			baseDir: config.outputSource
 		}
 		// logLevel: "debug",
 		// logConnections: true
@@ -138,7 +142,7 @@ gulp.task('connect', function () {
 	gulp.watch(config.jsSources + '/js/**/*').on('change', reload);
 	// gulp.watch(config.devSource + '/*.html').on('change', reload);
 });
-		
+
 
 		// function() {
   // return gulp.src('src/*.html')
@@ -147,13 +151,13 @@ gulp.task('connect', function () {
 //Html
 gulp.task('html', function () {
 	gulp.src(config.htmlSources)
+            //.pipe(config.prodHtmlMin)
 			// .pipe(htmlmin(config.htmlOptions))
 			.pipe(gulp.dest(config.htmlOutput));
 });
 // Include sources
 gulp.task('include', function () {
 	gulp.src(config.htmlOutput + '**/*.*')
-			.pipe(includeSources())
 			.pipe(gulp.dest(config.htmlOutput));
 });
 	// .pipe(prettify({

@@ -3,6 +3,7 @@
 
 var gutil = require('gulp-util'),
     minify = require('gulp-uglify'),
+    htmlmin = require('gulp-htmlmin'),
     prod = gutil.env.type === 'production';
 
 var GulpConfig = (function () {
@@ -23,6 +24,7 @@ var GulpConfig = (function () {
         this.devSource = './builds/development/';
         // this.devSource = './builds/development/';
         this.prodSource = './builds/production/';
+        this.outputSource = prod ? this.prodSource : this.devSource;
         // this.prodSource = './builds/production/';
 
         // JS
@@ -48,7 +50,7 @@ var GulpConfig = (function () {
         this.prodCssName = 'jquery.frodo.min.css';
         this.cssFileName = prod ?  this.prodCssName : this.devCssName;
 
-        // HTML  
+        // HTML
         this.htmlSources = this.source + '*.html';
         this.htmlOptions = {
             collapseWhitespace: true,
@@ -62,7 +64,7 @@ var GulpConfig = (function () {
         };
         this.devHtml = this.devSource;
         // this.devHtml = this.devSource + '*.html';
-        this.prodHtml = this.prodSource + '*.html';
+        this.prodHtml = this.prodSource;
         this.htmlOutput = prod ? this.prodHtml : this.devHtml;
 
         // IMAGES
@@ -72,6 +74,7 @@ var GulpConfig = (function () {
         this.imgOutput = prod ? this.prodImg : this.devImg;
 
         this.prodMinify = prod ? minify() : gutil.noop();
+        this.prodHtmlMin = prod ? htmlmin(this.htmlOptions) : gutil.noop();
         this.typings = './tools/typings/';
         this.libraryTypeScriptDefinitions = './tools/typings/**/*.ts';
     }

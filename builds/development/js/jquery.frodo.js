@@ -11,6 +11,7 @@
 (function($) {
     "use strict";
 
+    console.log('test123');
     /*
     PRIVATE SETTINGS
      */
@@ -19,7 +20,7 @@
          DEFAULT PLUGIN SETTINGS
          */
         defaults: {
-            lang: 'en',
+            lang: 'ar',
             version: 'basic',
             provider: ['eniro', 'facebook', 'google'],
             device: 'desktop',
