@@ -50,6 +50,345 @@
 
             return submitBtn.prop('disabled', bool);
         },
+        validate: function(event) {
+            /**
+             * HELPERS
+             */
+            //Get input name
+            function getInputName() {
+                return input.attr('name');
+            }
+            //Get input type
+            function getInputType() {
+                return input.attr('type');
+            }
+            //Chek input type
+            function checkInputType(name) {
+                return getInputType() === name;
+            }
+            //Get input value
+            function getInputValue(input) {
+                return input.val();
+            }
+            //Get input length
+            function getInputLength(input) {
+                return getInputValue(input).length;
+            }
+
+            function inputIsEmpty(input) {
+                var val = getInputLength(input);
+
+                return !val;
+            }
+            /**
+             * VALIDATORS
+             */
+            //Validate email
+            function checkEmail(email) {
+                var pattern = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+                return pattern.test(getInputValue(email));
+            }
+            //Validate password
+            function checkPassword(password) {
+                var val = getInputLength(password);
+
+                if (val < 8 || inputIsEmpty(password))
+                    return false;
+                else
+                    return true;
+            }
+
+            function anyInputEmpty() {
+                var anyEmpty = $('.' + Private.frodoConfig.frodoLogin.box).find('.' + Private.frodoConfig.frodoLogin.input).not(':disabled').filter(function() {
+                        return !$(this).val();
+                    }),
+                    errMsg = anyEmpty.find('span');
+                //if submit btn
+                if (getInputName() === Private.frodoConfig.frodoForm) {
+                    anyEmpty.each(function() {
+                        var input = $(this),
+                            errMsg = $('span', input.parent()),
+                            type = input.attr('type'),
+                            errors = Private.translation[lang].errors;
+
+                        if (type === 'text') {
+                            input.addClass(Private.frodoConfig.errorClass.input);
+                            errMsg.text(errors.fullname).addClass(Private.frodoConfig.errorClass.msg);
+                        } else if (type === 'password') {
+                            input.addClass(Private.frodoConfig.errorClass.input);
+                            errMsg.text(errors.password).addClass(Private.frodoConfig.errorClass.msg);
+                        } else if (type === 'email') {
+                            input.addClass(Private.frodoConfig.errorClass.input);
+                            errMsg.text(errors.email).addClass(Private.frodoConfig.errorClass.msg);
+                        }
+                    });
+                }
+
+                return anyEmpty.length;
+            }
+
+            function setErrors(bool, name) {
+                var errors = Private.translation[lang].errors,
+                    errName = errors[name];
+
+                if (bool) {
+                    input.addClass(Private.frodoConfig.errorClass.input);
+                    error.text(errName).addClass(Private.frodoConfig.errorClass.msg);
+                } else {
+                    input.removeClass(Private.frodoConfig.errorClass.input);
+                    error.text('').removeClass(Private.frodoConfig.errorClass.msg);
+                }
+            }
+            //Check for passwords match (only in case of singup form)
+            function passwordsMatch(password) {
+
+                var ifMatch = password.data('if-match'),
+                    currentVal = getInputValue(password),
+                    matchVal = $(ifMatch).val(),
+                    allErrors = $('[data-if-match]', $('.' + Private.frodoConfig.frodoForm)).siblings('span');
+
+                //Compare only if match password is >= 8
+                if (matchVal.length >= 8) {
+                    //Compare values
+                    if (currentVal !== matchVal) {
+                        error.text(Private.translation[lang].errors.passwordNotMatch).addClass(Private.frodoConfig.errorClass.msg);
+                        Private.submitDisabled(true);
+                    } else {
+                        allErrors.text('').removeClass(Private.frodoConfig.errorClass.msg);
+                        validateInput();
+                    }
+                }
+            }
+            //Check if there is no empty inputs or error messages
+            function validateInput() {
+
+                if (errors < 1 && anyInputEmpty() === 0) {
+                    return Private.submitDisabled(false);
+                } else {
+                    return Private.submitDisabled(true);
+                }
+            }
+
+            var frodo = this,
+                config = this.config,
+                lang = Private.defaults.lang,
+                input = $(event.target),
+                errors = null,
+                anyEmpty = null,
+                submitBtn = $('.' + Private.frodoConfig.frodoLogin.submit),
+                valid = false,
+                error = $('span', input.parent());
+
+            //If submit button was clicked
+            if (getInputName() === Private.frodoConfig.frodoForm) {
+                validateInput();
+            }
+
+
+            //Email
+            if (checkInputType('email')) {
+
+                // If email is wrong
+                if (!checkEmail(input)) {
+                    setErrors(true, 'email');
+                } else {
+                    setErrors(false, 'email');
+                    errors = $('.' + Private.frodoConfig.errorClass.input).length;
+                    validateInput();
+                }
+            }
+
+            //All passwords
+            if (checkInputType('password')) {
+
+                //If any error occurs
+                if (!checkPassword(input)) {
+                    setErrors(true, 'password');
+                    //Check for passwords match (only in case of singup form)
+                    if (Private.frodoConfig.currentForm === Private.frodoConfig.forms[1]) {
+                        passwordsMatch(input);
+                    }
+                } else {
+                    setErrors(false, 'password');
+                    errors = $('.' + Private.frodoConfig.errorClass.input).length;
+                    //Check for passwords match (only in case of singup form)
+                    validateInput();
+                    if (Private.frodoConfig.currentForm === Private.frodoConfig.forms[1]) {
+                        passwordsMatch(input);
+                    }
+                }
+            }
+
+            //Fullname
+            if (checkInputType('text')) {
+                if (inputIsEmpty(input)) {
+                    setErrors(true, 'fullname');
+                } else {
+                    setErrors(false, 'password');
+                    errors = $('.' + Private.frodoConfig.errorClass.input).length;
+                    validateInput();
+                }
+            }
+        },
+        /**
+         * [toggleForm switch forms]
+         * @param  {[string]} form [form name]
+         * @return {[boolean]}
+         * */
+        toggleForm: function(form) {
+
+            function changeTxt(selector, text) {
+
+                $(selector).text(text);
+
+                return true;
+            }
+
+            function aggregateInputs(obj) {
+                var inputs = [],
+                    keys = Object.keys(obj);
+
+                for (var i = 0, len = keys.length; i < len; i++) {
+                    inputs.push(obj[keys[i]]);
+                }
+
+                return inputs;
+            }
+
+            function toggleInputs(inputs, arr) {
+                inputs.map(function(value) {
+                    if (arr.indexOf(value) !== -1)
+                        $('.frodo-input[name="' + value + '"]').removeClass(Private.frodoConfig.hideClass).prop('disabled', false);
+                    else
+                        $('.frodo-input[name="' + value + '"]').addClass(Private.frodoConfig.hideClass).prop('disabled', true);
+                });
+
+                return true;
+            }
+
+            function objToArray(obj) {
+                var arr = [];
+
+                obj.each(function() {
+                    return arr.push($(this).attr('name'));
+                });
+
+                return arr;
+            }
+
+            //Shorthand for this.config
+            var config = this.config,
+                text = Private.translation[Private.defaults.lang],
+                inputsObj = $('.frodo-input'),
+                init = [inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name')],
+                signup = [inputsObj.filter('[name="fullname"]').attr('name'), inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name'), inputsObj.filter('[name="passwordConfirm"]').attr('name')],
+                reset = [inputsObj.filter('[name="passwordReset"]').attr('name')],
+                inputs = objToArray(inputsObj),
+                headerTxt = $('.' + Private.frodoConfig.frodoHeader.text),
+                signUpTxt = $('.' + Private.frodoConfig.frodoLogin.signUp);
+
+
+            //Delete alert message
+            Private.showAlert(null, {
+                messageBox: Private.frodoConfig.frodoLogin.message,
+                text: Private.frodoConfig.frodoLogin.message + ' > span',
+                alert: Private.frodoConfig.frodoLogin.messageAlert
+            });
+
+            //Clear form inputs
+            Private.clearInputs();
+
+            //Check which form is used
+            if (form === 'signup') {
+                //Check if is either login or reset form, switch to signup
+                if (headerTxt.text() === text.loginTxt || headerTxt.text() === text.resetTxt) {
+                    toggleInputs(inputs, signup);
+                    changeTxt(headerTxt, text.signUpTxt);
+                    changeTxt(signUpTxt, text.links[2]);
+                    Private.frodoConfig.currentForm = Private.frodoConfig.forms[1];
+
+                    //Switch to login
+                } else {
+                    toggleInputs(inputs, init);
+                    changeTxt(headerTxt, text.loginTxt);
+                    changeTxt(signUpTxt, text.links[1]);
+                    Private.frodoConfig.currentForm = Private.frodoConfig.forms[0];
+                }
+            }
+            //Form reset password
+            else if (form === 'reset') {
+                toggleInputs(inputs, reset);
+                changeTxt(headerTxt, text.resetTxt);
+                changeTxt(signUpTxt, text.links[1]);
+                Private.frodoConfig.currentForm = Private.frodoConfig.forms[2];
+            }
+
+            //Form login, init state
+            else if (form === 'init') {
+                toggleInputs(inputs, init);
+                changeTxt(headerTxt, text.loginTxt);
+                changeTxt(signUpTxt, text.links[1]);
+                Private.frodoConfig.currentForm = Private.frodoConfig.forms[0];
+            }
+
+            return true;
+        },
+        /**
+         * [showAlert show message above the form]
+         * @param  {[object]} data
+         * @param  {[object]} box
+         * @param  {[object]} text
+         * @return {[boolean]}
+         */
+        showAlert: function(data, options) {
+            if (data === undefined) {
+                data = false;
+            }
+
+            if (data) {
+                if (data.fail) {
+                    $('#' + options.messageBox).addClass(options.alert);
+                    $('.' + options.text).empty().text(data.message);
+                } else {
+                    $('#' + options.messageBox).removeClass(options.alert);
+                    $('.' + options.text).empty();
+                }
+            } else {
+                $('#' + options.messageBox).removeClass(options.alert);
+                $('.' + options.text).empty();
+            }
+
+            return true;
+        },
+        /**
+         * [closePanel close login panel]
+         * @return {[boolean]}
+         */
+        closePanel: function() {
+            Private.resetMainClasses(false);
+            Private.clearInputs();
+            Private.submitDisabled(false);
+            Private.frodoConfig.currentForm = null;
+
+            return true;
+        },
+
+        /**
+         * [clearInputs - clear form input]
+         * @return {[boolean]}
+         */
+        clearInputs: function() {
+            $('.' + Private.frodoConfig.frodoLogin.input).each(function() {
+                this.value = '';
+            });
+
+            return true;
+        },
+        //TEMP - shuffle random url
+        getRandomInt: function(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        },
         /*
          DEFAULT PLUGIN SETTINGS
          */
@@ -268,7 +607,9 @@
             configLang = (typeof Private.translation[config.lang] !== 'undefined') ? Object.keys(Private.translation[config.lang]) : void 0;
 
 
-        this.lang = ((typeof configLang === 'undefined') || (defaultLang.length !== configLang.length)) ? Private.defaults.lang : config.lang;
+        Private.defaults.lang = this.lang = ((typeof configLang === 'undefined') || (defaultLang.length !== configLang.length)) ? Private.defaults.lang : config.lang;
+
+
 
         //INITIALIZE PLUGIN
         this.init();
@@ -310,20 +651,20 @@
                 Private.resetMainClasses(true);
 
                 //Reset err message
-                self.showAlert(null, {
+                Private.showAlert(null, {
                     messageBox: Private.frodoConfig.frodoLogin.message,
                     text: Private.frodoConfig.frodoLogin.message + ' > span',
                     alert: Private.frodoConfig.frodoLogin.messageAlert
                 });
 
                 //Rest form to login
-                self.toggleForm('init');
+                Private.toggleForm('init');
 
                 //Clear errors
                 Private.clearErrors();
 
                 //Clear inputs
-                self.clearInputs();
+                Private.clearInputs();
 
                 //Enable submit btn
                 Private.submitDisabled(false);
@@ -338,13 +679,13 @@
             if (config.device === 'desktop') {
                 //Close login panel
                 $(body).on('click', '.' + Private.frodoConfig.frodoHeader.closeBtn, function() {
-                    self.closePanel();
+                    Private.closePanel();
                 });
 
                 $(body).on('keyup', function(event) {
                     //If 'Escape' key is pressed
                     if (event.keyCode === 27 && Private.frodoConfig.currentForm !== null) {
-                        self.closePanel();
+                        Private.closePanel();
                     }
                 });
             }
@@ -354,7 +695,7 @@
              */
             $(body).on('click', '.' + Private.frodoConfig.frodoLogin.signUp, function(event) {
                 Private.stopEvent(event);
-                self.toggleForm('signup');
+                Private.toggleForm('signup');
                 Private.clearErrors();
                 Private.submitDisabled(false);
 
@@ -366,7 +707,7 @@
              */
             $(body).on('click', '.' + Private.frodoConfig.frodoLogin.forgot, function(event) {
                 Private.stopEvent(event);
-                self.toggleForm('reset');
+                Private.toggleForm('reset');
                 Private.clearErrors();
                 Private.submitDisabled(false);
 
@@ -383,13 +724,13 @@
                     $('.' + Private.frodoConfig.frodoForm).trigger('submit');
                 }
                 Private.submitDisabled(true);
-                self.validate(event);
+                Private.validate(event);
                 Private.stopEvent(event);
 
             });
             $(body).on('submit', '.' + Private.frodoConfig.frodoForm, function(event) {
                 Private.stopEvent(event);
-                self.validate(event);
+                Private.validate(event);
                 //Ajax submit
             });
 
@@ -403,7 +744,7 @@
                     address = [url, url2],
                     index;
 
-                index = frodo.getRandomInt(0, address.length - 1);
+                index = Private.getRandomInt(0, address.length - 1);
 
                 $.ajax({
                     type: 'GET',
@@ -411,7 +752,7 @@
                     dataType: 'jsonp',
                     jsonpCallback: 'myCallback'
                 }).then(function(response) {
-                    self.showAlert(response, {
+                    Private.showAlert(response, {
                         messageBox: Private.frodoConfig.frodoLogin.message,
                         text: Private.frodoConfig.frodoLogin.message + '> span',
                         alert: Private.frodoConfig.frodoLogin.messageAlert
@@ -676,350 +1017,6 @@
         }
     };
 
-    Frodo.prototype.validate = function(event) {
-        /**
-         * HELPERS
-         */
-        //Get input name
-        function getInputName() {
-            return input.attr('name');
-        }
-        //Get input type
-        function getInputType() {
-            return input.attr('type');
-        }
-        //Chek input type
-        function checkInputType(name) {
-            return getInputType() === name;
-        }
-        //Get input value
-        function getInputValue(input) {
-            return input.val();
-        }
-        //Get input length
-        function getInputLength(input) {
-            return getInputValue(input).length;
-        }
-
-        function inputIsEmpty(input) {
-            var val = getInputLength(input);
-
-            return !val;
-        }
-        /**
-         * VALIDATORS
-         */
-        //Validate email
-        function checkEmail(email) {
-            var pattern = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-
-            return pattern.test(getInputValue(email));
-        }
-        //Validate password
-        function checkPassword(password) {
-            var val = getInputLength(password);
-
-            if (val < 8 || inputIsEmpty(password))
-                return false;
-            else
-                return true;
-        }
-
-        function anyInputEmpty() {
-            var anyEmpty = $('.' + Private.frodoConfig.frodoLogin.box).find('.' + Private.frodoConfig.frodoLogin.input).not(':disabled').filter(function() {
-                    return !$(this).val();
-                }),
-                errMsg = anyEmpty.find('span');
-            //if submit btn
-            if (getInputName() === Private.frodoConfig.frodoForm) {
-                anyEmpty.each(function() {
-                    var input = $(this),
-                        errMsg = $('span', input.parent()),
-                        type = input.attr('type'),
-                        errors = Private.translation[lang].errors;
-
-                    if (type === 'text') {
-                        input.addClass(Private.frodoConfig.errorClass.input);
-                        errMsg.text(errors.fullname).addClass(Private.frodoConfig.errorClass.msg);
-                    } else if (type === 'password') {
-                        input.addClass(Private.frodoConfig.errorClass.input);
-                        errMsg.text(errors.password).addClass(Private.frodoConfig.errorClass.msg);
-                    } else if (type === 'email') {
-                        input.addClass(Private.frodoConfig.errorClass.input);
-                        errMsg.text(errors.email).addClass(Private.frodoConfig.errorClass.msg);
-                    }
-                });
-            }
-
-            return anyEmpty.length;
-        }
-
-        function setErrors(bool, name) {
-            var errors = Private.translation[lang].errors,
-                errName = errors[name];
-
-            if (bool) {
-                input.addClass(Private.frodoConfig.errorClass.input);
-                error.text(errName).addClass(Private.frodoConfig.errorClass.msg);
-            } else {
-                input.removeClass(Private.frodoConfig.errorClass.input);
-                error.text('').removeClass(Private.frodoConfig.errorClass.msg);
-            }
-        }
-        //Check for passwords match (only in case of singup form)
-        function passwordsMatch(password) {
-
-            var ifMatch = password.data('if-match'),
-                currentVal = getInputValue(password),
-                matchVal = $(ifMatch).val(),
-                allErrors = $('[data-if-match]', $('.' + Private.frodoConfig.frodoForm)).siblings('span');
-
-            //Compare only if match password is >= 8
-            if (matchVal.length >= 8) {
-                //Compare values
-                if (currentVal !== matchVal) {
-                    error.text(Private.translation[lang].errors.passwordNotMatch).addClass(Private.frodoConfig.errorClass.msg);
-                    Private.submitDisabled(true);
-                } else {
-                    allErrors.text('').removeClass(Private.frodoConfig.errorClass.msg);
-                    validateInput();
-                }
-            }
-        }
-        //Check if there is no empty inputs or error messages
-        function validateInput() {
-
-            if (errors < 1 && anyInputEmpty() === 0) {
-                return Private.submitDisabled(false);
-            } else {
-                return Private.submitDisabled(true);
-            }
-        }
-
-        var frodo = this,
-            config = this.config,
-            lang = this.lang,
-            input = $(event.target),
-            errors = null,
-            anyEmpty = null,
-            submitBtn = $('.' + Private.frodoConfig.frodoLogin.submit),
-            valid = false,
-            error = $('span', input.parent());
-
-        //If submit button was clicked
-        if (getInputName() === Private.frodoConfig.frodoForm) {
-            validateInput();
-        }
-
-
-        //Email
-        if (checkInputType('email')) {
-
-            // If email is wrong
-            if (!checkEmail(input)) {
-                setErrors(true, 'email');
-            } else {
-                setErrors(false, 'email');
-                errors = $('.' + Private.frodoConfig.errorClass.input).length;
-                validateInput();
-            }
-        }
-
-        //All passwords
-        if (checkInputType('password')) {
-
-            //If any error occurs
-            if (!checkPassword(input)) {
-                setErrors(true, 'password');
-                //Check for passwords match (only in case of singup form)
-                if (Private.frodoConfig.currentForm === Private.frodoConfig.forms[1]) {
-                    passwordsMatch(input);
-                }
-            } else {
-                setErrors(false, 'password');
-                errors = $('.' + Private.frodoConfig.errorClass.input).length;
-                //Check for passwords match (only in case of singup form)
-                validateInput();
-                if (Private.frodoConfig.currentForm === Private.frodoConfig.forms[1]) {
-                    passwordsMatch(input);
-                }
-            }
-        }
-
-        //Fullname
-        if (checkInputType('text')) {
-            if (inputIsEmpty(input)) {
-                setErrors(true, 'fullname');
-            } else {
-                setErrors(false, 'password');
-                errors = $('.' + Private.frodoConfig.errorClass.input).length;
-                validateInput();
-            }
-        }
-    };
-
-    /**
-     * [toggleForm switch forms]
-     * @param  {[string]} form [form name]
-     * @return {[boolean]}
-     * */
-    Frodo.prototype.toggleForm = function(form) {
-
-        function changeTxt(selector, text) {
-
-            $(selector).text(text);
-
-            return true;
-        }
-
-        function aggregateInputs(obj) {
-            var inputs = [],
-                keys = Object.keys(obj);
-
-            for (var i = 0, len = keys.length; i < len; i++) {
-                inputs.push(obj[keys[i]]);
-            }
-
-            return inputs;
-        }
-
-        function toggleInputs(inputs, arr) {
-            inputs.map(function(value) {
-                if (arr.indexOf(value) !== -1)
-                    $('.frodo-input[name="' + value + '"]').removeClass(Private.frodoConfig.hideClass).prop('disabled', false);
-                else
-                    $('.frodo-input[name="' + value + '"]').addClass(Private.frodoConfig.hideClass).prop('disabled', true);
-            });
-
-            return true;
-        }
-
-        function objToArray(obj) {
-            var arr = [];
-
-            obj.each(function() {
-                return arr.push($(this).attr('name'));
-            });
-
-            return arr;
-        }
-
-        //Shorthand for this.config
-        var config = this.config,
-            text = Private.translation[this.lang],
-            inputsObj = $('.frodo-input'),
-            init = [inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name')],
-            signup = [inputsObj.filter('[name="fullname"]').attr('name'), inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name'), inputsObj.filter('[name="passwordConfirm"]').attr('name')],
-            reset = [inputsObj.filter('[name="passwordReset"]').attr('name')],
-            inputs = objToArray(inputsObj),
-            headerTxt = $('.' + Private.frodoConfig.frodoHeader.text),
-            signUpTxt = $('.' + Private.frodoConfig.frodoLogin.signUp);
-
-
-        //Delete alert message
-        this.showAlert(null, {
-            messageBox: Private.frodoConfig.frodoLogin.message,
-            text: Private.frodoConfig.frodoLogin.message + ' > span',
-            alert: Private.frodoConfig.frodoLogin.messageAlert
-        });
-
-        //Clear form inputs
-        this.clearInputs();
-
-        //Check which form is used
-        if (form === 'signup') {
-            //Check if is either login or reset form, switch to signup
-            if (headerTxt.text() === text.loginTxt || headerTxt.text() === text.resetTxt) {
-                toggleInputs(inputs, signup);
-                changeTxt(headerTxt, text.signUpTxt);
-                changeTxt(signUpTxt, text.links[2]);
-                Private.frodoConfig.currentForm = Private.frodoConfig.forms[1];
-
-                //Switch to login
-            } else {
-                toggleInputs(inputs, init);
-                changeTxt(headerTxt, text.loginTxt);
-                changeTxt(signUpTxt, text.links[1]);
-                Private.frodoConfig.currentForm = Private.frodoConfig.forms[0];
-            }
-        }
-        //Form reset password
-        else if (form === 'reset') {
-            toggleInputs(inputs, reset);
-            changeTxt(headerTxt, text.resetTxt);
-            changeTxt(signUpTxt, text.links[1]);
-            Private.frodoConfig.currentForm = Private.frodoConfig.forms[2];
-        }
-
-        //Form login, init state
-        else if (form === 'init') {
-            toggleInputs(inputs, init);
-            changeTxt(headerTxt, text.loginTxt);
-            changeTxt(signUpTxt, text.links[1]);
-            Private.frodoConfig.currentForm = Private.frodoConfig.forms[0];
-        }
-
-        return true;
-    };
-
-    /**
-     * [showAlert show message above the form]
-     * @param  {[object]} data
-     * @param  {[object]} box
-     * @param  {[object]} text
-     * @return {[boolean]}
-     */
-    Frodo.prototype.showAlert = function(data, options) {
-        if (data === undefined) {
-            data = false;
-        }
-
-        if (data) {
-            if (data.fail) {
-                $('#' + options.messageBox).addClass(options.alert);
-                $('.' + options.text).empty().text(data.message);
-            } else {
-                $('#' + options.messageBox).removeClass(options.alert);
-                $('.' + options.text).empty();
-            }
-        } else {
-            $('#' + options.messageBox).removeClass(options.alert);
-            $('.' + options.text).empty();
-        }
-
-        return true;
-    };
-
-    /**
-     * [closePanel close login panel]
-     * @return {[boolean]}
-     */
-    Frodo.prototype.closePanel = function() {
-        Private.resetMainClasses(false);
-        this.clearInputs();
-        Private.submitDisabled(false);
-        Private.frodoConfig.currentForm = null;
-
-        return true;
-    };
-
-    /**
-     * [clearInputs - clear form input]
-     * @return {[boolean]}
-     */
-    Frodo.prototype.clearInputs = function() {
-        $('.' + Private.frodoConfig.frodoLogin.input).each(function() {
-            this.value = '';
-        });
-
-        return true;
-    };
-
-
-    //TEMP - shuffle random url
-    Frodo.prototype.getRandomInt = function(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    };
     /*
     -------------------M E T H O D S  END --------------------------------------------------
      */
