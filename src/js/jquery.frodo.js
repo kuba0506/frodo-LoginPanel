@@ -262,7 +262,9 @@
         //INIT METHOD
         init: function  () {
 
-            var body = Private.frodoConfig.body;
+            var self = this,
+                body = Private.frodoConfig.body,
+                config = this.config;
                                 /*
             -----------------------------E V E N T  H A N D L E R S BEGIN----------------------------------------------------------
              */
@@ -275,47 +277,47 @@
 
 
                         //Prevent default behaviour
-                        this.stopEvent(event);
+                        self.stopEvent(event);
 
                         //Reset frodo, wrapper and overlay classes
-                        this.resetMainClasses(true);
+                        self.resetMainClasses(true);
 
                         //Reset err message
-                        this.showAlert(null, {
+                        self.showAlert(null, {
                             messageBox: Private.frodoConfig.frodoLogin.message,
                             text: Private.frodoConfig.frodoLogin.message + ' > span',
                             alert: Private.frodoConfig.frodoLogin.messageAlert
                         });
 
                         //Rest form to login
-                        this.toggleForm('init');
+                        self.toggleForm('init');
 
                         //Clear errors
-                        this.clearErrors();
+                        self.clearErrors();
 
                         //Clear inputs
-                        this.clearInputs();
+                        self.clearInputs();
 
                         //Enable submit btn
-                        this.submitDisabled(false);
+                        self.submitDisabled(false);
 
                         //Set focus on first not disabled input
-                        this.focusFirst();
+                        self.focusFirst();
                     });
 
                     /*
             -----------------------------CLOSE LOGIN PANEL--------------------------------------------------------------------
              */
-                    if (this.device === 'desktop') {
+                    if (config.device === 'desktop') {
                         //Close login panel
                         $(body).on('click', '.' + Private.frodoConfig.frodoHeader.closeBtn, function() {
-                            this.closePanel();
+                            self.closePanel();
                         });
 
                         $(body).on('keyup', function(event) {
                             //If 'Escape' key is pressed
                             if (event.keyCode === 27 && Private.frodoConfig.currentForm !== null) {
-                                this.closePanel();
+                                self.closePanel();
                             }
                         });
                     }
@@ -324,25 +326,25 @@
             -----------------------------REGISTER FORM HANDLER-----------------------------------------------------------------
              */
                     $(body).on('click', '.' + Private.frodoConfig.frodoLogin.signUp, function(event) {
-                        this.stopEvent(event);
-                        this.toggleForm('signup');
-                        this.clearErrors();
-                        this.submitDisabled(false);
+                        self.stopEvent(event);
+                        self.toggleForm('signup');
+                        self.clearErrors();
+                        self.submitDisabled(false);
 
                         //Set focus on first not disabled input
-                        this.focusFirst();
+                        self.focusFirst();
                     });
                     /*
             -----------------------------RESET FORM HANDLER-----------------------------------------------------------------
              */
                     $(body).on('click', '.' + Private.frodoConfig.frodoLogin.forgot, function(event) {
-                        this.stopEvent(event);
-                        this.toggleForm('reset');
-                        this.clearErrors();
-                        this.submitDisabled(false);
+                        self.stopEvent(event);
+                        self.toggleForm('reset');
+                        self.clearErrors();
+                        self.submitDisabled(false);
 
                         //Set focus on first not disabled input
-                        this.focusFirst();
+                        self.focusFirst();
                     });
 
                     /*
@@ -353,14 +355,14 @@
                         if (event.which == 13 || event.keyCode == 13) {
                             $('.' + Private.frodoConfig.frodoForm).trigger('submit');
                         }
-                        this.submitDisabled(true);
-                        this.validate(event);
-                        this.stopEvent(event);
+                        self.submitDisabled(true);
+                        self.validate(event);
+                        self.stopEvent(event);
 
                     });
                     $(body).on('submit', '.' + Private.frodoConfig.frodoForm, function(event) {
-                        this.stopEvent(event);
-                        this.validate(event);
+                        self.stopEvent(event);
+                        self.validate(event);
                         //Ajax submit
                     });
 
@@ -382,7 +384,7 @@
                             dataType: 'jsonp',
                             jsonpCallback: 'myCallback'
                         }).then(function(response) {
-                            this.showAlert(response, {
+                            self.showAlert(response, {
                                 messageBox: Private.frodoConfig.frodoLogin.message,
                                 text: Private.frodoConfig.frodoLogin.message + '> span',
                                 alert: Private.frodoConfig.frodoLogin.messageAlert
