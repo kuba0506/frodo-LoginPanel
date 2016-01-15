@@ -15,7 +15,7 @@
     PRIVATE SETTINGS
      */
     var Private = {
-        plugin: null,
+        // plugin: null,
         // Private methods
         stopEvent : function(e) {
             var e = e || window.event;
@@ -232,111 +232,7 @@
                 }
             }
         },
-        /**
-         * [toggleForm switch forms]
-         * @param  {[string]} form [form name]
-         * @return {[boolean]}
-         * */
-        toggleForm : function(form) {
 
-            function changeTxt(selector, text) {
-
-                $(selector).text(text);
-
-                return true;
-            }
-
-            function aggregateInputs(obj) {
-                var inputs = [],
-                    keys = Object.keys(obj);
-
-                for (var i = 0, len = keys.length; i < len; i++) {
-                    inputs.push(obj[keys[i]]);
-                }
-
-                return inputs;
-            }
-
-            function toggleInputs(inputs, arr) {
-                inputs.map(function(value) {
-                    if (arr.indexOf(value) !== -1)
-                        $('.frodo-input[name="' + value + '"]').removeClass(Private.frodoConfig.hideClass).prop('disabled', false);
-                    else
-                        $('.frodo-input[name="' + value + '"]').addClass(Private.frodoConfig.hideClass).prop('disabled', true);
-                });
-
-                return true;
-            }
-
-            function objToArray(obj) {
-                var arr = [];
-
-                obj.each(function() {
-                    return arr.push($(this).attr('name'));
-                });
-
-                return arr;
-            }
-
-            console.log('Translation toogle Form: ', Private.plugin)
-            //Shorthand for this.config
-            var config = this.config,
-                text = Private.translation[Private.plugin.lang],
-                // text = Private.translation[Private.defaults.lang],
-                inputsObj = $('.frodo-input'),
-                init = [inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name')],
-                signup = [inputsObj.filter('[name="fullname"]').attr('name'), inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name'), inputsObj.filter('[name="passwordConfirm"]').attr('name')],
-                reset = [inputsObj.filter('[name="passwordReset"]').attr('name')],
-                inputs = objToArray(inputsObj),
-                headerTxt = $('.' + Private.frodoConfig.frodoHeader.text),
-                signUpTxt = $('.' + Private.frodoConfig.frodoLogin.signUp);
-
-
-            //Delete alert message
-            Private.showAlert(null, {
-                messageBox: Private.frodoConfig.frodoLogin.message,
-                text: Private.frodoConfig.frodoLogin.message + ' > span',
-                alert: Private.frodoConfig.frodoLogin.messageAlert
-            });
-
-            //Clear form inputs
-            Private.clearInputs();
-
-            //Check which form is used
-            if (form === 'signup') {
-                //Check if is either login or reset form, switch to signup
-                if (headerTxt.text() === text.loginTxt || headerTxt.text() === text.resetTxt) {
-                    toggleInputs(inputs, signup);
-                    changeTxt(headerTxt, text.signUpTxt);
-                    changeTxt(signUpTxt, text.links[2]);
-                    Private.frodoConfig.currentForm = Private.frodoConfig.forms[1];
-
-                    //Switch to login
-                } else {
-                    toggleInputs(inputs, init);
-                    changeTxt(headerTxt, text.loginTxt);
-                    changeTxt(signUpTxt, text.links[1]);
-                    Private.frodoConfig.currentForm = Private.frodoConfig.forms[0];
-                }
-            }
-            //Form reset password
-            else if (form === 'reset') {
-                toggleInputs(inputs, reset);
-                changeTxt(headerTxt, text.resetTxt);
-                changeTxt(signUpTxt, text.links[1]);
-                Private.frodoConfig.currentForm = Private.frodoConfig.forms[2];
-            }
-
-            //Form login, init state
-            else if (form === 'init') {
-                toggleInputs(inputs, init);
-                changeTxt(headerTxt, text.loginTxt);
-                changeTxt(signUpTxt, text.links[1]);
-                Private.frodoConfig.currentForm = Private.frodoConfig.forms[0];
-            }
-
-            return true;
-        },
         /**
          * [showAlert show message above the form]
          * @param  {[object]} data
@@ -594,7 +490,6 @@
         this.element = element;
         this.$element = $(element);
         this.options = options;
-        this.invokeCount = 0;
 
         //User options
         // this.defaults_provider = Private.defaults.provider;
@@ -631,8 +526,7 @@
 
             var self = this,
                 body = Private.frodoConfig.body,
-                config = this.config,
-                invokeCount = this.invokeCount;
+                config = this.config;
 
 
         //Config object
@@ -655,8 +549,6 @@
         self.config.lang = self.lang = (self.config.lang in Private.translation) ?
                             self.config.lang : self.defaults.lang;
 
-        Private.plugin = this;
-
         //    var defaultLang = Object.keys(Private.translation[this.defaults.lang]);
         // var configLang = (typeof Private.translation[config.lang] !== 'undefined') ? Object.keys(Private.translation[config.lang]) : void 0;
 
@@ -664,11 +556,8 @@
         // this.defaults.lang = this.lang = ((typeof configLang === 'undefined') || (defaultLang.length !== configLang.length)) ? this.defaults.lang : config.lang;
                 //Build popup
                 this.$element.on('click', function () {
-                    console.log('Invoke count before: ', invokeCount);
                         self.build();
                         self.attachEvents();
-                    invokeCount++;
-                    console.log('Invoke count after: ', invokeCount);
                      // self.build();
                     // self.attachEvents();
 
@@ -686,7 +575,7 @@
                     // });
 
                     //Rest form to login
-                    Private.toggleForm('init');
+                    self.toggleForm('init');
 
                     //Clear errors
                     Private.clearErrors();
@@ -1001,7 +890,7 @@
              */
                 $(body).on('click', '.' + Private.frodoConfig.frodoLogin.signUp, function(event) {
                     Private.stopEvent(event);
-                    Private.toggleForm('signup');
+                    self.toggleForm('signup');
                     Private.clearErrors();
                     Private.submitDisabled(false);
 
@@ -1013,7 +902,7 @@
              */
                     $(body).on('click', '.' + Private.frodoConfig.frodoLogin.forgot, function(event) {
                         Private.stopEvent(event);
-                        Private.toggleForm('reset');
+                        self.toggleForm('reset');
                         Private.clearErrors();
                         Private.submitDisabled(false);
 
@@ -1085,6 +974,109 @@
 
             // $(body).off();
             console.log('Events removed');
+        },/**
+         * [toggleForm switch forms]
+         * @param  {[string]} form [form name]
+         * @return {[boolean]}
+         * */
+        toggleForm : function(form) {
+
+            function changeTxt(selector, text) {
+
+                $(selector).text(text);
+
+                return true;
+            }
+
+            function aggregateInputs(obj) {
+                var inputs = [],
+                    keys = Object.keys(obj);
+
+                for (var i = 0, len = keys.length; i < len; i++) {
+                    inputs.push(obj[keys[i]]);
+                }
+
+                return inputs;
+            }
+
+            function toggleInputs(inputs, arr) {
+                inputs.map(function(value) {
+                    if (arr.indexOf(value) !== -1)
+                        $('.frodo-input[name="' + value + '"]').removeClass(Private.frodoConfig.hideClass).prop('disabled', false);
+                    else
+                        $('.frodo-input[name="' + value + '"]').addClass(Private.frodoConfig.hideClass).prop('disabled', true);
+                });
+
+                return true;
+            }
+
+            function objToArray(obj) {
+                var arr = [];
+
+                obj.each(function() {
+                    return arr.push($(this).attr('name'));
+                });
+
+                return arr;
+            }
+            console.log(this.lang);
+            //Shorthand for this.config
+            var config = this.config,
+                text = Private.translation[this.lang],
+                // text = Private.translation[Private.defaults.lang],
+                inputsObj = $('.frodo-input'),
+                init = [inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name')],
+                signup = [inputsObj.filter('[name="fullname"]').attr('name'), inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name'), inputsObj.filter('[name="passwordConfirm"]').attr('name')],
+                reset = [inputsObj.filter('[name="passwordReset"]').attr('name')],
+                inputs = objToArray(inputsObj),
+                headerTxt = $('.' + Private.frodoConfig.frodoHeader.text),
+                signUpTxt = $('.' + Private.frodoConfig.frodoLogin.signUp);
+
+
+            //Delete alert message
+            Private.showAlert(null, {
+                messageBox: Private.frodoConfig.frodoLogin.message,
+                text: Private.frodoConfig.frodoLogin.message + ' > span',
+                alert: Private.frodoConfig.frodoLogin.messageAlert
+            });
+
+            //Clear form inputs
+            Private.clearInputs();
+
+            //Check which form is used
+            if (form === 'signup') {
+                //Check if is either login or reset form, switch to signup
+                if (headerTxt.text() === text.loginTxt || headerTxt.text() === text.resetTxt) {
+                    toggleInputs(inputs, signup);
+                    changeTxt(headerTxt, text.signUpTxt);
+                    changeTxt(signUpTxt, text.links[2]);
+                    Private.frodoConfig.currentForm = Private.frodoConfig.forms[1];
+
+                    //Switch to login
+                } else {
+                    toggleInputs(inputs, init);
+                    changeTxt(headerTxt, text.loginTxt);
+                    changeTxt(signUpTxt, text.links[1]);
+                    Private.frodoConfig.currentForm = Private.frodoConfig.forms[0];
+                }
+            }
+            //Form reset password
+            else if (form === 'reset') {
+                toggleInputs(inputs, reset);
+                changeTxt(headerTxt, text.resetTxt);
+                changeTxt(signUpTxt, text.links[1]);
+                Private.frodoConfig.currentForm = Private.frodoConfig.forms[2];
+            }
+
+            //Form login, init state
+            else if (form === 'init') {
+                toggleInputs(inputs, init);
+                changeTxt(headerTxt, text.loginTxt);
+                changeTxt(signUpTxt, text.links[1]);
+                Private.frodoConfig.currentForm = Private.frodoConfig.forms[0];
+            }
+
+            return true;
         }
     };
 
