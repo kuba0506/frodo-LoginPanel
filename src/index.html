@@ -55,7 +55,8 @@
     $(document).ready(function () {
         $('[data-login]').frodo({
             version: 'advanced',
-            lang: 'dk'
+            lang: 'dk',
+            provider: ['eniro', 'facebook', 'google']
         });
         $('[data-login2]').frodo({
             version: 'basic',
@@ -63,7 +64,8 @@
         });
         $('[data-login3]').frodo({
             version: 'advanced',
-            lang: 'en'
+            lang: 'en',
+            provider: ['linkedin', 'google', 'facebook']
         });
     });
     // if(navigator.onLine) {

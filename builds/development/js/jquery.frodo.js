@@ -15,6 +15,7 @@
     PRIVATE SETTINGS
      */
     var Private = {
+        plugin: null,
         // Private methods
         stopEvent: function(e) {
             var e = e || window.event;
@@ -277,9 +278,11 @@
                 return arr;
             }
 
-            //Shorthand for this.config
+            console.log('Translation toogle Form: ', Private.plugin)
+                //Shorthand for this.config
             var config = this.config,
-                text = Private.translation[Private.defaults.lang],
+                text = Private.translation[Private.plugin.lang],
+                // text = Private.translation[Private.defaults.lang],
                 inputsObj = $('.frodo-input'),
                 init = [inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name')],
                 signup = [inputsObj.filter('[name="fullname"]').attr('name'), inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name'), inputsObj.filter('[name="passwordConfirm"]').attr('name')],
@@ -587,11 +590,6 @@
     -------------------C O N S T R U C T O R BEGIN-------------------------------------------------------
      */
     function Frodo(element, options) {
-        var config,
-            defaultLang,
-            configLang,
-            body;
-
         //Element we call a function on
         this.element = element;
         this.$element = $(element);
@@ -640,17 +638,24 @@
             //Config object
             this.config = config = $.extend(true, {}, this.defaults, this.options);
             // this.config = config = $.extend(true, {}, Private.defaults, this.options);
-            console.log('Defaults: ', this.defaults)
-            console.log('Options: ', this.options)
-            console.log('Final config: ', this.config)
-            console.log('----END---');
-
+            // console.log('Defaults: ', this.defaults)
+            // console.log('Options: ', this.options)
+            // console.log('Final config: ', this.config)
+            // console.log('----END---');
             //Set language ,
+            // var defaultLang = Object.keys(Private.translation[self.defaults.lang]);
             // var defaultLang = Object.keys(Private.translation[Private.defaults.lang]);
-            // var configLang = (typeof Private.translation[config.lang] !== 'undefined') ? Object.keys(Private.translation[config.lang]) : void 0;
+            //Check if given language is valid
+            // var configLang = (typeof Private.translation[config.lang] !== 'undefined') ? Object.keys(Private.translation[config.lang]) : Object.keys(Private.translation[self.defaults.lang]);
+            // console.log('Config lang: ', config.lang);
+            // console.log('Default lang: ', defaultLang);
+            // console.log('Config lang: ', configLang);
+            // self.config.lang = this.lang = ((typeof configLang === 'undefined') || (defaultLang.length !== configLang.length)) ? self.defaults.lang : config.lang;
+            //czy lang w Private.translation,
+            self.config.lang = self.lang = (self.config.lang in Private.translation) ?
+                self.config.lang : self.defaults.lang;
 
-
-            // Private.defaults.lang = this.lang = ((typeof configLang === 'undefined') || (defaultLang.length !== configLang.length)) ? Private.defaults.lang : config.lang;
+            Private.plugin = this;
 
             //    var defaultLang = Object.keys(Private.translation[this.defaults.lang]);
             // var configLang = (typeof Private.translation[config.lang] !== 'undefined') ? Object.keys(Private.translation[config.lang]) : void 0;
@@ -701,12 +706,13 @@
 
         //Build html structure
         build: function() {
-            var config = this.config,
+            var self = this,
+                config = this.config,
                 lang = this.config.lang,
                 frodo = $('#' + Private.frodoConfig.frodoWrapper),
                 inputs = [],
-                def_providers = this.defaults_provider,
-                opt_providers = this.options_provider,
+                default_providers = this.defaults.provider,
+                options_provider = this.options.provider,
                 el = {},
                 providers = [],
                 keys = null;
@@ -831,120 +837,115 @@
                     class: Private.frodoConfig.social
                 })
             };
-
             /**
              * CREATING HTML STRUCTURE
              */
 
             //Check if there is only one instace of plugin
-            if (frodo.length === 0) {
+            // if (frodo.length === 0) {
 
-                //Wrap all content with frodo wrapper, and append frodo container and overlay
-                $(Private.frodoConfig.body).wrapInner(el.wrapper).
-                find('#' + Private.frodoConfig.frodoWrapper).
-                append(el.frodo.append(el.form), el.overlay);
+            //Wrap all content with frodo wrapper, and append frodo container and overlay
+            $(Private.frodoConfig.body).wrapInner(el.wrapper).
+            find('#' + Private.frodoConfig.frodoWrapper).
+            append(el.frodo.append(el.form), el.overlay);
 
-                //Insert form header
-                if (config.device === 'desktop') {
-                    el.header.append(el.headerTxt, el.closeBtn);
-                } else {
-                    el.header.append(el.headerTxt);
+            //Insert form header
+            if (config.device === 'desktop') {
+                el.header.append(el.headerTxt, el.closeBtn);
+            } else {
+                el.header.append(el.headerTxt);
+            }
+
+            //Add header txt to form
+            $('.' + Private.frodoConfig.frodoForm).append(el.header);
+
+            //Additional funcionality for widget advanced version
+            if (config.version === 'advanced') {
+
+                //Append login box
+                el.frodoLinksWrapper.append(el.forgotLink, el.signUpLink);
+                el.loginFooter.append(el.frodoLinksWrapper, el.submitBtn);
+
+                //Create array of all inputs
+                keys = Object.keys(el.input);
+
+                for (var i = 0, len = keys.length; i < len; i++) {
+                    inputs.push(el.input[keys[i]]);
                 }
 
-                $('.' + Private.frodoConfig.frodoForm).append(el.header);
+                //Wrap each input with wrapper
+                inputs = inputs.map(function(input) {
+                    return el.inputWrapper.clone().prepend(input);
+                });
+                //Finally append everything into box
+                el.loginBox.append(el.message, inputs, el.loginFooter);
+                $('.' + Private.frodoConfig.frodoForm).append(el.loginBox);
 
-                //Additional funcionality for widget advanced version
-                if (config.version === 'advanced') {
+                //Append log with text
+                $('.' + Private.frodoConfig.frodoForm).append(el.logWith);
 
-                    //Append login box
-                    el.frodoLinksWrapper.append(el.forgotLink, el.signUpLink);
-                    el.loginFooter.append(el.frodoLinksWrapper, el.submitBtn);
+            }
 
-                    //Create array of all inputs
-                    keys = Object.keys(el.input);
+            //Append social buttons
+            el.socialWrapper.each(function() {
+                var btns = '',
+                    version = config.version,
+                    //Set provider either from config or from option
+                    // provider = options.provider || config.provider,
+                    provider = config.provider,
+                    providerClass = (config.device === 'desktop') ? Private.frodoConfig.frodoLogin.frodoProvider : Private.frodoConfig.frodoLogin.frodoProvider + ' ' + Private.frodoConfig.frodoLogin.frodoProviderMobile,
+                    // options_provider = opt_providers,
+                    result_provider = default_providers.slice(); //copy default providers
 
-                    for (var i = 0, len = keys.length; i < len; i++) {
-                        inputs.push(el.input[keys[i]]);
-                    }
+                //Aggregate providers from config and options
+                if (options_provider) {
 
-                    //Wrap each input with wrapper
-                    inputs = inputs.map(function(input) {
-                        return el.inputWrapper.clone().prepend(input);
+                    options_provider.forEach(function(opt_name) {
+                        result_provider.forEach(function(conf_name) {
+                            if (opt_name !== conf_name && result_provider.indexOf(opt_name) === -1) {
+                                result_provider.push(opt_name);
+                            }
+
+                        });
                     });
-                    //Finally append everything into box
-                    el.loginBox.append(el.message, inputs, el.loginFooter);
-                    $('.' + Private.frodoConfig.frodoForm).append(el.loginBox);
-
-                    //Append log with text
-                    $('.' + Private.frodoConfig.frodoForm).append(el.logWith);
-
                 }
 
-                //Append social buttons
-                el.socialWrapper.each(function() {
-                    var btns = '',
-                        version = config.version,
-                        //Set provider either from config or from option
-                        // provider = options.provider || config.provider,
-                        provider = config.provider,
-                        providerClass = (config.device === 'desktop') ? Private.frodoConfig.frodoLogin.frodoProvider : Private.frodoConfig.frodoLogin.frodoProvider + ' ' + Private.frodoConfig.frodoLogin.frodoProviderMobile,
-                        defaults_provider = Private.defaults.provider,
-                        options_provider = opt_providers,
-                        result_provider = defaults_provider.slice();
+                //If 'advanced' version is selected than skip eniro button
+                if (version === 'advanced') {
+                    result_provider.forEach(function(name, index) {
+                        if (name === 'eniro')
+                            result_provider.splice(index, 1);
+                    });
+                }
 
-                    //Aggregate providers from config and options
-                    if (options_provider) {
-
-                        options_provider.forEach(function(opt_name) {
-                            result_provider.forEach(function(conf_name) {
-                                if (opt_name !== conf_name && result_provider.indexOf(opt_name) === -1) {
-                                    result_provider.push(opt_name);
-                                }
-
-                            });
-                        });
-                    }
-                    // console.log('Result providers: ', result_provider);
+                //Create buttons
+                result_provider.forEach(function(name) {
+                    if (name in Private.socialBtn) {
+                        var link = Private.socialBtn[name].link;
 
 
-                    //If 'advanced' version is selected than skip eniro button
-                    if (version === 'advanced') {
-                        result_provider.forEach(function(name, index) {
-                            if (name === 'eniro')
-                                result_provider.splice(index, 1);
-                        });
-                    }
+                        link = link.replace('{client_id}', config.clientId);
+                        link = link.replace('{scope}', config.scope);
+                        link = link.replace('{redirect_uri}', config.redirectUri);
 
-                    // console.log(social);
-                    //Create buttons
-                    result_provider.forEach(function(name) {
-                        if (name in Private.socialBtn) {
-                            var link = Private.socialBtn[name].link;
-
-
-                            link = link.replace('{client_id}', config.clientId);
-                            link = link.replace('{scope}', config.scope);
-                            link = link.replace('{redirect_uri}', config.redirectUri);
-
-                            btns += '<div class="' + providerClass + '" ">\
+                        btns += '<div class="' + providerClass + '" ">\
                                         <a class="frodo-btn frodo-btn-' + name + '" \
                                          href="' + link + '">\
                                         <i class="fa faa-' + name + '"></i>' + Private.socialBtn[name].text + '</a>\
                                         </div>';
-                        }
-                    });
-
-                    $(this).append(btns);
+                    }
                 });
-                $('.' + Private.frodoConfig.frodoForm).append(el.socialWrapper);
 
-                //Set value of current form
-                Private.frodoConfig.currentForm = Private.frodoConfig.forms[0];
+                $(this).append(btns);
+            });
+            $('.' + Private.frodoConfig.frodoForm).append(el.socialWrapper);
 
-                console.log('Login panel created');
-            } else {
-                return false;
-            }
+            //Set value of current form
+            Private.frodoConfig.currentForm = Private.frodoConfig.forms[0];
+            console.log('Login panel created');
+            // } else {
+            //     return false;
+            // }
         },
         destroy: function() {
             var frodoWrapper = $('#' + Private.frodoConfig.frodoWrapper),
