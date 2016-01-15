@@ -594,25 +594,20 @@
 
         //Element we call a function on
         this.element = element;
+        this.$element = $(element);
+        this.options = options;
+        this.invokeCount = 0;
 
         //User options
         // this.defaults_provider = Private.defaults.provider;
         // this.options_provider = options.provider;
 
-        //Config object
-        this.config = config = $.extend(true, {}, Private.defaults, options);
 
-        //Set language ,
-        defaultLang = Object.keys(Private.translation[Private.defaults.lang]),
-            configLang = (typeof Private.translation[config.lang] !== 'undefined') ? Object.keys(Private.translation[config.lang]) : void 0;
-
-
-        Private.defaults.lang = this.lang = ((typeof configLang === 'undefined') || (defaultLang.length !== configLang.length)) ? Private.defaults.lang : config.lang;
 
 
 
         //INITIALIZE PLUGIN
-        this.init();
+        // this.init();
     }
     /*
     -------------------C O N S T R U C T O R  END----------------------------------------------------
@@ -624,38 +619,66 @@
      */
 
     Frodo.prototype = {
+        defaults: {
+            lang: 'en',
+            version: 'basic',
+            provider: ['eniro', 'facebook', 'google'],
+            device: 'desktop',
+            clientId: '',
+            redirectUri: '/',
+            scope: ''
+        },
         //INIT METHOD
         init: function() {
 
             var self = this,
                 body = Private.frodoConfig.body,
-                config = this.config;
+                config = this.config,
+                invokeCount = this.invokeCount;
 
+
+            //Config object
+            this.config = config = $.extend(true, {}, this.defaults, this.options);
+            // this.config = config = $.extend(true, {}, Private.defaults, this.options);
+            console.log('Defaults: ', this.defaults)
+            console.log('Options: ', this.options)
+            console.log('Final config: ', this.config)
+            console.log('----END---');
+
+            //Set language ,
+            // var defaultLang = Object.keys(Private.translation[Private.defaults.lang]);
+            // var configLang = (typeof Private.translation[config.lang] !== 'undefined') ? Object.keys(Private.translation[config.lang]) : void 0;
+
+
+            // Private.defaults.lang = this.lang = ((typeof configLang === 'undefined') || (defaultLang.length !== configLang.length)) ? Private.defaults.lang : config.lang;
+
+            //    var defaultLang = Object.keys(Private.translation[this.defaults.lang]);
+            // var configLang = (typeof Private.translation[config.lang] !== 'undefined') ? Object.keys(Private.translation[config.lang]) : void 0;
+
+
+            // this.defaults.lang = this.lang = ((typeof configLang === 'undefined') || (defaultLang.length !== configLang.length)) ? this.defaults.lang : config.lang;
             //Build popup
-            this.build();
-
-            /*
-            -----------------------------E V E N T  H A N D L E R S BEGIN----------------------------------------------------------
-             */
-
-            /*
-            -----------------------------OPEN LOGIN PANEL--------------------------------------------------------------------
-             */
-            this.element.on('click', function(event) {
-
+            this.$element.on('click', function() {
+                console.log('Invoke count before: ', invokeCount);
+                self.build();
+                self.attachEvents();
+                invokeCount++;
+                console.log('Invoke count after: ', invokeCount);
+                // self.build();
+                // self.attachEvents();
 
                 //Prevent default behaviour
-                Private.stopEvent(event);
+                // Private.stopEvent(event);
 
                 //Reset frodo, wrapper and overlay classes
                 Private.resetMainClasses(true);
 
                 //Reset err message
-                Private.showAlert(null, {
-                    messageBox: Private.frodoConfig.frodoLogin.message,
-                    text: Private.frodoConfig.frodoLogin.message + ' > span',
-                    alert: Private.frodoConfig.frodoLogin.messageAlert
-                });
+                // Private.showAlert(null, {
+                //     messageBox: Private.frodoConfig.frodoLogin.message,
+                //     text: Private.frodoConfig.frodoLogin.message + ' > span',
+                //     alert: Private.frodoConfig.frodoLogin.messageAlert
+                // });
 
                 //Rest form to login
                 Private.toggleForm('init');
@@ -673,102 +696,13 @@
                 Private.focusFirst();
             });
 
-            /*
-            -----------------------------CLOSE LOGIN PANEL--------------------------------------------------------------------
-             */
-            if (config.device === 'desktop') {
-                //Close login panel
-                $(body).on('click', '.' + Private.frodoConfig.frodoHeader.closeBtn, function() {
-                    Private.closePanel();
-                });
-
-                $(body).on('keyup', function(event) {
-                    //If 'Escape' key is pressed
-                    if (event.keyCode === 27 && Private.frodoConfig.currentForm !== null) {
-                        Private.closePanel();
-                    }
-                });
-            }
-
-            /*
-            -----------------------------REGISTER FORM HANDLER-----------------------------------------------------------------
-             */
-            $(body).on('click', '.' + Private.frodoConfig.frodoLogin.signUp, function(event) {
-                Private.stopEvent(event);
-                Private.toggleForm('signup');
-                Private.clearErrors();
-                Private.submitDisabled(false);
-
-                //Set focus on first not disabled input
-                Private.focusFirst();
-            });
-            /*
-            -----------------------------RESET FORM HANDLER-----------------------------------------------------------------
-             */
-            $(body).on('click', '.' + Private.frodoConfig.frodoLogin.forgot, function(event) {
-                Private.stopEvent(event);
-                Private.toggleForm('reset');
-                Private.clearErrors();
-                Private.submitDisabled(false);
-
-                //Set focus on first not disabled input
-                Private.focusFirst();
-            });
-
-            /*
-            -----------------------------FORM VALIDATION HANDLER --------------------------------------------------------
-             */
-            $(body).on('input', 'input', function(event) {
-                //If user press 'enter'
-                if (event.which == 13 || event.keyCode == 13) {
-                    $('.' + Private.frodoConfig.frodoForm).trigger('submit');
-                }
-                Private.submitDisabled(true);
-                Private.validate(event);
-                Private.stopEvent(event);
-
-            });
-            $(body).on('submit', '.' + Private.frodoConfig.frodoForm, function(event) {
-                Private.stopEvent(event);
-                Private.validate(event);
-                //Ajax submit
-            });
-
-            /*
-            -----------------------------AJAX FORM VALIDATION-----------------------------------------------------------------
-             */
-            // TEMP - Ajax - jsonp
-            $(body).on('click', '.frodo-btn', function() {
-                var url = 'http://jurczynski.czest.pl/registerFailed.json?callback=myCallback',
-                    url2 = 'http://jurczynski.czest.pl/registerSuccess.json?callback=myCallback',
-                    address = [url, url2],
-                    index;
-
-                index = Private.getRandomInt(0, address.length - 1);
-
-                $.ajax({
-                    type: 'GET',
-                    url: address[index],
-                    dataType: 'jsonp',
-                    jsonpCallback: 'myCallback'
-                }).then(function(response) {
-                    Private.showAlert(response, {
-                        messageBox: Private.frodoConfig.frodoLogin.message,
-                        text: Private.frodoConfig.frodoLogin.message + '> span',
-                        alert: Private.frodoConfig.frodoLogin.messageAlert
-                    });
-                });
-            });
-
-            /*
-        --------------------E V E N T  H A N D L E R S  E N D-----------------------------------------------------
-         */
+            return this;
         },
 
         //Build html structure
         build: function() {
             var config = this.config,
-                lang = this.lang,
+                lang = this.config.lang,
                 frodo = $('#' + Private.frodoConfig.frodoWrapper),
                 inputs = [],
                 def_providers = this.defaults_provider,
@@ -1013,7 +947,143 @@
             }
         },
         destroy: function() {
+            var frodoWrapper = $('#' + Private.frodoConfig.frodoWrapper),
+                frodoBody = $('#' + Private.frodoConfig.frodo),
+                frodoOverlay = $('.' + Private.frodoConfig.frodoOverlay),
+                wrapperContent;
 
+            // var frodoCopy = {
+            //     frodoWrapper
+            // };
+            this.detachEvents();
+            frodoBody.remove();
+            frodoOverlay.remove();
+            wrapperContent = frodoWrapper.contents()
+            frodoWrapper.replaceWith(wrapperContent);
+            console.log('Plugin destroyed');
+        },
+        attachEvents: function() {
+
+            var body = Private.frodoConfig.body,
+                config = this.config,
+                self = this;
+            /*
+            -----------------------------E V E N T  H A N D L E R S BEGIN----------------------------------------------------------
+             */
+
+            /*
+            -----------------------------OPEN LOGIN PANEL--------------------------------------------------------------------
+             */
+
+            /*
+            -----------------------------CLOSE LOGIN PANEL--------------------------------------------------------------------
+             */
+
+            if (config.device === 'desktop') {
+                //Close login panel
+                $(body).on('click', '.' + Private.frodoConfig.frodoHeader.closeBtn, function() {
+                    Private.closePanel();
+                    self.destroy();
+                });
+
+                $(body).on('keyup', function(event) {
+                    //If 'Escape' key is pressed
+                    if (event.keyCode === 27 && Private.frodoConfig.currentForm !== null) {
+                        Private.closePanel();
+                        self.destroy();
+                    }
+                });
+            }
+
+            /*
+            -----------------------------REGISTER FORM HANDLER-----------------------------------------------------------------
+             */
+            $(body).on('click', '.' + Private.frodoConfig.frodoLogin.signUp, function(event) {
+                Private.stopEvent(event);
+                Private.toggleForm('signup');
+                Private.clearErrors();
+                Private.submitDisabled(false);
+
+                //Set focus on first not disabled input
+                Private.focusFirst();
+            });
+            /*
+            -----------------------------RESET FORM HANDLER-----------------------------------------------------------------
+             */
+            $(body).on('click', '.' + Private.frodoConfig.frodoLogin.forgot, function(event) {
+                Private.stopEvent(event);
+                Private.toggleForm('reset');
+                Private.clearErrors();
+                Private.submitDisabled(false);
+
+                //Set focus on first not disabled input
+                Private.focusFirst();
+            });
+
+            /*
+            -----------------------------FORM VALIDATION HANDLER --------------------------------------------------------
+             */
+            $(body).on('input', '.' + Private.frodoConfig.frodoLogin.input, function(event) {
+                //If user press 'enter'
+                if (event.which == 13 || event.keyCode == 13) {
+                    $('.' + Private.frodoConfig.frodoForm).trigger('submit');
+                }
+                Private.submitDisabled(true);
+                Private.validate(event);
+                Private.stopEvent(event);
+
+            });
+            $(body).on('submit', '.' + Private.frodoConfig.frodoForm, function(event) {
+                Private.stopEvent(event);
+                Private.validate(event);
+                //Ajax submit
+            });
+
+            /*
+            -----------------------------AJAX FORM VALIDATION-----------------------------------------------------------------
+             */
+            // TEMP - Ajax - jsonp
+            $(body).on('click', '.frodo-btn', function() {
+                var url = 'http://jurczynski.czest.pl/registerFailed.json?callback=myCallback',
+                    url2 = 'http://jurczynski.czest.pl/registerSuccess.json?callback=myCallback',
+                    address = [url, url2],
+                    index;
+
+                index = Private.getRandomInt(0, address.length - 1);
+
+                $.ajax({
+                    type: 'GET',
+                    url: address[index],
+                    dataType: 'jsonp',
+                    jsonpCallback: 'myCallback'
+                }).then(function(response) {
+                    Private.showAlert(response, {
+                        messageBox: Private.frodoConfig.frodoLogin.message,
+                        text: Private.frodoConfig.frodoLogin.message + '> span',
+                        alert: Private.frodoConfig.frodoLogin.messageAlert
+                    });
+                });
+            });
+
+            /*
+        --------------------E V E N T  H A N D L E R S  E N D-----------------------------------------------------
+         */
+        },
+        detachEvents: function() {
+            var body = Private.frodoConfig.body,
+                frodo = $('#' + Private.frodoConfig.frodo);
+
+            // 'click', '.' + Private.frodoConfig.frodoHeader.closeBtn
+            //            $(body).on('keyup'
+            //               click '.' + Private.frodoConfig.frodoLogin.signUp
+            //               'click', '.' + Private.frodoConfig.frodoLogin.forgot
+            //               'input', '.' + Private.frodoConfig.frodoLogin.input,
+            //               'submit', '.' + Private.frodoConfig.frodoForm
+            //               'click', '.frodo-btn',
+            $(frodo).off();
+
+            // $(body).off();
+            console.log('Events removed');
         }
     };
 
@@ -1021,12 +1091,17 @@
     -------------------M E T H O D S  END --------------------------------------------------
      */
 
+    Frodo.defaults = Frodo.prototype.defaults;
+
     $.fn.frodo = function(options) {
-        new Frodo(this, options);
+        //     new Frodo(this, options).init();
+        // return this;
         // return this.each(function() {
         // });
         //
-        return this;
+        return this.each(function() {
+            new Frodo(this, options).init();
+        });
     };
 
 })(jQuery);
