@@ -15,8 +15,6 @@
     PRIVATE SETTINGS
      */
     var Private = {
-        // plugin: null,
-        // Private methods
         stopEvent: function(e) {
             var e = e || window.event;
 
@@ -491,17 +489,6 @@
         this.$element = $(element);
         this.options = options;
         this.metaData = this.$element.data('login');
-
-        //User options
-        // this.defaults_provider = Private.defaults.provider;
-        // this.options_provider = options.provider;
-
-
-
-
-
-        //INITIALIZE PLUGIN
-        // this.init();
     }
     /*
     -------------------C O N S T R U C T O R  END----------------------------------------------------
@@ -536,60 +523,28 @@
             } else {
                 this.config = config = $.extend(true, {}, this.defaults, this.options);
             }
-            // this.config = config = $.extend(true, {}, Private.defaults, this.options);
-            // console.log('Defaults: ', this.defaults)
-            // console.log('Options: ', this.options)
-            // console.log('Final config: ', this.config)
-            // console.log('----END---');
-            //Set language ,
-            // var defaultLang = Object.keys(Private.translation[self.defaults.lang]);
-            // var defaultLang = Object.keys(Private.translation[Private.defaults.lang]);
-            //Check if given language is valid
-            // var configLang = (typeof Private.translation[config.lang] !== 'undefined') ? Object.keys(Private.translation[config.lang]) : Object.keys(Private.translation[self.defaults.lang]);
-            // console.log('Config lang: ', config.lang);
-            // console.log('Default lang: ', defaultLang);
-            // console.log('Config lang: ', configLang);
-            // self.config.lang = this.lang = ((typeof configLang === 'undefined') || (defaultLang.length !== configLang.length)) ? self.defaults.lang : config.lang;
-            //czy lang w Private.translation,
+            //Set plugin language
             self.config.lang = self.lang = (self.config.lang in Private.translation) ?
                 self.config.lang : self.defaults.lang;
 
-            //    var defaultLang = Object.keys(Private.translation[this.defaults.lang]);
-            // var configLang = (typeof Private.translation[config.lang] !== 'undefined') ? Object.keys(Private.translation[config.lang]) : void 0;
-
-
-            // this.defaults.lang = this.lang = ((typeof configLang === 'undefined') || (defaultLang.length !== configLang.length)) ? this.defaults.lang : config.lang;
-            //Build popup
+            //Add event handler for plugin element
             this.$element.on('click', function() {
                 self.build();
                 self.attachEvents();
-                // self.build();
-                // self.attachEvents();
-
-                //Prevent default behaviour
-                // Private.stopEvent(event);
 
                 //Reset frodo, wrapper and overlay classes
                 Private.resetMainClasses(true);
 
-                //Reset err message
-                // Private.showAlert(null, {
-                //     messageBox: Private.frodoConfig.frodoLogin.message,
-                //     text: Private.frodoConfig.frodoLogin.message + ' > span',
-                //     alert: Private.frodoConfig.frodoLogin.messageAlert
-                // });
-
-                //Rest form to login
                 self.toggleForm('init');
 
                 //Clear errors
-                Private.clearErrors();
+                // Private.clearErrors();
 
                 //Clear inputs
-                Private.clearInputs();
+                // Private.clearInputs();
 
                 //Enable submit btn
-                Private.submitDisabled(false);
+                // Private.submitDisabled(false);
 
                 //Set focus on first not disabled input
                 Private.focusFirst();
@@ -606,7 +561,7 @@
                 frodo = $('#' + Private.frodoConfig.frodoWrapper),
                 inputs = [],
                 default_providers = this.defaults.provider,
-                options_provider = this.options.provider,
+                option_providers = this.options.provider,
                 el = {},
                 providers = [],
                 keys = null;
@@ -735,9 +690,6 @@
              * CREATING HTML STRUCTURE
              */
 
-            //Check if there is only one instace of plugin
-            // if (frodo.length === 0) {
-
             //Wrap all content with frodo wrapper, and append frodo container and overlay
             $(Private.frodoConfig.body).wrapInner(el.wrapper).
             find('#' + Private.frodoConfig.frodoWrapper).
@@ -785,16 +737,14 @@
                 var btns = '',
                     version = config.version,
                     //Set provider either from config or from option
-                    // provider = options.provider || config.provider,
                     provider = config.provider,
                     providerClass = (config.device === 'desktop') ? Private.frodoConfig.frodoLogin.frodoProvider : Private.frodoConfig.frodoLogin.frodoProvider + ' ' + Private.frodoConfig.frodoLogin.frodoProviderMobile,
-                    // options_provider = opt_providers,
                     result_provider = default_providers.slice(); //copy default providers
 
                 //Aggregate providers from config and options
-                if (options_provider) {
+                if (option_providers) {
 
-                    options_provider.forEach(function(opt_name) {
+                    option_providers.forEach(function(opt_name) {
                         result_provider.forEach(function(conf_name) {
                             if (opt_name !== conf_name && result_provider.indexOf(opt_name) === -1) {
                                 result_provider.push(opt_name);
@@ -837,9 +787,6 @@
             //Set value of current form
             Private.frodoConfig.currentForm = Private.frodoConfig.forms[0];
             console.log('Login panel created');
-            // } else {
-            //     return false;
-            // }
         },
         destroy: function() {
             var frodoWrapper = $('#' + Private.frodoConfig.frodoWrapper),
@@ -847,9 +794,6 @@
                 frodoOverlay = $('.' + Private.frodoConfig.frodoOverlay),
                 wrapperContent;
 
-            // var frodoCopy = {
-            //     frodoWrapper
-            // };
             this.detachEvents();
             frodoBody.remove();
             frodoOverlay.remove();
@@ -864,10 +808,6 @@
                 self = this;
             /*
             -----------------------------E V E N T  H A N D L E R S BEGIN----------------------------------------------------------
-             */
-
-            /*
-            -----------------------------OPEN LOGIN PANEL--------------------------------------------------------------------
              */
 
             /*
@@ -968,17 +908,7 @@
             var body = Private.frodoConfig.body,
                 frodo = $('#' + Private.frodoConfig.frodo);
 
-            // 'click', '.' + Private.frodoConfig.frodoHeader.closeBtn
-            //            $(body).on('keyup'
-            //               click '.' + Private.frodoConfig.frodoLogin.signUp
-            //               'click', '.' + Private.frodoConfig.frodoLogin.forgot
-            //               'input', '.' + Private.frodoConfig.frodoLogin.input,
-            //               'submit', '.' + Private.frodoConfig.frodoForm
-            //               'click', '.frodo-btn',
             $(frodo).off();
-
-            // $(body).off();
-            console.log('Events removed');
         },
         /**
          * [toggleForm switch forms]
@@ -1028,7 +958,6 @@
             //Shorthand for this.config
             var config = this.config,
                 text = Private.translation[this.lang],
-                // text = Private.translation[Private.defaults.lang],
                 inputsObj = $('.frodo-input'),
                 init = [inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name')],
                 signup = [inputsObj.filter('[name="fullname"]').attr('name'), inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name'), inputsObj.filter('[name="passwordConfirm"]').attr('name')],
@@ -1092,11 +1021,7 @@
     Frodo.defaults = Frodo.prototype.defaults;
 
     $.fn.frodo = function(options) {
-        //     new Frodo(this, options).init();
-        // return this;
-        // return this.each(function() {
-        // });
-        //
+
         return this.each(function() {
             new Frodo(this, options).init();
         });

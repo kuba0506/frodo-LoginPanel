@@ -15,22 +15,20 @@
     PRIVATE SETTINGS
      */
     var Private = {
-        // plugin: null,
-        // Private methods
-        stopEvent : function(e) {
+        stopEvent: function(e) {
             var e = e || window.event;
 
             e.preventDefault();
             e.stopPropagation();
         },
-        resetMainClasses : function(state) {
+        resetMainClasses: function(state) {
             $('.' + Private.frodoConfig.frodoOverlay).toggleClass(Private.frodoConfig.frodoVisible, state);
             $('#' + Private.frodoConfig.frodo).toggleClass(Private.frodoConfig.frodoVisible, state);
             $('#' + Private.frodoConfig.frodoWrapper).addClass(Private.frodoConfig.noScroll, state);
 
             return true;
         },
-        clearErrors : function() {
+        clearErrors: function() {
             var loginBox = $('.' + Private.frodoConfig.frodoLogin.box),
                 errMsg = Private.frodoConfig.errorClass.msg,
                 errInput = Private.frodoConfig.errorClass.input,
@@ -42,16 +40,16 @@
 
             return true;
         },
-        focusFirst : function() {
+        focusFirst: function() {
             return $('.' + Private.frodoConfig.frodoLogin.input).first().focus();
         },
         //Change submit button disabled state
-        submitDisabled : function(bool) {
+        submitDisabled: function(bool) {
             var submitBtn = $('.' + Private.frodoConfig.frodoLogin.submit);
 
             return submitBtn.prop('disabled', bool);
         },
-        validate : function(event) {
+        validate: function(event) {
             /**
              * HELPERS
              */
@@ -240,7 +238,7 @@
          * @param  {[object]} text
          * @return {[boolean]}
          */
-        showAlert : function(data, options) {
+        showAlert: function(data, options) {
             if (data === undefined) {
                 data = false;
             }
@@ -264,7 +262,7 @@
          * [closePanel close login panel]
          * @return {[boolean]}
          */
-        closePanel : function() {
+        closePanel: function() {
             Private.resetMainClasses(false);
             Private.clearInputs();
             Private.submitDisabled(false);
@@ -277,7 +275,7 @@
          * [clearInputs - clear form input]
          * @return {[boolean]}
          */
-        clearInputs : function() {
+        clearInputs: function() {
             $('.' + Private.frodoConfig.frodoLogin.input).each(function() {
                 this.value = '';
             });
@@ -285,13 +283,13 @@
             return true;
         },
         //TEMP - shuffle random url
-        getRandomInt : function(min, max) {
+        getRandomInt: function(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         },
         /*
          DEFAULT PLUGIN SETTINGS
          */
-        defaults : {
+        defaults: {
             lang: 'en',
             version: 'basic',
             provider: ['eniro', 'facebook', 'google'],
@@ -304,7 +302,7 @@
         /*
          MAIN CONFIG
          */
-        frodoConfig : {
+        frodoConfig: {
             //State values
             currentForm: null,
             forms: ['login', 'signup', 'reset'],
@@ -358,7 +356,7 @@
         /*
         TRANSLATIONS
          */
-        translation : {
+        translation: {
             'en': {
                 loginTxt: 'Log in',
                 signUpTxt: 'Sign up',
@@ -464,7 +462,7 @@
         /*
         SOCIAL BUTTONS
         */
-        socialBtn : {
+        socialBtn: {
             'eniro': {
                 text: 'Eniro',
                 link: 'https://accounts.eniro.com.test.eniro.net/frodo/oauth/eniro/authorize?response_type=code&client_id={client_id}&scope={scope}&redirect_uri={redirect_uri}'
@@ -473,8 +471,8 @@
                 text: 'Facebook',
                 link: 'https://accounts.eniro.com.test.eniro.net/frodo/oauth/facebook/authorize?response_type=code&client_id={client_id}&scope={scope}&redirect_uri={redirect_uri}'
             },
-            'google' : {
-               text: 'Google',
+            'google': {
+                text: 'Google',
                 link: 'https://accounts.eniro.com.test.eniro.net/frodo/oauth/google/authorize?response_type=code&client_id={client_id}&scope={scope}&redirect_uri={redirect_uri}'
             }
         }
@@ -491,17 +489,6 @@
         this.$element = $(element);
         this.options = options;
         this.metaData = this.$element.data('login');
-
-        //User options
-        // this.defaults_provider = Private.defaults.provider;
-        // this.options_provider = options.provider;
-
-
-
-
-
-        //INITIALIZE PLUGIN
-        // this.init();
     }
     /*
     -------------------C O N S T R U C T O R  END----------------------------------------------------
@@ -523,95 +510,63 @@
             scope: ''
         },
         //INIT METHOD
-        init: function  () {
+        init: function() {
 
             var self = this,
                 body = Private.frodoConfig.body,
                 config = this.config;
 
-        //Config object
-        if (this.metaData) {
-            this.options = this.metaData;
-            this.config = config = $.extend(true, {}, this.defaults, this.options);
-        }  else {
-            this.config = config = $.extend(true, {}, this.defaults, this.options);
-        }
-        // this.config = config = $.extend(true, {}, Private.defaults, this.options);
-        // console.log('Defaults: ', this.defaults)
-        // console.log('Options: ', this.options)
-        // console.log('Final config: ', this.config)
-        // console.log('----END---');
-        //Set language ,
-        // var defaultLang = Object.keys(Private.translation[self.defaults.lang]);
-        // var defaultLang = Object.keys(Private.translation[Private.defaults.lang]);
-        //Check if given language is valid
-        // var configLang = (typeof Private.translation[config.lang] !== 'undefined') ? Object.keys(Private.translation[config.lang]) : Object.keys(Private.translation[self.defaults.lang]);
-        // console.log('Config lang: ', config.lang);
-        // console.log('Default lang: ', defaultLang);
-        // console.log('Config lang: ', configLang);
-        // self.config.lang = this.lang = ((typeof configLang === 'undefined') || (defaultLang.length !== configLang.length)) ? self.defaults.lang : config.lang;
-        //czy lang w Private.translation,
-        self.config.lang = self.lang = (self.config.lang in Private.translation) ?
-                            self.config.lang : self.defaults.lang;
+            //Config object
+            if (this.metaData) {
+                this.options = this.metaData;
+                this.config = config = $.extend(true, {}, this.defaults, this.options);
+            } else {
+                this.config = config = $.extend(true, {}, this.defaults, this.options);
+            }
+            //Set plugin language
+            self.config.lang = self.lang = (self.config.lang in Private.translation) ?
+                self.config.lang : self.defaults.lang;
 
-        //    var defaultLang = Object.keys(Private.translation[this.defaults.lang]);
-        // var configLang = (typeof Private.translation[config.lang] !== 'undefined') ? Object.keys(Private.translation[config.lang]) : void 0;
+            //Add event handler for plugin element
+            this.$element.on('click', function() {
+                self.build();
+                self.attachEvents();
 
+                //Reset frodo, wrapper and overlay classes
+                Private.resetMainClasses(true);
 
-        // this.defaults.lang = this.lang = ((typeof configLang === 'undefined') || (defaultLang.length !== configLang.length)) ? this.defaults.lang : config.lang;
-                //Build popup
-                this.$element.on('click', function () {
-                        self.build();
-                        self.attachEvents();
-                     // self.build();
-                    // self.attachEvents();
+                self.toggleForm('init');
 
-                    //Prevent default behaviour
-                    // Private.stopEvent(event);
+                //Clear errors
+                // Private.clearErrors();
 
-                    //Reset frodo, wrapper and overlay classes
-                    Private.resetMainClasses(true);
+                //Clear inputs
+                // Private.clearInputs();
 
-                    //Reset err message
-                    // Private.showAlert(null, {
-                    //     messageBox: Private.frodoConfig.frodoLogin.message,
-                    //     text: Private.frodoConfig.frodoLogin.message + ' > span',
-                    //     alert: Private.frodoConfig.frodoLogin.messageAlert
-                    // });
+                //Enable submit btn
+                // Private.submitDisabled(false);
 
-                    //Rest form to login
-                    self.toggleForm('init');
+                //Set focus on first not disabled input
+                Private.focusFirst();
+            });
 
-                    //Clear errors
-                    Private.clearErrors();
-
-                    //Clear inputs
-                    Private.clearInputs();
-
-                    //Enable submit btn
-                    Private.submitDisabled(false);
-
-                    //Set focus on first not disabled input
-                    Private.focusFirst();
-                });
-
-                return this;
+            return this;
         },
 
         //Build html structure
-        build: function () {
+        build: function() {
             var self = this,
                 config = this.config,
                 lang = this.config.lang,
                 frodo = $('#' + Private.frodoConfig.frodoWrapper),
                 inputs = [],
                 default_providers = this.defaults.provider,
-                options_provider = this.options.provider,
+                option_providers = this.options.provider,
                 el = {},
                 providers = [],
                 keys = null;
 
-             //CACHED OBJECTS
+            //CACHED OBJECTS
             el = {
                 //Main elemenets
                 wrapper: $('<div/>', {
@@ -735,86 +690,81 @@
              * CREATING HTML STRUCTURE
              */
 
-            //Check if there is only one instace of plugin
-            // if (frodo.length === 0) {
-
             //Wrap all content with frodo wrapper, and append frodo container and overlay
             $(Private.frodoConfig.body).wrapInner(el.wrapper).
-                find('#' + Private.frodoConfig.frodoWrapper).
-                append(el.frodo.append(el.form), el.overlay);
+            find('#' + Private.frodoConfig.frodoWrapper).
+            append(el.frodo.append(el.form), el.overlay);
 
-                //Insert form header
-                if (config.device === 'desktop') {
-                    el.header.append(el.headerTxt, el.closeBtn);
-                } else {
-                    el.header.append(el.headerTxt);
+            //Insert form header
+            if (config.device === 'desktop') {
+                el.header.append(el.headerTxt, el.closeBtn);
+            } else {
+                el.header.append(el.headerTxt);
+            }
+
+            //Add header txt to form
+            $('.' + Private.frodoConfig.frodoForm).append(el.header);
+
+            //Additional funcionality for widget advanced version
+            if (config.version === 'advanced') {
+
+                //Append login box
+                el.frodoLinksWrapper.append(el.forgotLink, el.signUpLink);
+                el.loginFooter.append(el.frodoLinksWrapper, el.submitBtn);
+
+                //Create array of all inputs
+                keys = Object.keys(el.input);
+
+                for (var i = 0, len = keys.length; i < len; i++) {
+                    inputs.push(el.input[keys[i]]);
                 }
 
-                //Add header txt to form
-                $('.' + Private.frodoConfig.frodoForm).append(el.header);
+                //Wrap each input with wrapper
+                inputs = inputs.map(function(input) {
+                    return el.inputWrapper.clone().prepend(input);
+                });
+                //Finally append everything into box
+                el.loginBox.append(el.message, inputs, el.loginFooter);
+                $('.' + Private.frodoConfig.frodoForm).append(el.loginBox);
 
-                //Additional funcionality for widget advanced version
-                if (config.version === 'advanced') {
+                //Append log with text
+                $('.' + Private.frodoConfig.frodoForm).append(el.logWith);
 
-                    //Append login box
-                    el.frodoLinksWrapper.append(el.forgotLink, el.signUpLink);
-                    el.loginFooter.append(el.frodoLinksWrapper, el.submitBtn);
+            }
 
-                    //Create array of all inputs
-                    keys = Object.keys(el.input);
+            //Append social buttons
+            el.socialWrapper.each(function() {
+                var btns = '',
+                    version = config.version,
+                    //Set provider either from config or from option
+                    provider = config.provider,
+                    providerClass = (config.device === 'desktop') ? Private.frodoConfig.frodoLogin.frodoProvider : Private.frodoConfig.frodoLogin.frodoProvider + ' ' + Private.frodoConfig.frodoLogin.frodoProviderMobile,
+                    result_provider = default_providers.slice(); //copy default providers
 
-                    for (var i = 0, len = keys.length; i < len; i++) {
-                        inputs.push(el.input[keys[i]]);
-                    }
+                //Aggregate providers from config and options
+                if (option_providers) {
 
-                    //Wrap each input with wrapper
-                    inputs = inputs.map(function(input) {
-                        return el.inputWrapper.clone().prepend(input);
+                    option_providers.forEach(function(opt_name) {
+                        result_provider.forEach(function(conf_name) {
+                            if (opt_name !== conf_name && result_provider.indexOf(opt_name) === -1) {
+                                result_provider.push(opt_name);
+                            }
+
+                        });
                     });
-                    //Finally append everything into box
-                    el.loginBox.append(el.message, inputs, el.loginFooter);
-                    $('.' + Private.frodoConfig.frodoForm).append(el.loginBox);
-
-                    //Append log with text
-                    $('.' + Private.frodoConfig.frodoForm).append(el.logWith);
-
                 }
 
-                //Append social buttons
-                el.socialWrapper.each(function() {
-                    var btns = '',
-                        version = config.version,
-                        //Set provider either from config or from option
-                        // provider = options.provider || config.provider,
-                        provider = config.provider,
-                        providerClass = (config.device === 'desktop') ? Private.frodoConfig.frodoLogin.frodoProvider : Private.frodoConfig.frodoLogin.frodoProvider + ' ' + Private.frodoConfig.frodoLogin.frodoProviderMobile,
-                        // options_provider = opt_providers,
-                        result_provider = default_providers.slice(); //copy default providers
+                //If 'advanced' version is selected than skip eniro button
+                if (version === 'advanced') {
+                    result_provider.forEach(function(name, index) {
+                        if (name === 'eniro')
+                            result_provider.splice(index, 1);
+                    });
+                }
 
-                    //Aggregate providers from config and options
-                    if (options_provider) {
-
-                        options_provider.forEach(function(opt_name) {
-                            result_provider.forEach(function(conf_name) {
-                                if (opt_name !== conf_name && result_provider.indexOf(opt_name) === -1) {
-                                    result_provider.push(opt_name);
-                                }
-
-                            });
-                        });
-                    }
-
-                    //If 'advanced' version is selected than skip eniro button
-                    if (version === 'advanced') {
-                        result_provider.forEach(function(name, index) {
-                            if (name === 'eniro')
-                                result_provider.splice(index, 1);
-                        });
-                    }
-
-                    //Create buttons
-                    result_provider.forEach(function(name) {
-                        if (name in Private.socialBtn) {
+                //Create buttons
+                result_provider.forEach(function(name) {
+                    if (name in Private.socialBtn) {
                         var link = Private.socialBtn[name].link;
 
 
@@ -827,164 +777,145 @@
                                          href="' + link + '">\
                                         <i class="fa faa-' + name + '"></i>' + Private.socialBtn[name].text + '</a>\
                                         </div>';
-                        }
-                    });
-
-                    $(this).append(btns);
+                    }
                 });
-                $('.' + Private.frodoConfig.frodoForm).append(el.socialWrapper);
 
-                //Set value of current form
-                Private.frodoConfig.currentForm = Private.frodoConfig.forms[0];
-                console.log('Login panel created');
-            // } else {
-            //     return false;
-            // }
-        },
-        destroy: function () {
-                var frodoWrapper = $('#' + Private.frodoConfig.frodoWrapper),
-                    frodoBody = $('#' + Private.frodoConfig.frodo),
-                    frodoOverlay = $('.' + Private.frodoConfig.frodoOverlay),
-                    wrapperContent;
+                $(this).append(btns);
+            });
+            $('.' + Private.frodoConfig.frodoForm).append(el.socialWrapper);
 
-                // var frodoCopy = {
-                //     frodoWrapper
-                // };
-                this.detachEvents();
-                frodoBody.remove();
-                frodoOverlay.remove();
-                wrapperContent = frodoWrapper.contents()
-                frodoWrapper.replaceWith(wrapperContent);
-                console.log('Plugin destroyed');
+            //Set value of current form
+            Private.frodoConfig.currentForm = Private.frodoConfig.forms[0];
+            console.log('Login panel created');
         },
-        attachEvents: function () {
+        destroy: function() {
+            var frodoWrapper = $('#' + Private.frodoConfig.frodoWrapper),
+                frodoBody = $('#' + Private.frodoConfig.frodo),
+                frodoOverlay = $('.' + Private.frodoConfig.frodoOverlay),
+                wrapperContent;
+
+            this.detachEvents();
+            frodoBody.remove();
+            frodoOverlay.remove();
+            wrapperContent = frodoWrapper.contents()
+            frodoWrapper.replaceWith(wrapperContent);
+            console.log('Plugin destroyed');
+        },
+        attachEvents: function() {
 
             var body = Private.frodoConfig.body,
                 config = this.config,
                 self = this;
-                                /*
+            /*
             -----------------------------E V E N T  H A N D L E R S BEGIN----------------------------------------------------------
              */
 
-                    /*
-            -----------------------------OPEN LOGIN PANEL--------------------------------------------------------------------
-             */
-
-                    /*
+            /*
             -----------------------------CLOSE LOGIN PANEL--------------------------------------------------------------------
              */
 
-                if (config.device === 'desktop') {
-                    //Close login panel
-                    $(body).on('click', '.' + Private.frodoConfig.frodoHeader.closeBtn, function() {
+            if (config.device === 'desktop') {
+                //Close login panel
+                $(body).on('click', '.' + Private.frodoConfig.frodoHeader.closeBtn, function() {
+                    Private.closePanel();
+                    self.destroy();
+                });
+
+                $(body).on('keyup', function(event) {
+                    //If 'Escape' key is pressed
+                    if (event.keyCode === 27 && Private.frodoConfig.currentForm !== null) {
                         Private.closePanel();
                         self.destroy();
-                    });
+                    }
+                });
+            }
 
-                    $(body).on('keyup', function(event) {
-                        //If 'Escape' key is pressed
-                        if (event.keyCode === 27 && Private.frodoConfig.currentForm !== null) {
-                            Private.closePanel();
-                            self.destroy();
-                        }
-                    });
-                }
-
-                    /*
+            /*
             -----------------------------REGISTER FORM HANDLER-----------------------------------------------------------------
              */
-                $(body).on('click', '.' + Private.frodoConfig.frodoLogin.signUp, function(event) {
-                    Private.stopEvent(event);
-                    self.toggleForm('signup');
-                    Private.clearErrors();
-                    Private.submitDisabled(false);
+            $(body).on('click', '.' + Private.frodoConfig.frodoLogin.signUp, function(event) {
+                Private.stopEvent(event);
+                self.toggleForm('signup');
+                Private.clearErrors();
+                Private.submitDisabled(false);
 
-                    //Set focus on first not disabled input
-                    Private.focusFirst();
-                });
-                    /*
+                //Set focus on first not disabled input
+                Private.focusFirst();
+            });
+            /*
             -----------------------------RESET FORM HANDLER-----------------------------------------------------------------
              */
-                    $(body).on('click', '.' + Private.frodoConfig.frodoLogin.forgot, function(event) {
-                        Private.stopEvent(event);
-                        self.toggleForm('reset');
-                        Private.clearErrors();
-                        Private.submitDisabled(false);
+            $(body).on('click', '.' + Private.frodoConfig.frodoLogin.forgot, function(event) {
+                Private.stopEvent(event);
+                self.toggleForm('reset');
+                Private.clearErrors();
+                Private.submitDisabled(false);
 
-                        //Set focus on first not disabled input
-                        Private.focusFirst();
-                    });
+                //Set focus on first not disabled input
+                Private.focusFirst();
+            });
 
-                    /*
+            /*
             -----------------------------FORM VALIDATION HANDLER --------------------------------------------------------
              */
-                    $(body).on('input', '.' + Private.frodoConfig.frodoLogin.input, function(event) {
-                        //If user press 'enter'
-                        if (event.which == 13 || event.keyCode == 13) {
-                            $('.' + Private.frodoConfig.frodoForm).trigger('submit');
-                        }
-                        Private.submitDisabled(true);
-                        Private.validate(event);
-                        Private.stopEvent(event);
+            $(body).on('input', '.' + Private.frodoConfig.frodoLogin.input, function(event) {
+                //If user press 'enter'
+                if (event.which == 13 || event.keyCode == 13) {
+                    $('.' + Private.frodoConfig.frodoForm).trigger('submit');
+                }
+                Private.submitDisabled(true);
+                Private.validate(event);
+                Private.stopEvent(event);
 
-                    });
-                    $(body).on('submit', '.' + Private.frodoConfig.frodoForm, function(event) {
-                        Private.stopEvent(event);
-                        Private.validate(event);
-                        //Ajax submit
-                    });
+            });
+            $(body).on('submit', '.' + Private.frodoConfig.frodoForm, function(event) {
+                Private.stopEvent(event);
+                Private.validate(event);
+                //Ajax submit
+            });
 
-                    /*
+            /*
             -----------------------------AJAX FORM VALIDATION-----------------------------------------------------------------
              */
-                    // TEMP - Ajax - jsonp
-                    $(body).on('click', '.frodo-btn', function() {
-                        var url = 'http://jurczynski.czest.pl/registerFailed.json?callback=myCallback',
-                            url2 = 'http://jurczynski.czest.pl/registerSuccess.json?callback=myCallback',
-                            address = [url, url2],
-                            index;
+            // TEMP - Ajax - jsonp
+            $(body).on('click', '.frodo-btn', function() {
+                var url = 'http://jurczynski.czest.pl/registerFailed.json?callback=myCallback',
+                    url2 = 'http://jurczynski.czest.pl/registerSuccess.json?callback=myCallback',
+                    address = [url, url2],
+                    index;
 
-                        index = Private.getRandomInt(0, address.length - 1);
+                index = Private.getRandomInt(0, address.length - 1);
 
-                        $.ajax({
-                            type: 'GET',
-                            url: address[index],
-                            dataType: 'jsonp',
-                            jsonpCallback: 'myCallback'
-                        }).then(function(response) {
-                            Private.showAlert(response, {
-                                messageBox: Private.frodoConfig.frodoLogin.message,
-                                text: Private.frodoConfig.frodoLogin.message + '> span',
-                                alert: Private.frodoConfig.frodoLogin.messageAlert
-                            });
-                        });
+                $.ajax({
+                    type: 'GET',
+                    url: address[index],
+                    dataType: 'jsonp',
+                    jsonpCallback: 'myCallback'
+                }).then(function(response) {
+                    Private.showAlert(response, {
+                        messageBox: Private.frodoConfig.frodoLogin.message,
+                        text: Private.frodoConfig.frodoLogin.message + '> span',
+                        alert: Private.frodoConfig.frodoLogin.messageAlert
                     });
+                });
+            });
 
-                /*
+            /*
         --------------------E V E N T  H A N D L E R S  E N D-----------------------------------------------------
          */
         },
-        detachEvents: function  () {
+        detachEvents: function() {
             var body = Private.frodoConfig.body,
                 frodo = $('#' + Private.frodoConfig.frodo);
 
- // 'click', '.' + Private.frodoConfig.frodoHeader.closeBtn
- //            $(body).on('keyup'
- //               click '.' + Private.frodoConfig.frodoLogin.signUp
- //               'click', '.' + Private.frodoConfig.frodoLogin.forgot
- //               'input', '.' + Private.frodoConfig.frodoLogin.input,
- //               'submit', '.' + Private.frodoConfig.frodoForm
- //               'click', '.frodo-btn',
             $(frodo).off();
-
-            // $(body).off();
-            console.log('Events removed');
-        },/**
+        },
+        /**
          * [toggleForm switch forms]
          * @param  {[string]} form [form name]
          * @return {[boolean]}
          * */
-        toggleForm : function(form) {
+        toggleForm: function(form) {
 
             function changeTxt(selector, text) {
 
@@ -1027,7 +958,6 @@
             //Shorthand for this.config
             var config = this.config,
                 text = Private.translation[this.lang],
-                // text = Private.translation[Private.defaults.lang],
                 inputsObj = $('.frodo-input'),
                 init = [inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name')],
                 signup = [inputsObj.filter('[name="fullname"]').attr('name'), inputsObj.filter('[name="email"]').attr('name'), inputsObj.filter('[name="password"]').attr('name'), inputsObj.filter('[name="passwordConfirm"]').attr('name')],
@@ -1091,16 +1021,10 @@
     Frodo.defaults = Frodo.prototype.defaults;
 
     $.fn.frodo = function(options) {
-        //     new Frodo(this, options).init();
-        // return this;
-        // return this.each(function() {
-        // });
-        //
-        return this.each(function () {
-             new Frodo(this, options).init();
+
+        return this.each(function() {
+            new Frodo(this, options).init();
         });
     };
 
 })(jQuery);
-
-
