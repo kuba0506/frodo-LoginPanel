@@ -46,6 +46,7 @@ var GulpConfig = (function () {
         this.devCss = this.devSource + '/css';
         this.prodCss = this.prodSource + '/css';
         this.cssOutput =  prod ? this.prodCss : this.devCss;
+        this.outputCssName = prod ? this.prodCssName : this.devCssName;
         this.devCssName = 'jquery.frodo.css';
         this.prodCssName = 'jquery.frodo.min.css';
         this.cssFileName = prod ?  this.prodCssName : this.devCssName;

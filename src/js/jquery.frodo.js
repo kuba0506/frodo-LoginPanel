@@ -7,8 +7,7 @@
  * To fire at a page load use:
  * $(element).frodo().trigger('click');
  */
-;
-(function($) {
+;(function($) {
     "use strict";
 
     /*
@@ -16,8 +15,6 @@
      */
     var Private = {
         stopEvent: function(e) {
-            var e = e || window.event;
-
             e.preventDefault();
             e.stopPropagation();
         },
@@ -772,11 +769,11 @@
                         link = link.replace('{scope}', config.scope);
                         link = link.replace('{redirect_uri}', config.redirectUri);
 
-                        btns += '<div class="' + providerClass + '" ">\
-                                        <a class="frodo-btn frodo-btn-' + name + '" \
-                                         href="' + link + '">\
-                                        <i class="fa faa-' + name + '"></i>' + Private.socialBtn[name].text + '</a>\
-                                        </div>';
+                        btns += '<div class="' + providerClass + '" ">' +
+                                        '<a class="frodo-btn frodo-btn-' + name + '"' +
+                                         'href="' + link + '">' +
+                                        '<i class="fa faa-' + name + '"></i>' + Private.socialBtn[name].text +
+                                        '</a></div>';
                     }
                 });
 
@@ -797,7 +794,7 @@
             this.detachEvents();
             frodoBody.remove();
             frodoOverlay.remove();
-            wrapperContent = frodoWrapper.contents()
+            wrapperContent = frodoWrapper.contents();
             frodoWrapper.replaceWith(wrapperContent);
             console.log('Plugin destroyed');
         },

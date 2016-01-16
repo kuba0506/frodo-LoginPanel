@@ -9,10 +9,15 @@ var gulp = require('gulp'),
     //HTML
     htmlmin = require('gulp-htmlmin'),
     inject = require('gulp-inject'),
+    htmlhint = require("gulp-htmlhint") //html validator
+    //CSS
+    uncss = require('gulp-uncss'), //remove unused css
+    csslint = require('gulp-csslint'),
     //JS
     include  = require('gulp-include'),
     prettify = require('gulp-jsbeautifier'),
     jshint = require('gulp-jshint'),
+    jscs = require('gulp-jscs'), //code style
     tsc = require('gulp-typescript'),
     tslint = require('gulp-tslint'),
     //IMG
@@ -95,11 +100,12 @@ gulp.task('js',function () {
 	.pipe(jshint.reporter('default'))
 	.pipe(include())
 		.on('error', gutil.log)
-	.pipe(rename(config.jsFileName))
-	.pipe(prettify({config: '.jsbeautifyrc', mode: 'VERIFY_AND_WRITE'}))
-	//.pipe(config.prodMinify)
-	.pipe(rename(config.jsFileName))
-	.pipe(sourcemaps.write('.'))
+    .pipe(rename(config.jsFileName))
+    .pipe(prettify({config: '.jsbeautifyrc', mode: 'VERIFY_AND_WRITE'}))
+    //.pipe(config.prodMinify)
+    .pipe(rename(config.jsFileName))
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('src'))
 	.pipe(gulp.dest(config.jsOutput))
 });
 
@@ -123,6 +129,18 @@ gulp.task('sass', function () {
 	.pipe(sourcemaps.write('.'))
 	.pipe(gulp.dest(config.cssOutput))
 });
+
+//CSS
+gulp.task('css', function () {
+    gulp.src(config.outputSource + config.outputCssName)
+        .pipe(csslint())
+        .pipe(csslint.reporter())
+        .pipe(uncss({
+            html: [config.htmlOutput  + '*.html']
+        }))
+        .pipe(gulp.dest(config.htmlOutput));
+});
+
 
 //Serwer - BrowserSync
 gulp.task('connect', function () {
@@ -151,6 +169,8 @@ gulp.task('connect', function () {
 //Html
 gulp.task('html', function () {
 	gulp.src(config.htmlSources)
+            .pipe(htmlhint())
+            .pipe(htmlhint.reporter())
             //.pipe(config.prodHtmlMin)
 			// .pipe(htmlmin(config.htmlOptions))
 			.pipe(gulp.dest(config.htmlOutput));
@@ -226,5 +246,5 @@ gulp.task('watch', function () {
 /**
  * Default task
  */
-gulp.task('default', ['html', 'js', 'sass', 'img', 'include','connect', 'watch']);
-gulp.task('ts', ['html', 'ts-lint', 'compile-ts','js', 'sass', 'img', 'include', 'connect', 'watch']);
+gulp.task('default', ['html', 'js', 'sass', 'css', 'img', 'include','connect', 'watch']);
+gulp.task('ts', ['html', 'ts-lint', 'compile-ts','js', 'sass', 'css', 'img', 'include', 'connect', 'watch']);
