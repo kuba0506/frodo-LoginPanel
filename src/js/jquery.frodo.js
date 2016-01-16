@@ -1,11 +1,11 @@
 /**
- * Frodo.js v.1.5 - Multiprovider login panel
+ * Frodo.js v.1.6 - Multiprovider login panel
  * Copyright (c) 2016, Jakub Jurczyñski
  *
  * To initialise plugin just add data-login attribute to any html element
- * $([data-login]).frodo();
+ * $(element).frodo(); or in html put data-login='{"lang": "ar"}'
  * To fire at a page load use:
- * $([data-login]).frodo().trigger('click');
+ * $(element).frodo().trigger('click');
  */
 ;
 (function($) {
@@ -490,6 +490,7 @@
         this.element = element;
         this.$element = $(element);
         this.options = options;
+        this.metaData = this.$element.data('login');
 
         //User options
         // this.defaults_provider = Private.defaults.provider;
@@ -528,9 +529,13 @@
                 body = Private.frodoConfig.body,
                 config = this.config;
 
-
         //Config object
-        this.config = config = $.extend(true, {}, this.defaults, this.options);
+        if (this.metaData) {
+            this.options = this.metaData;
+            this.config = config = $.extend(true, {}, this.defaults, this.options);
+        }  else {
+            this.config = config = $.extend(true, {}, this.defaults, this.options);
+        }
         // this.config = config = $.extend(true, {}, Private.defaults, this.options);
         // console.log('Defaults: ', this.defaults)
         // console.log('Options: ', this.options)
@@ -1019,7 +1024,6 @@
 
                 return arr;
             }
-            console.log(this.lang);
             //Shorthand for this.config
             var config = this.config,
                 text = Private.translation[this.lang],
