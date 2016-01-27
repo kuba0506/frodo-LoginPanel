@@ -569,7 +569,7 @@
                     if (typeof el !== 'undefined') {
                         return result_provider.indexOf(el) === i;
                     }
-                }); //copy default providers
+                });
 
                 //If 'advanced' version is selected than skip eniro button
                 if (version === 'advanced') {
@@ -589,7 +589,7 @@
                         link = link.replace('{scope}', config.scope);
                         link = link.replace('{redirect_uri}', config.redirectUri);
 
-                        btns += '<div class="' + providerClass + '" ">' +
+                        btns += '<div class="' + providerClass + '">' +
                             '<a class="frodo-btn frodo-btn-' + name + '"' +
                             'href="' + link + '">' +
                             '<i class="fa faa-' + name + '"></i>' + Private.socialBtn[name].text +
