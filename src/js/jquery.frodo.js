@@ -107,7 +107,7 @@
         defaults: {
             lang: 'en',
             version: 'basic',
-            provider: ['eniro', 'facebook', 'google'],
+            provider: ['eniro', 'facebook', 'google', 'android'],
             device: 'desktop',
             clientId: '',
             redirectUri: '/',
@@ -306,29 +306,8 @@
         this.options = options;
         this.metaData = this.$element.data('login');
 
-        //Add event handler for plugin element
-        this.$element.on('click', function() {
-            self.init();
-            self.build();
-            self.attachEvents();
+        this.elementListener(this.$element);
 
-            //Reset frodo, wrapper and overlay classes
-            Private.resetMainClasses(true);
-
-            self.toggleForm('init');
-
-            //Clear errors
-            // Private.clearErrors();
-
-            //Clear inputs
-            // Private.clearInputs();
-
-            //Enable submit btn
-            // Private.submitDisabled(false);
-
-            //Set focus on first not disabled input
-            Private.focusFirst();
-        });
     }
     /*
     -------------------C O N S T R U C T O R  END----------------------------------------------------
@@ -368,6 +347,32 @@
                 self.config.lang : self.defaults.lang;
 
             return this;
+        },
+        elementListener: function (element) {
+            var self = this;
+            //Add event handler for plugin element
+            element.on('click', function() {
+                self.init();
+                self.build();
+                self.attachEvents();
+
+                //Reset frodo, wrapper and overlay classes
+                Private.resetMainClasses(true);
+
+                self.toggleForm('init');
+
+                //Clear errors
+                // Private.clearErrors();
+
+                //Clear inputs
+                // Private.clearInputs();
+
+                //Enable submit btn
+                // Private.submitDisabled(false);
+
+                //Set focus on first not disabled input
+                Private.focusFirst();
+            });
         },
 
         //Build html structure
@@ -556,20 +561,14 @@
                     //Set provider either from config or from option
                     provider = config.provider,
                     providerClass = (config.device === 'desktop') ? Private.frodoConfig.frodoLogin.frodoProvider : Private.frodoConfig.frodoLogin.frodoProvider + ' ' + Private.frodoConfig.frodoLogin.frodoProviderMobile,
-                    result_provider = default_providers.slice(); //copy default providers
+                    result_provider = default_providers.concat(option_providers);
 
-                //Aggregate providers from config and options
-                if (option_providers) {
-
-                    option_providers.forEach(function(opt_name) {
-                        result_provider.forEach(function(conf_name) {
-                            if (opt_name !== conf_name && result_provider.indexOf(opt_name) === -1) {
-                                result_provider.push(opt_name);
-                            }
-
-                        });
-                    });
-                }
+                    result_provider = result_provider.filter(function (el, i) {
+                        //returns only unique elements
+                        if (typeof el !== 'undefined') {
+                            return result_provider.indexOf(el) === i;
+                        }
+                    }); //copy default providers
 
                 //If 'advanced' version is selected than skip eniro button
                 if (version === 'advanced') {
@@ -648,7 +647,7 @@
             }
 
             /*
-            -----------------------------SIGN UP FORM HANDLER-----------------------------------------------------------------
+            -------------------------SIGN UP FORM HANDLER------------------------------------------------------------
              */
             $(body).on('click', '.' + Private.frodoConfig.frodoLogin.signUp, function(event) {
                 Private.stopEvent(event);
@@ -660,7 +659,7 @@
                 Private.focusFirst();
             });
             /*
-            -----------------------------RESET FORM HANDLER-----------------------------------------------------------------
+            ------------------RESET FORM HANDLER-----------------------------------------------------------------
              */
             $(body).on('click', '.' + Private.frodoConfig.frodoLogin.forgot, function(event) {
                 Private.stopEvent(event);
@@ -673,7 +672,7 @@
             });
 
             /*
-            -----------------------------FORM VALIDATION HANDLER --------------------------------------------------------
+            -------------------FORM VALIDATION HANDLER --------------------------------------------------------
              */
             $(body).on('input', '.' + Private.frodoConfig.frodoLogin.input, function(event) {
                 //If user press 'enter'
@@ -733,7 +732,6 @@
          * @return {[boolean]}
          * */
         toggleForm: function(form) {
-            console.log(form);
 
             function changeTxt(selector, text) {
 
@@ -799,17 +797,18 @@
             if (form === 'signup') {
                 //Check if is either login or reset form, switch to signup
                 if (headerTxt.text() === text.loginTxt || headerTxt.text() === text.resetTxt) {
-                    toggleInputs(inputs, signup);
-                    changeTxt(headerTxt, text.signUpTxt);
-                    changeTxt(signUpTxt, text.links[2]);
-                    Private.frodoConfig.currentForm = Private.frodoConfig.forms[1];
-
+                    toggleInputs(inputs, signup); //toggle inputs
+                    changeTxt(headerTxt, text.signUpTxt); //change header txt
+                    changeTxt(signUpTxt, text.links[2]); //change link txt
+                    Private.frodoConfig.currentForm = Private.frodoConfig.forms[1]; //switch current form to signup
+                    console.log('tutaj jestem');
                     //Switch to login
                 } else {
                     toggleInputs(inputs, init);
                     changeTxt(headerTxt, text.loginTxt);
                     changeTxt(signUpTxt, text.links[1]);
                     Private.frodoConfig.currentForm = Private.frodoConfig.forms[0];
+                    console.log('jestem w else');
                 }
             }
             //Form reset password
